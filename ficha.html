@@ -12,6 +12,7 @@ if (!v) { out.innerHTML = `<div class="empty card"><h1>Vehículo no encontrado</
 else {
   document.title = `${v.brand} ${v.model} ${v.version} en Uruguay: precio y ficha | Autos Eléctricos UY`;
   const row = (k, val) => `<tr><th>${k}</th><td>${val == null || val === "" ? ni : e(val)}</td></tr>`;
+  const eff = (v.type === "BEV" && v.batteryKwh && v.rangeKm) ? (v.batteryKwh / v.rangeKm * 100).toFixed(1).replace(".", ",") + " kWh/100 km — batería ÷ autonomía homologada (" + (v.rangeCycle || "ciclo no informado") + "); orientativo, no es un dato declarado" : null;
   const cyc = v.rangeKm != null ? `${v.rangeKm} km · ciclo: ${v.rangeCycle || "no informado"}` : null;
   out.innerHTML = `<p><a href="catalogo.html">← Catálogo</a></p>
 <h1>${e(v.brand)} ${e(v.model)} <small class="muted">${e(v.version)}</small></h1>
@@ -23,11 +24,15 @@ ${v.discrepancy ? `<div class="notice"><strong>Las fuentes discrepan:</strong> $
 ${row("Tipo", EV.typeLabel(v.type))}${row("Origen de la marca", EV.originOf(v.brand).country + (EV.originOf(v.brand).note ? " — " + EV.originOf(v.brand).note : ""))}${row("Importador / representante", v.importer)}${row("Concesionarios", v.dealers.length ? v.dealers.join(", ") : null)}
 ${row("Carrocería", v.body)}${row("Tracción", v.drive)}${row("Potencia", v.powerCv != null ? v.powerCv + " cv" : null)}
 ${row("Batería", v.batteryKwh != null ? v.batteryKwh + " kWh" : null)}${row("Autonomía homologada", cyc)}${row("Autonomía real estimada", v.rangeReal)}
-${row("Carga rápida (DC)", v.chargeNote || (v.dcKw ? v.dcKw + " kW" : null))}${row("Carga AC", v.acKw ? v.acKw + " kW" : null)}
+${row("Consumo declarado", v.consumption)}${row("Consumo estimado (calculado)", eff)}
+${row("Carga rápida (DC)", [v.dcKw ? "hasta " + v.dcKw + " kW" : null, v.chargeNote].filter(Boolean).join(" · ") || null)}${row("Carga AC", v.acKw ? "hasta " + v.acKw + " kW" : null)}
+${row("Aceleración 0-100 km/h", v.accel != null ? String(v.accel).replace(".", ",") + " s" : null)}${row("Velocidad máxima", v.topSpeedKmh ? v.topSpeedKmh + " km/h" : null)}${row("Torque", v.torqueNm ? v.torqueNm + " Nm" : null)}
+${row("Baúl", v.trunkL ? v.trunkL + " L (mínimo)" : null)}${row("Plazas", v.seats)}
 ${row("Garantía del vehículo", v.warranty.vehicle)}${row("Garantía de batería", v.warranty.battery)}${row("Condiciones de garantía", v.warranty.note)}
 ${row("Observaciones", v.notes)}
 </tbody></table></div>
-<h2>Fuente</h2><p><a href="${e(v.source.url)}" rel="noopener">${e(v.source.name)}</a> — ${e(v.source.type)}, publicada ${e(v.source.date)}. Consultada el ${e(EV.D.checked)}.</p>
+<h2>Fuente</h2><p><strong>Precio:</strong> <a href="${e(v.source.url)}" rel="noopener">${e(v.source.name)}</a> — ${e(v.source.type)}, publicada ${e(v.source.date)}. Consultada el ${e(EV.D.checked)}.</p>
+${v.specSource ? `<p><strong>Ficha técnica:</strong> <a href="${e(v.specSource.url)}" rel="noopener">${e(v.specSource.name)}</a> — ${e(v.specSource.type)}, ${e(v.specSource.date)}.${v.specNote ? " " + e(v.specNote) : ""}</p>` : `<p class="small muted">Aún no se halló una ficha técnica completa para esta versión.</p>`}
 <p class="small muted">Dato sin ficha oficial del importador: tratar como orientativo. Los vacíos se muestran como «No informado»; no se rellenan con estimaciones.</p>
 <p><a class="btn" href="comparador.html?ids=${e(v.id)}">Comparar este modelo</a> <a class="btn sec" href="guias.html">Qué revisar antes de comprar</a></p>`;
 }

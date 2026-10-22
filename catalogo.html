@@ -57,7 +57,9 @@ function card(v) {
 <div style="margin:8px 0">${EV.priceHtml(v)}</div>
 <dl>${v.type === "BEV" ? `<dt>Batería</dt><dd>${v.batteryKwh != null ? EV.fmtNum(v.batteryKwh, 1) + " kWh" : EV.NI}</dd>
 <dt>Autonomía</dt><dd>${v.rangeKm != null ? v.rangeKm + " km (" + EV.esc(v.rangeCycle || "ciclo no informado") + ")" : EV.NI}</dd>` : `<dt>Autonomía eléctrica</dt><dd>${v.rangeKm != null ? v.rangeKm + " km" : EV.NI}</dd>`}
+${v.type === "BEV" && v.batteryKwh && v.rangeKm ? `<dt>Consumo est.</dt><dd>${(v.batteryKwh / v.rangeKm * 100).toFixed(1).replace(".", ",")} kWh/100 km</dd>` : ""}
 <dt>Potencia</dt><dd>${v.powerCv != null ? v.powerCv + " cv" : EV.NI}</dd>
+${v.dcKw ? `<dt>Carga rápida DC</dt><dd>hasta ${v.dcKw} kW</dd>` : ""}${v.accel != null ? `<dt>0-100 km/h</dt><dd>${String(v.accel).replace(".", ",")} s</dd>` : ""}${v.trunkL ? `<dt>Baúl</dt><dd>${v.trunkL} L</dd>` : ""}
 <dt>Garantía vehículo</dt><dd>${EV.esc(v.warranty.vehicle || EV.NI)}</dd></dl>
 <label style="font-weight:400"><input type="checkbox" data-id="${v.id}" style="width:auto" ${sel.includes(v.id) ? "checked" : ""}> Comparar</label></article>`;
 }

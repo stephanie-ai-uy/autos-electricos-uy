@@ -33,7 +33,10 @@ function render(){
   ["Tipo",v=>EV.typeLabel(v.type)],["Origen de la marca",v=>EV.originOf(v.brand).country],["Estado",v=>({disponible:"Comercializado (stock a confirmar)",verificar:"Pendiente de verificación"})[v.status]||v.status],
   ["Carrocería",v=>v.body],["Batería",v=>v.batteryKwh!=null?v.batteryKwh+" kWh":ni],
   ["Autonomía",v=>v.rangeKm!=null?v.rangeKm+" km · "+(v.rangeCycle||"ciclo no informado"):ni],
-  ["Potencia",v=>v.powerCv!=null?v.powerCv+" cv":ni],["Carga rápida",v=>v.chargeNote||ni],
+  ["Consumo estimado (calc.)",v=>(v.type==="BEV"&&v.batteryKwh&&v.rangeKm)?(v.batteryKwh/v.rangeKm*100).toFixed(1).replace(".",",")+" kWh/100 km":ni],
+  ["Potencia",v=>v.powerCv!=null?v.powerCv+" cv":ni],["Torque",v=>v.torqueNm?v.torqueNm+" Nm":ni],["0-100 km/h",v=>v.accel!=null?String(v.accel).replace(".",",")+" s":ni],
+  ["Tracción",v=>v.drive||ni],["Carga rápida (DC)",v=>[v.dcKw?"hasta "+v.dcKw+" kW":null,v.chargeNote].filter(Boolean).join(" · ")||ni],["Carga AC",v=>v.acKw?"hasta "+v.acKw+" kW":ni],
+  ["Baúl",v=>v.trunkL?v.trunkL+" L":ni],
   ["Garantía vehículo",v=>v.warranty.vehicle||ni],["Garantía batería",v=>v.warranty.battery||ni],
   ["Importador",v=>v.importer||ni],["Fuente",v=>`<a href="${e(v.source.url)}" rel="noopener">${e(v.source.date)}</a>`]];
   $("out").innerHTML = `<div class="tablewrap"><table><thead><tr><th></th>${vs.map(v=>`<th>${e(v.brand)} ${e(v.model)}<br><span class="small muted">${e(v.version)}</span><br><button class="btn sec noprint" data-rm="${v.id}" style="padding:2px 8px;font-size:.8rem">Quitar</button></th>`).join("")}</tr></thead><tbody>`+
