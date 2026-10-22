@@ -59,6 +59,7 @@ window.EVDATA = (function () {
     miniOf: { name: "MINI Uruguay — sitio oficial", url: "https://mini.com.uy/", date: "2026-10-22", type: "Web oficial de la marca/importador" },
     fotonView: { name: "Autoblog Uruguay — Lanzamiento Foton e-View Connect", url: "https://www.autoblog.com.uy/2026/07/lanzamiento-foton-e-view-connect.html", date: "2026-07", type: "Prensa especializada" },
     fotonTunland: { name: "Autoblog Uruguay — Lanzamiento Foton e-Tunland", url: "https://www.autoblog.com.uy/2025/02/lanzamiento-foton-e-tunland.html", date: "2025-02", type: "Prensa especializada" },
+    mlBmw: { name: "MercadoLibre Uruguay — BMW eléctricos (anuncios de Magna Motors)", url: "https://autos.mercadolibre.com.uy/bmw/electrico/", date: "2026-10-22", type: "Anuncio de concesionario (no es lista oficial)" },
     peugeot2008: { name: "Autoblog Uruguay — Lanzamiento Peugeot 2008, 3008 y 5008 Hybrid", url: "https://www.autoblog.com.uy/2025/05/lanzamiento-peugeot-2008-3008-y-5008.html", date: "2025-05-27", type: "Prensa especializada" },
     ex90: { name: "Autoblog Uruguay — Lanzamiento Volvo EX90", url: "https://www.autoblog.com.uy/2025/09/lanzamiento-volvo-ex90-los-apuntes-del.html", date: "2025-09", type: "Prensa especializada" },
     rankAutoblog: { name: "Autoblog Uruguay — Ventas 2025: los 10 electrificados más vendidos", url: "https://www.autoblog.com.uy/2026/02/ventas-2025-los-10-vehiculos.html", date: "2026-02", type: "Prensa especializada (datos ACAU)" }
@@ -78,7 +79,7 @@ window.EVDATA = (function () {
     "Toyota": { country: "Japón" }, "Nissan": { country: "Japón" }, "Renault": { country: "Francia" }, "Peugeot": { country: "Francia" }, "Mercedes-Benz": { country: "Alemania" }, "Hyundai": { country: "Corea del Sur" },
     "GWM": { country: "China", note: "Great Wall Motor (incluye ORA, Haval y Tank)" }, "Changan": { country: "China" },
     "Deepal": { country: "China", note: "Marca del grupo Changan" }, "Xpeng": { country: "China" },
-    "Kia": { country: "Corea del Sur" }, "Citroën": { country: "Francia" }, "MINI": { country: "Reino Unido", note: "Marca del grupo alemán BMW" }, "Foton": { country: "China" },
+    "Kia": { country: "Corea del Sur" }, "Citroën": { country: "Francia" }, "BMW": { country: "Alemania" }, "MINI": { country: "Reino Unido", note: "Marca del grupo alemán BMW" }, "Foton": { country: "China" },
     "Suzuki": { country: "Japón", note: "Algunos modelos (p. ej. Swift) se importan desde India según prensa" }
   };
 
@@ -976,6 +977,38 @@ window.EVDATA = (function () {
       powerCv: null, batteryKwh: 88.5, rangeKm: 350, rangeCycle: "WLTP", chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
       source: sources.fotonTunland, notes: "Vehículo comercial basado en la Tunland G7."
+    }),
+    Object.assign({}, base, {
+      id: "bmw-ix3-40-edrive-urban", type: "BEV", brand: "BMW", model: "iX3 (2027)", version: "40 eDrive Urban", body: "SUV",
+      importer: "Magna Motors", dealers: [], status: "disponible",
+      price: { list: 69990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Anuncio 0 km de Magna Motors en MercadoLibre Uruguay; no es lista oficial y puede cambiar.", verification: "parcial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en el anuncio." },
+      source: sources.mlBmw, notes: "Modelo año 2027."
+    }),
+    Object.assign({}, base, {
+      id: "bmw-ix3-50-xdrive-m-sport-pro", type: "BEV", brand: "BMW", model: "iX3 (2026)", version: "50 xDrive M Sport Pro", body: "SUV",
+      importer: "Magna Motors", dealers: [], status: "disponible",
+      price: { list: 116990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Anuncio 0 km de Magna Motors en MercadoLibre Uruguay; no es lista oficial y puede cambiar.", verification: "parcial" },
+      powerCv: null, batteryKwh: 108.7, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en el anuncio." },
+      source: sources.mlBmw, notes: "Batería de 108,7 kWh según el título del anuncio."
+    }),
+    Object.assign({}, base, {
+      id: "bmw-ix3-neue-klasse", type: "BEV", brand: "BMW", model: "iX3 Neue Klasse (2027)", version: "Neue Klasse", body: "SUV",
+      importer: "Magna Motors", dealers: [], status: "disponible",
+      price: { list: 105990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Anuncio 0 km de Magna Motors en MercadoLibre Uruguay; no es lista oficial y puede cambiar.", verification: "parcial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en el anuncio." },
+      source: sources.mlBmw, notes: "Modelo año 2027; el anuncio no detalla versión."
+    }),
+    Object.assign({}, base, {
+      id: "bmw-ix2-edrive20", type: "BEV", brand: "BMW", model: "iX2 (2027)", version: "eDrive20", body: "SUV",
+      importer: "Magna Motors", dealers: [], status: "disponible",
+      price: { list: 59990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Anuncio 0 km de Magna Motors en MercadoLibre Uruguay; no es lista oficial y puede cambiar.", verification: "parcial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en el anuncio." },
+      source: sources.mlBmw, notes: "Modelo año 2027."
     })
   ];
 
@@ -984,7 +1017,8 @@ window.EVDATA = (function () {
     { brand: "Volvo y MG: precios de web oficial pendientes", detail: "Los precios de Volvo y MG provienen de prensa o anuncios: la web de MG dio error de conexión y la de Volvo no publica precio. Kia, Chevrolet, Peugeot y Citroën sí se leyeron en su web oficial el " + CHECKED + ", pero no se relevaron todas sus fichas técnicas.", importer: "Eximar (Volvo, MG)", source: sources.ex30 },
     { brand: "Audi, Porsche y Land Rover", detail: "Sus webs bloquearon la consulta (Audi), no existe la URL probada (Porsche) o no publican precio ni indican qué modelos son eléctricos/enchufables (Land Rover); sin datos cargados.", importer: null, source: sources.ex30 },
     { brand: "BAIC", detail: "No se halló información de modelos eléctricos de BAIC en Uruguay en la búsqueda del " + CHECKED + ".", importer: null, source: sources.ex30 },
-    { brand: "Volkswagen, Mitsubishi y BMW: sin eléctricos visibles", detail: "En sus webs oficiales no aparece ningún eléctrico o híbrido: Volkswagen lista Polo, Virtus, Nivus, T-Cross, Taos, Tiguan, Amarok y otros sin indicar propulsión eléctrica; Mitsubishi lista Outlander y Eclipse Cross solo con motor a nafta; BMW muestra conceptos Neue Klasse y su web indicaba no estar completamente disponible.", importer: null, source: { name: "Volkswagen Uruguay — sitio oficial (y webs de Mitsubishi y BMW Uruguay)", url: "https://www.volkswagen.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" } },
+    { brand: "BMW: otros modelos (iX1, iX, i4, i5)", detail: "Hay iX1, iX, i4 e i5 en MercadoLibre Uruguay, pero casi todos usados o de concesionarias que no son el importador; sin precio oficial de lista. La web de BMW Uruguay no muestra eléctricos.", importer: "Magna Motors", source: sources.mlBmw },
+    { brand: "Volkswagen y Mitsubishi: sin eléctricos visibles", detail: "En sus webs oficiales no aparece ningún eléctrico o híbrido: Volkswagen lista Polo, Virtus, Nivus, T-Cross, Taos, Tiguan, Amarok y otros sin indicar propulsión eléctrica; Mitsubishi lista Outlander y Eclipse Cross solo con motor a nafta; BMW muestra conceptos Neue Klasse y su web indicaba no estar completamente disponible.", importer: null, source: { name: "Volkswagen Uruguay — sitio oficial (y webs de Mitsubishi y BMW Uruguay)", url: "https://www.volkswagen.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" } },
     { brand: "Mercedes-Benz — otros modelos", detail: "La web lista GLC, Clase C y GLE en la categoría «Híbridos y Eléctricos» sin aclarar si son enchufables; no se cargaron.", importer: null, source: sources.mercedesOf },
     { brand: "Santa Rosa — Mitsubishi, Renault, JMC, Iveco, Farizon", detail: "Marcas del grupo cuyos modelos eléctricos/híbridos no se relevaron aún (JMC JMEV 2 sin precio; Renault Kwid E-Tech sin precio actual; Farizon son furgonetas eléctricas).", importer: "Santa Rosa", source: sources.leapmotor },
     { brand: "BYD — otros modelos", detail: "Dolphin Mini, Yuan Plus, Song Plus EV y Atto 8 aparecen en prensa o en la web del importador sin precio o sin confirmar que sean eléctricos puros.", importer: "Sadar", source: sources.bydOficial },
