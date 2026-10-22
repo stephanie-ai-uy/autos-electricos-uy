@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mi primer coche eléctrico en Uruguay: guía para decidir si te conviene | Autos Eléctricos UY</title>
+<meta name="description" content="Guía para quien compra su primer coche eléctrico en Uruguay: pros, contras, cuántos km por día, dónde cargar, qué preguntar y una calculadora simple para saber si te conviene.">
+<meta name="theme-color" content="#07090c">
+<link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="first"><main id="main"><div class="wrap">
+<h1>Mi primer coche eléctrico: ¿me conviene?</h1>
+<p class="lead">Guía orientativa para decidir con calma. No te decimos que compres ni que no: te ayudamos a hacerte las preguntas correctas antes de pasarte a un eléctrico.</p>
+<div class="notice info">Es una guía general, no asesoramiento financiero. Las cifras de cada modelo están en el <a href="catalogo.html">catálogo</a>, con fuente y fecha; acá no inventamos números: los que ves en la calculadora los cargás vos.</div>
+
+<h2>1. Primero: ¿cómo usás el auto?</h2>
+<div class="grid g2">
+<div class="card"><h3 style="margin-top:0">Kilómetros por día</h3><p class="small">Es la pregunta clave. Anotá una semana tus recorridos reales (trabajo, hijos, compras, fines de semana). La mayoría de los eléctricos actuales publica una autonomía muy superior al uso diario urbano, pero la <strong>autonomía real baja</strong> con ruta a alta velocidad, calor o frío extremo, carga completa y pendientes.</p></div>
+<div class="card"><h3 style="margin-top:0">Viajes largos</h3><p class="small">¿Viajás seguido a Punta del Este, Rivera o Salto? Planificá paradas con cargador rápido (DC). Si hacés viajes largos todas las semanas, un <strong>híbrido</strong> puede ser más cómodo; si son esporádicos, un eléctrico alcanza con algo de planificación. Mirá la autonomía y la potencia de carga DC de cada ficha.</p></div>
+</div>
+
+<h2>2. ¿Dónde vas a cargar?</h2>
+<ul class="steps">
+<li><strong>En casa (lo ideal):</strong> con garaje propio, un enchufe adecuado o un cargador doméstico (wallbox) cargás de noche. Pedí a un electricista una revisión de la instalación y de la potencia contratada con UTE antes de comprar.</li>
+<li><strong>Apartamento o sin garaje:</strong> es el mayor obstáculo. Consultá con la administración del edificio si se puede instalar un punto de carga y quién paga la electricidad. Si dependés solo de carga pública, hacé las cuentas con ese precio.</li>
+<li><strong>En la calle / trabajo:</strong> averiguá si tu empleador ofrece carga y qué puntos públicos hay en tus recorridos habituales.</li>
+</ul>
+
+<h2>3. Pros y contras</h2>
+<div class="grid g2">
+<div class="card"><h3 style="margin-top:0">A favor</h3><ul class="steps">
+<li>Cargar en casa suele costar bastante menos por km que la nafta, sobre todo con la tarifa valle de UTE (ver calculadora).</li>
+<li>Menos mantenimiento mecánico: sin cambios de aceite ni correa de distribución (siguen frenos, neumáticos, filtros y revisiones).</li>
+<li>Conducción silenciosa y de respuesta inmediata.</li>
+<li>Patente con alícuota del 3 % sobre el valor sin IVA para 0 km empadronados en 2026 (ver <a href="beneficios.html">beneficios</a>); los impuestos pueden cambiar.</li>
+</ul></div>
+<div class="card"><h3 style="margin-top:0">En contra</h3><ul class="steps">
+<li>Precio de compra por lo general más alto que un auto equivalente de combustión.</li>
+<li>Hace falta dónde cargar; sin carga en casa, el ahorro se reduce.</li>
+<li>La autonomía real varía con velocidad, clima y carga.</li>
+<li>Reventa: el mercado de usados eléctricos es nuevo y el valor futuro es incierto; preguntá por la garantía de batería y su transferencia.</li>
+<li>Red de talleres y repuestos todavía en crecimiento, sobre todo en marcas nuevas en el país. Cambios previstos de IMESI desde 2027 (ver <a href="beneficios.html">beneficios</a>).</li>
+</ul></div>
+</div>
+
+<h2>4. Calculá cuánto necesitás</h2>
+<form class="card" id="f" novalidate>
+<div class="row">
+<div><label for="km">Km por día</label><input id="km" type="text" inputmode="decimal" placeholder="Ej.: 40"></div>
+<div><label for="dias">Días de uso por mes</label><input id="dias" type="text" inputmode="decimal" value="30"></div>
+<div><label for="veh">Modelo de referencia (del catálogo)</label><select id="veh"><option value="">Elegí un modelo</option></select></div>
+<div><label for="kwh">Consumo (kWh/100 km)</label><input id="kwh" type="text" inputmode="decimal" placeholder="Se completa con el modelo"></div>
+<div><label for="tar">Precio del kWh (tu tarifa)</label><input id="tar" type="text" inputmode="decimal" placeholder="Ej.: 2,98"></div>
+<div><label for="nl">Tu auto actual: L/100 km</label><input id="nl" type="text" inputmode="decimal" placeholder="Opcional"></div>
+<div><label for="pl">Precio del litro</label><input id="pl" type="text" inputmode="decimal" placeholder="Opcional"></div></div>
+<p class="small muted">Tarifas de UTE publicadas por <a href="https://www.montevideo.com.uy/" rel="noopener">Montevideo Portal</a> el 6/10/2026: valle $ 2,98 y llano $ 6,31 por kWh (pueden cambiar; confirmalas en tu factura). Usá la misma moneda en todos los campos.</p>
+<p><button class="btn" type="submit">Calcular</button></p></form>
+<div id="res" class="result" aria-live="polite">Completá km por día, consumo y precio del kWh.</div>
+
+<h2>5. Antes de firmar: lista rápida</h2>
+<ol class="steps">
+<li>Probá el auto (también en ruta) y mirá el consumo real en el tablero.</li>
+<li>Pedí por escrito el <strong>precio final</strong>: flete, patente, gastos y accesorios.</li>
+<li>Preguntá la garantía del <strong>vehículo y de la batería</strong> (años, km, capacidad mínima garantizada) y si cubre al segundo dueño. Ver <a href="guias.html">guía de garantías</a>.</li>
+<li>Pedí cotización de <a href="seguros.html">seguro</a> con las preguntas específicas de batería y carga.</li>
+<li>Simulá la <a href="financiacion.html">financiación</a> y comparala con el contado; si entregás un usado, mirá <a href="permuta.html">quién lo toma</a>.</li>
+<li>Calculá el <a href="tco.html">coste total</a> a los años que pensás quedártelo.</li>
+</ol>
+
+<h2>¿Te conviene?</h2>
+<div class="grid g3">
+<div class="card"><h3 style="margin-top:0">Probablemente sí</h3><p class="small">Cargás en casa, hacés recorridos diarios previsibles, viajes largos esporádicos y pensás quedarte con el auto varios años.</p></div>
+<div class="card"><h3 style="margin-top:0">Pensalo mejor</h3><p class="small">Vivís en apartamento sin carga, hacés viajes largos seguido o necesitás pagar lo mínimo hoy: considerá un híbrido o seguí mirando.</p></div>
+<div class="card"><h3 style="margin-top:0">Si dudás</h3><p class="small">Alquilá o probá uno unos días, y comparalo en el <a href="comparador.html">comparador</a> con un híbrido y con uno de combustión.</p></div></div>
+<p class="small muted">Este sitio no vende autos ni recibe comisiones por esta guía.</p>
+</div></main>
+<script src="assets/finance.js"></script><script src="assets/data.js"></script><script src="assets/app.js"></script>
+<script>
+const $=id=>document.getElementById(id), V=EV.getVehicles().filter(v=>v.type==="BEV"&&v.batteryKwh&&v.rangeKm);
+V.sort((a,b)=>(a.brand+a.model).localeCompare(b.brand+b.model)).forEach(v=>$("veh").insertAdjacentHTML("beforeend",`<option value="${EV.esc(v.id)}">${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version||"")}</option>`));
+$("veh").onchange=()=>{const v=EV.byId($("veh").value);if(v)$("kwh").value=(v.batteryKwh/v.rangeKm*100).toFixed(1).replace(".",",")};
+const f2=n=>EV.fmtNum(n,2);
+$("f").addEventListener("submit",ev=>{ev.preventDefault();
+ const km=EV.num($("km").value),d=EV.num($("dias").value),k=EV.num($("kwh").value),t=EV.num($("tar").value),nl=EV.num($("nl").value),pl=EV.num($("pl").value);
+ if([km,d,k,t,nl,pl].some(x=>Number.isNaN(x))){$("res").textContent="No se entiende algún número. Escribí solo cifras, por ejemplo 40 o 2,98.";return}
+ if(![km,d,k,t].every(x=>x!==""&&x>0)){$("res").textContent="Faltan km por día, días, consumo o precio del kWh.";return}
+ const kwhDay=km*k/100,cDay=kwhDay*t,cMes=cDay*d;
+ let h=`<p><strong>${EV.fmtNum(kwhDay,1)} kWh por día</strong> (${EV.fmtNum(km*d,0)} km al mes, ${EV.fmtNum(kwhDay*d,0)} kWh al mes).</p><p>Electricidad: <strong>${f2(cDay)}</strong> por día · <strong>${f2(cMes)}</strong> por mes.</p>`;
+ const v=EV.byId($("veh").value);
+ if(v)h+=`<p class="small">Con la autonomía publicada de ${v.rangeKm} km (${EV.esc(v.rangeCycle||"ciclo no informado")}), serían unos ${EV.fmtNum(v.rangeKm/km,1)} días de uso entre cargas completas, <em>antes</em> de descontar el efecto de ruta, clima y reserva de seguridad: contá con menos.</p>`;
+ if(nl>0&&pl>0){const c=km*nl/100*pl*d;h+=`<p>Combustión: <strong>${f2(c)}</strong> por mes. ${c>=cMes?`Diferencia a favor del eléctrico: <strong>${f2(c-cMes)}</strong> por mes.`:`El eléctrico saldría <strong>${f2(cMes-c)}</strong> más caro por mes.`} Solo energía; no incluye compra, seguro ni mantenimiento.</p>`}
+ $("res").innerHTML=h});
+</script></body></html>
