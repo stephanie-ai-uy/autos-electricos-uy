@@ -60,7 +60,19 @@
 <p><button class="btn" type="submit">Calcular</button></p></form>
 <div id="res" class="result" aria-live="polite">Completá los kilómetros por día, el consumo y el precio del kWh, y tocá Calcular.</div>
 
-<h2>5. Antes de firmar: lista rápida</h2>
+<h2>5. ¿Cuándo conviene cargar?</h2>
+<p class="small muted">Precios por kWh con IVA incluido, según la prensa y el decreto de tarifas de UTE (ver fuentes abajo). Pueden cambiar: confirmalos en UTE.</p>
+<div class="tablewrap"><table><thead><tr><th>Dónde y cuándo</th><th class="num">$U por kWh</th><th class="num" id="th100">$U cada 100 km</th><th>Cuándo conviene</th></tr></thead><tbody id="tcar"></tbody></table></div>
+<ul class="steps">
+<li><strong>Lo más barato es cargar en casa de madrugada</strong> (horario valle, de 00:00 a 07:00) con la Tarifa Residencial Triple Horario: la mayoría de los autos permite programar la hora de inicio de carga.</li>
+<li><strong>Evitá cargar en punta</strong> (cuatro horas que elegís entre las 17:00 y las 23:00 de días hábiles): es el kWh más caro de la factura. Si cargás en casa, programá el auto para que no arranque a esa hora.</li>
+<li><strong>La carga rápida (corriente continua) es para viajes largos o urgencias, no para el uso diario:</strong> por kWh cuesta varias veces más que cargar en casa de noche. Además se suma un cargo fijo por conexión.</li>
+<li>La carga pública lenta (corriente alterna) sale algo menos por kWh que la rápida, pero sigue siendo bastante más cara que la tarifa valle de casa.</li>
+<li>Si no tenés cómo cargar en casa, el ahorro frente a la nafta se achica: hacé la cuenta con el precio de carga pública (la calculadora de arriba permite escribir "otra" tarifa).</li>
+</ul>
+<p class="small muted">Cargo fijo por conexión pública: $U 54,8 en corriente alterna y $U 132,9 en continua; cargo por quedarse conectado sin cargar después de 20 minutos: $U 9,6 y $U 12,3 por minuto. Fuentes: <a href="https://www.montevideo.com.uy/Airbag/Como-cargar-autos-electricos-la-tarifa-recomendada-por-UTE-y-cuanto-puede-costar-uc977602" rel="noopener">Montevideo Portal</a> (tarifa triple horario residencial), <a href="https://www.elobservador.com.uy/ute-aplico-un-nuevo-ajuste-el-precio-la-carga-vehiculos-electricos-la-red-publica-n6030591" rel="noopener">El Observador, 10/1/2026</a> (carga en la red pública) y el <a href="https://www.impo.com.uy/bases/decretos/339-2025" rel="noopener">decreto 339/2025</a>. UTE anunció que seguirá ajustando la carga pública (<a href="https://www.elobservador.com.uy/hacia-el-fin-las-bonificaciones-ute-proyecta-nuevos-ajustes-el-precio-la-carga-vehiculos-electricos-n6045583" rel="noopener">El Observador, 29/5/2026</a>). Las tarifas de empresas privadas de carga pueden ser distintas.</p>
+
+<h2>6. Antes de firmar: lista rápida</h2>
 <ol class="steps">
 <li>Probá el auto (también en ruta) y mirá el consumo real en el tablero.</li>
 <li>Pedí por escrito el <strong>precio final</strong>: flete, patente, gastos y accesorios.</li>
@@ -82,7 +94,11 @@
 const $=id=>document.getElementById(id), V=EV.getVehicles().filter(v=>v.type==="BEV"&&v.batteryKwh&&v.rangeKm);
 V.sort((a,b)=>(a.brand+a.model).localeCompare(b.brand+b.model)).forEach(v=>$("veh").insertAdjacentHTML("beforeend",`<option value="${EV.esc(v.id)}">${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version||"")}</option>`));
 $("tsel").onchange=()=>{if($("tsel").value)$("tar").value=$("tsel").value;else{$("tar").value="";$("tar").focus()}};
-$("veh").onchange=()=>{const v=EV.byId($("veh").value);if(v)$("kwh").value=(v.batteryKwh/v.rangeKm*100).toFixed(1).replace(".",",")};
+$("veh").onchange=()=>{const v=EV.byId($("veh").value);if(v){$("kwh").value=(v.batteryKwh/v.rangeKm*100).toFixed(1).replace(".",",");tcar()}};
+const CARGA=[["En casa, horario valle (00:00–07:00)",2.98,"La mejor opción: cargá de noche."],["En casa, horario llano (resto del día)",6.31,"Aceptable si no podés de madrugada."],["En casa, horario punta",14.68,"Evitar: es lo más caro."],["Punto público, corriente alterna (lenta)",10.4,"Solo si no tenés otra opción."],["Punto público, corriente continua (rápida)",11.8,"Viajes largos o urgencias."]];
+function tcar(){const k=EV.num($("kwh").value),ok=k!==""&&!Number.isNaN(k)&&k>0;$("th100").textContent=ok?"$U cada 100 km (con "+EV.fmtNum(k,1)+" kWh/100 km)":"$U cada 100 km";
+ $("tcar").innerHTML=CARGA.map(c=>`<tr><td>${c[0]}</td><td class="num">${EV.fmtNum(c[1],2)}</td><td class="num">${ok?EV.fmtNum(k*c[1],2):"Elegí un modelo arriba"}</td><td>${c[2]}</td></tr>`).join("")}
+tcar();$("kwh").addEventListener("input",tcar);
 const f2=n=>"$U "+EV.fmtNum(n,2);
 $("f").addEventListener("submit",ev=>{ev.preventDefault();
  const km=EV.num($("km").value),d=EV.num($("dias").value),k=EV.num($("kwh").value),t=EV.num($("tar").value),nl=EV.num($("nl").value),pl=EV.num($("pl").value);
