@@ -10,7 +10,8 @@
 <form class="card" id="f" novalidate><h2 style="margin-top:0">Simulador</h2>
 <label for="preset">Cargar condiciones publicadas por una entidad (opcional)</label><select id="preset"><option value="">Ninguna: completo yo los datos</option></select>
 <p class="small muted" id="presetNote" style="margin:4px 0 0"></p>
-<label for="cur">Moneda (todos los importes en esta moneda)</label><select id="cur"><option value="USD">Dólares (US$)</option><option value="UYU">Pesos ($)</option></select>
+<label for="cur">Moneda (todos los importes en esta moneda)</label><select id="cur"><option value="USD">Dólares (US$)</option><option value="UYU">Pesos ($)</option><option value="UI">Unidades indexadas (UI)</option></select>
+<div id="uibox" hidden><label for="uival">Valor de la UI hoy en pesos (opcional, solo para ver la cuota en $)</label><input id="uival" inputmode="decimal" placeholder="Ej.: lo publica el BCU/INE"><p class="small muted" style="margin:4px 0 0">En UI, precio, entrega y cuota se expresan en UI y la tasa es real: la cuota en pesos sube con la inflación porque la UI se reajusta. No inventamos el valor de la UI: ingresalo vos si querés ver pesos.</p></div>
 <label for="price">Precio del vehículo</label><input id="price" type="number" min="0" inputmode="decimal">
 <label for="down">Entrega inicial</label><input id="down" type="number" min="0" value="0" inputmode="decimal">
 <label for="fa">Importe a financiar (opcional; por defecto precio − entrega)</label><input id="fa" type="number" min="0" inputmode="decimal">
@@ -22,7 +23,7 @@
 <p><button class="btn" type="submit">Calcular</button></p></form>
 <div><div id="res" class="result" aria-live="polite">Completá los datos y calculá.</div>
 <div class="notice"><strong>Simulación orientativa. No constituye una oferta de crédito ni garantiza la aprobación de la financiación.</strong></div>
-<details><summary>Supuestos del cálculo</summary><ul class="small"><li>Sistema francés (cuota constante, pagos al fin de cada mes).</li><li>TNA se divide entre 12; TEA se convierte a tasa mensual equivalente (1+TEA)^(1/12)−1. No son lo mismo y no se tratan como equivalentes.</li><li>Comisiones y otros gastos se suman al coste total pero no se financian.</li><li>No incluye seguros obligatorios, impuestos al crédito ni IVA sobre intereses, salvo que los cargues en «Otros gastos».</li><li>No se mezclan monedas ni se convierte tipo de cambio.</li></ul></details></div></div>
+<details><summary>Supuestos del cálculo</summary><ul class="small"><li>Sistema francés (cuota constante, pagos al fin de cada mes).</li><li>TNA se divide entre 12; TEA se convierte a tasa mensual equivalente (1+TEA)^(1/12)−1. No son lo mismo y no se tratan como equivalentes.</li><li>Comisiones y otros gastos se suman al coste total pero no se financian.</li><li>No incluye seguros obligatorios, impuestos al crédito ni IVA sobre intereses, salvo que los cargues en «Otros gastos».</li><li>No se mezclan monedas ni se convierte tipo de cambio. En UI todo se expresa en UI y la tasa es real; la cuota en pesos depende del valor de la UI en cada mes.</li></ul></details></div></div>
 
 <h2>Entidades y productos</h2>
 <div class="notice info">«Hasta 100 % financiable» en un aviso no significa aprobación automática del 100 % para cualquier solicitante. Condiciones y tasas dependen de cada perfil.</div>
@@ -42,26 +43,31 @@ $("ent").innerHTML = EV.D.financing.map(f=>{
 // Condiciones publicadas que se pueden cargar en el simulador (solo lo que la entidad publica; la tasa real depende del perfil).
 const PRESETS=[
  {id:"bbva-usd",label:"BBVA · autos eléctricos 0 km · USD 5,5 % TEA · hasta 72 meses",cur:"USD",rate:5.5,rt:"TEA",months:72,note:"BBVA publica 5,5 % TEA en dólares, hasta 100 % del valor del 0 km y hasta 72 meses (web oficial, 22/10/2026). Tu tasa final depende de la aprobación crediticia."},
+ {id:"bbva-ui",label:"BBVA · autos eléctricos 0 km · UI 5 % TEA · hasta 72 meses",cur:"UI",rate:5,rt:"TEA",months:72,note:"BBVA publica 5 % TEA en UI (tasa real), hasta 100 % del valor del 0 km y hasta 72 meses. Ingresá el precio y la entrega en UI."},
  {id:"bbva-uyu",label:"BBVA · autos eléctricos 0 km · pesos 9,25 % TEA (promo hasta 31/10/2026)",cur:"UYU",rate:9.25,rt:"TEA",months:72,note:"Tasa promocional en pesos válida hasta el 31/10/2026 según la web oficial de BBVA. Después puede cambiar."},
  {id:"bbva-0",label:"BBVA · tasa 0 % hasta 36 meses (según automotora)",cur:"USD",rate:0,rt:"TEA",months:36,note:"BBVA indica que la tasa 0 % depende de cada automotora y se limita a 36 meses y a vehículos 0 km."},
+ {id:"santander-ui",label:"Santander (MiAuto) · UI desde 5,8 % TEA · hasta 72 meses (eléctricos/híbridos)",cur:"UI",rate:5.8,rt:"TEA",months:72,note:"MiAuto publica de 5,8 % a 13,8 % TEA en UI (según perfil); se carga la tasa mínima. Hasta 72 cuotas para híbridos y eléctricos. Ingresá importes en UI."},
  {id:"santander-usd",label:"Santander (MiAuto) · USD desde 6,4 % TEA · hasta 72 meses (eléctricos/híbridos)",cur:"USD",rate:6.4,rt:"TEA",months:72,note:"MiAuto publica un rango de 6,4 % a 15,5 % TEA en dólares (según perfil); se carga la tasa mínima. Hasta 72 cuotas para híbridos y eléctricos y máximo US$ 50.000. Suma gastos de otorgamiento (40 UI + 8 UI por cuota, tope 120 UI) en «Comisiones»."},
  {id:"santander-uyu",label:"Santander (MiAuto) · pesos desde 18,5 % TEA · hasta 72 meses",cur:"UYU",rate:18.5,rt:"TEA",months:72,note:"MiAuto publica de 18,5 % a 29 % TEA en pesos (según perfil); se carga la tasa mínima. La tasa en pesos es mucho más alta que en dólares o UI: compará el costo total."},
  {id:"itau-0",label:"Itaú · tasa 0 % en dólares · hasta 36 meses (solo automotoras)",cur:"USD",rate:0,rt:"TEA",months:36,note:"Itaú ofrece tasa 0 % pero cobra una comisión única de 5,5 % + IVA (12 meses) o 7 % + IVA (24 a 36 meses) sobre el monto: cargala en «Comisiones» (por ejemplo, 7 % + IVA = 8,54 % del préstamo) para ver el costo real."},
+ {id:"scotia-ui",label:"Scotiabank · 0 km · desde 6,4 % en UI · hasta 60 meses",cur:"UI",rate:6.4,rt:"TEA",months:60,note:"Scotiabank publica «desde 6,4 % en UI» para 0 km y hasta 60 cuotas, pero NO aclara si es TEA o TNA: aquí se supone TEA; confirmalo con el banco. Ingresá importes en UI."},
  {id:"scotia-usd",label:"Scotiabank · 0 km · desde 7,5 % en USD · hasta 60 meses",cur:"USD",rate:7.5,rt:"TEA",months:60,note:"Scotiabank publica «desde 7,5 % en USD» para 0 km, hasta 60 cuotas y máximo US$ 100.000, pero NO aclara si es TEA o TNA: aquí se supone TEA; confirmalo con el banco."}
 ];
+$("cur").addEventListener("change",()=>{$("uibox").hidden=$("cur").value!=="UI"});
 PRESETS.forEach(p=>$("preset").insertAdjacentHTML("beforeend",`<option value="${p.id}">${e(p.label)}</option>`));
 $("preset").addEventListener("change",()=>{const p=PRESETS.find(x=>x.id===$("preset").value);
   if(!p){$("presetNote").textContent="";return}
-  $("cur").value=p.cur;$("rate").value=String(p.rate).replace(".",",");$("rt").value=p.rt;$("months").value=p.months;$("presetNote").textContent=p.note+" Cuota estimada con sistema francés; no es una oferta.";});
+  $("cur").value=p.cur;$("uibox").hidden=p.cur!=="UI";$("rate").value=String(p.rate).replace(".",",");$("rt").value=p.rt;$("months").value=p.months;$("presetNote").textContent=p.note+" Cuota estimada con sistema francés; no es una oferta.";});
 $("f").addEventListener("submit",ev=>{ev.preventDefault();
   const el=$("res"), v={}, bad=[];
   ["price","down","fa","rate","months","fees","other"].forEach(k=>{v[k]=EV.num($(k).value); if(Number.isNaN(v[k]))bad.push($(k).previousElementSibling.textContent);});
   if(bad.length){el.innerHTML="<strong>No se entiende el número en:</strong><ul>"+bad.map(x=>`<li>${e(x)}</li>`).join("")+"</ul><p class='small'>Escribí solo cifras, por ejemplo 35000 o 35.000,50.</p>";return;}
   const r=EVFIN.simulate({price:v.price,down:v.down,financeAmount:v.fa,rate:v.rate,rateType:$("rt").value,months:v.months,fees:v.fees,other:v.other});
   if(!r.ok){el.innerHTML="<strong>Faltan datos:</strong><ul>"+r.errors.map(x=>`<li>${e(x)}</li>`).join("")+"</ul>";return;}
-  const c=$("cur").value, m=n=>EV.fmtMoney(Math.round(n*100)/100,c).replace(/(\d)$/,"$1");
-  const f2=n=>(c==="UYU"?"$ ":"US$ ")+EV.fmtNum(n,2);
-  el.innerHTML=`<div class="muted small">Cuota mensual estimada (${r.months} cuotas)</div><div class="big">${f2(r.cuota)}</div>
+  const c=$("cur").value, m=n=>n;
+  const f2=n=>(c==="UYU"?"$ ":c==="UI"?"UI ":"US$ ")+EV.fmtNum(n,2);
+  const uiv=EV.num($("uival").value), pesos=(c==="UI"&&Number.isFinite(uiv)&&uiv>0)?n=>" (≈ $ "+EV.fmtNum(n*uiv,0)+")":()=>"";
+  el.innerHTML=`<div class="muted small">Cuota mensual estimada (${r.months} cuotas)</div><div class="big">${f2(r.cuota)}</div>${c==="UI"?`<p class="small">${uiv>0?"Cuota inicial aproximada en pesos"+pesos(r.cuota)+" con la UI que ingresaste; ":""}en pesos la cuota cambia cada mes con el valor de la UI.</p>`:""}
   <table><tbody><tr><th>Capital financiado</th><td>${f2(r.capital)}</td></tr><tr><th>Total de cuotas</th><td>${f2(r.totalCuotas)}</td></tr><tr><th>Intereses estimados</th><td>${f2(r.intereses)}</td></tr>
   <tr><th>Comisiones introducidas</th><td>${f2(r.fees)}</td></tr><tr><th>Otros gastos</th><td>${f2(r.other)}</td></tr>
   <tr><th>Coste total financiado (entrega + cuotas + gastos)</th><td><strong>${f2(r.totalFinanciado)}</strong></td></tr>
