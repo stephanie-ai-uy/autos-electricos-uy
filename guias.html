@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Qué saber antes de comprar un coche eléctrico en Uruguay: garantías y letra pequeña | Autos Eléctricos UY</title>
+<meta name="description" content="Lista de comprobación antes de firmar la compra de un coche eléctrico en Uruguay: precio final, reserva, garantía de batería, carga y financiación.">
+<link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="gui"><main id="main"><div class="wrap">
+<h1>Lo que debes saber antes de comprar</h1>
+<p class="lead">Guía general y lista de preguntas para el vendedor. Explica, no acusa: ninguna condición se califica de abusiva sin fundamento jurídico.</p>
+<div class="notice info">Todavía no hemos relevado la letra pequeña de concesionarios concretos (reservas, entregas, gastos). Cuando se verifique cada condición, se publicará con vendedor, fuente y fecha. Hasta entonces, usá esta lista para pedirlo por escrito.</div>
+
+<h2>Preguntas para cada concesionario</h2>
+<div class="grid g2">
+<div class="card"><h3 style="margin-top:0">Precio final</h3><ul class="steps"><li>¿El precio incluye matriculación, gastos administrativos y entrega?</li><li>¿Depende del color, versión o stock?</li><li>¿Hasta qué fecha vale la promoción?</li><li>¿Exige financiar con una entidad concreta o entregar un usado?</li><li>¿Habrá IMESI desde 2027 y quién lo asume si la entrega se demora? <a href="beneficios.html">Ver beneficios</a></li></ul></div>
+<div class="card"><h3 style="margin-top:0">Reserva y entrega</h3><ul class="steps"><li>¿Cuánto es la reserva y es reembolsable? ¿En qué condiciones?</li><li>¿Plazo de entrega estimado por escrito?</li><li>¿Qué pasa si el precio cambia entre reserva y entrega?</li></ul></div>
+<div class="card"><h3 style="margin-top:0">Carga</h3><ul class="steps"><li>¿Incluye cargador doméstico? ¿Y su instalación?</li><li>¿Conector compatible con la red pública local?</li><li>Revisá si tu vivienda admite el cargador (consultá a un electricista matriculado y a UTE).</li></ul></div>
+<div class="card"><h3 style="margin-top:0">Financiación</h3><ul class="steps"><li>Pedí tasa nominal <em>y</em> efectiva, comisiones, seguros exigidos y coste total.</li><li>Simulá en el <a href="financiacion.html">simulador</a> y compará con el contado.</li></ul></div></div>
+
+<h2>Garantías: qué comparar</h2>
+<p>Distinguí garantía general, de batería, de motor y componentes eléctricos, del cargador, y de la instalación. Para cada una pedí por escrito: tiempo y kilometraje límite, exclusiones, requisitos de mantenimiento, red de talleres autorizados en Uruguay y asistencia en ruta. <strong>No asumas que una garantía internacional rige en Uruguay.</strong></p>
+<div class="tablewrap"><table id="gt"><thead><tr><th>Vehículo</th><th>Garantía vehículo</th><th>Garantía batería</th><th>Nota / fuente</th></tr></thead><tbody></tbody></table></div>
+<p class="small muted">Las garantías son las citadas por prensa/importadores; puede diferir entre la ficha comercial y las condiciones oficiales: pedí el documento de garantía antes de firmar.</p>
+
+<h2>Preguntas frecuentes</h2>
+<details><summary>¿Un eléctrico tiene menos mantenimiento?</summary><p>Suele tener menos piezas de desgaste en el motor, pero el coste depende del modelo y del taller. Usá el <a href="tco.html">calculador</a> con tu cotización.</p></details>
+<details><summary>¿Los precios de esta web son definitivos?</summary><p>No. Son precios de lista según fuentes públicas con fecha; el vendedor puede haberlos cambiado. Siempre confirmá por escrito.</p></details>
+<details><summary>¿Puedo cargar el auto en casa?</summary><p>En general sí con una toma adecuada o cargador dedicado, pero requiere revisar la instalación eléctrica. Consultá a un profesional y a UTE.</p></details>
+</div></main>
+<script src="assets/data.js"></script><script src="assets/app.js"></script>
+<script>document.querySelector("#gt tbody").innerHTML=EV.getVehicles().map(v=>`<tr><td>${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version)}</td><td>${EV.esc(v.warranty.vehicle||EV.NI)}</td><td>${EV.esc(v.warranty.battery||EV.NI)}</td><td class="small">${EV.esc(v.warranty.note||"")} <a href="${EV.esc(v.source.url)}" rel="noopener">fuente</a></td></tr>`).join("");</script></body></html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Solicitar información | Autos Eléctricos UY</title>
+<meta name="description" content="Solicitá información sobre un modelo, financiación, seguro o cargador. Solo te contactamos con tu consentimiento.">
+<link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="con"><main id="main"><div class="wrap" style="max-width:640px">
+<h1>Solicitar información</h1>
+<p class="lead">Dejanos tu consulta y te respondemos. No es una oferta ni te comprometés a nada.</p>
+<div id="off" class="notice bad" hidden><strong>Formulario no activado todavía.</strong> Falta conectar la base de datos (ver <code>docs/FASE2-SUPABASE.md</code>). Mientras tanto no se recoge ningún dato.</div>
+<form class="card" id="f" novalidate>
+<label for="topic">Tema</label><select id="topic"><option value="modelo">Un modelo</option><option value="financiacion">Financiación</option><option value="seguro">Seguro</option><option value="cargador">Instalación de cargador</option><option value="otro">Otro</option></select>
+<label for="vehicle">Vehículo (opcional)</label><select id="vehicle"><option value="">—</option></select>
+<label for="name">Nombre</label><input id="name" maxlength="100" autocomplete="name" required>
+<label for="contact">Email o teléfono</label><input id="contact" maxlength="120" autocomplete="email" required>
+<label for="msg">Consulta (opcional)</label><input id="msg" maxlength="1000">
+<div style="position:absolute;left:-9999px" aria-hidden="true"><label>No completar<input id="hp" tabindex="-1" autocomplete="off"></label></div>
+<label style="font-weight:400;margin-top:14px"><input type="checkbox" id="consent" style="width:auto" required> <span id="ctext"></span></label>
+<p class="small muted">No pedimos cédula, datos bancarios ni documentación. Conservamos tu solicitud 180 días y luego se borra. Podés pedir acceso o eliminación escribiendo al mismo medio. Hoy <strong>no</strong> compartimos tus datos con concesionarios, bancos ni terceros.</p>
+<p><button class="btn" id="go" type="submit">Enviar solicitud</button></p><div id="msgout" aria-live="polite"></div></form>
+</div></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="assets/config.js"></script><script src="assets/data.js"></script><script src="assets/app.js"></script>
+<script>
+const $=id=>document.getElementById(id), C=window.EVCONFIG||{}, CV="2026-10-v1";
+const CT="Acepto que Autos Eléctricos UY use estos datos para responder mi solicitud. Entiendo que no se compartirán con terceros sin otro consentimiento expreso.";
+$("ctext").textContent=CT;
+EV.getVehicles().forEach(v=>$("vehicle").insertAdjacentHTML("beforeend",`<option value="${EV.esc(v.id)}">${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version)}</option>`));
+const q=new URLSearchParams(location.search).get("v"); if(q)$("vehicle").value=q;
+const sb=(C.SUPABASE_URL&&C.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY):null;
+if(!sb){$("off").hidden=false;$("go").disabled=true;}
+let last=0;
+$("f").addEventListener("submit",async ev=>{ev.preventDefault();const out=$("msgout");
+  if($("hp").value)return;                                   // honeypot anti-bots
+  if(Date.now()-last<15000){out.textContent="Esperá unos segundos antes de reenviar.";return}
+  const name=$("name").value.trim(),contact=$("contact").value.trim();
+  if(name.length<2||contact.length<5){out.textContent="Completá nombre y un medio de contacto válido.";return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)&&!/^[+\d][\d\s()-]{6,}$/.test(contact)){out.textContent="El contacto debe ser un email o un teléfono.";return}
+  if(!$("consent").checked){out.textContent="Necesitamos tu consentimiento para poder contactarte.";return}
+  $("go").disabled=true;last=Date.now();
+  const {error}=await sb.from("lead_requests").insert({topic:$("topic").value,name,contact,message:$("msg").value.trim()||null,vehicle_id:$("vehicle").value||null,origin_page:location.pathname,consent_contact:true,consent_text:CT,consent_version:CV});
+  $("go").disabled=false;
+  out.innerHTML=error?`<div class="notice bad">No se pudo enviar. Probá más tarde.</div>`:`<div class="notice info">¡Recibido! Te contactaremos por el medio indicado.</div>`;
+  if(!error)$("f").reset();});
+</script></body></html>

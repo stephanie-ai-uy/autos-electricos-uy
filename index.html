@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Autos eléctricos en Uruguay: comparativa de precios, financiación y beneficios | Autos Eléctricos UY</title>
+<meta name="description" content="Comparativa independiente de autos eléctricos en Uruguay: precios con fuente y fecha, condiciones de compra, financiación, garantías, beneficios fiscales y coste total de propiedad.">
+<link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="home"><main id="main"><div class="wrap">
+<section class="hero">
+<h1>Cuánto cuesta <em>realmente</em> comprar y mantener un coche eléctrico en Uruguay</h1>
+<p class="lead">El comparador independiente que te muestra el coste real, cómo financiarlo y qué condiciones debes conocer antes de firmar. Cada dato lleva su fuente y su fecha.</p>
+<form class="search" action="catalogo.html" method="get" role="search"><label for="q" style="position:absolute;left:-999px">Buscar vehículo</label>
+<input id="q" name="q" type="search" placeholder="Buscar marca o modelo (ej. MG4, Tesla, BYD)"><button class="btn" type="submit">Buscar</button></form>
+</section>
+
+<div class="notice info"><strong>Alerta de calendario:</strong> el decreto de junio de 2026 prevé aplicar IMESI escalonado (5 % y 9 %) a eléctricos de pasajeros desde el 1/1/2027; prensa de octubre informa que el MEF analiza postergarlo, sin anuncio oficial. <a href="beneficios.html">Ver detalle y fuentes</a>.</div>
+
+<h2>Herramientas</h2>
+<div class="grid g3">
+<a class="card" href="catalogo.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Catálogo y filtros</h3><p class="muted">Eléctricos puros (BEV) con precio, batería, autonomía y su ciclo de homologación.</p></a>
+<a class="card" href="comparador.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Comparador</h3><p class="muted">Hasta 4 vehículos lado a lado, con avisos cuando las cifras no son comparables.</p></a>
+<a class="card" href="financiacion.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Simulador de financiación</h3><p class="muted">Cuota, intereses y coste total frente al contado. Entidades con estado de verificación.</p></a>
+<a class="card" href="tco.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Coste total de propiedad</h3><p class="muted">Electricidad, seguro, patente y mantenimiento, con comparación opcional frente a nafta/diésel.</p></a>
+<a class="card" href="beneficios.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Beneficios e impuestos</h3><p class="muted">Qué está vigente, anunciado o pendiente, y asistente de orientación.</p></a>
+<a class="card" href="guias.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Lo que debes saber antes de comprar</h3><p class="muted">Letra pequeña, garantías y lista de comprobación previa a la firma.</p></a>
+</div>
+
+<h2>Vehículos relevados</h2>
+<div id="featured" class="grid g3"></div>
+<p class="small muted">Sin vehículos patrocinados: hoy no existe ningún acuerdo comercial. Los ordenamientos son orgánicos.</p>
+
+<h2>Estado de los datos</h2>
+<div class="card"><p id="stats"></p>
+<p class="small muted">Este catálogo es una <strong>primera versión parcial</strong>: se limita a lo que pudo verificarse en fuentes públicas el <span id="chk"></span>. Marcas detectadas pero sin ficha aún se listan en el catálogo como «pendientes de relevar». No hay stock confirmado por concesionarios.</p></div>
+</div></main>
+<script src="assets/data.js"></script><script src="assets/app.js"></script>
+<script>
+const vs = EV.getVehicles();
+document.getElementById("chk").textContent = EV.D.checked;
+document.getElementById("stats").innerHTML = `<strong>${vs.length}</strong> versiones eléctricas (BEV) cargadas · <strong>${vs.filter(v=>v.price.list!=null).length}</strong> con precio de lista con fuente · <strong>${new Set(vs.map(v=>v.brand)).size}</strong> marcas con ficha.`;
+document.getElementById("featured").innerHTML = vs.filter(v=>v.price.list!=null).sort((a,b)=>a.price.list-b.price.list).slice(0,3).map(v=>`
+<a class="card vcard" href="ficha.html?id=${v.id}" style="text-decoration:none;color:inherit"><div>${EV.statusBadge(v.status)}</div><h3>${EV.esc(v.brand)} ${EV.esc(v.model)}</h3><div class="muted small">${EV.esc(v.version)}</div>${EV.priceHtml(v)}</a>`).join("");
+</script></body></html>

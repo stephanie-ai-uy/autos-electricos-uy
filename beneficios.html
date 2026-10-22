@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beneficios e impuestos de coches eléctricos en Uruguay (IMESI) | Autos Eléctricos UY</title>
+<meta name="description" content="Estado del IMESI y otros beneficios para coches eléctricos en Uruguay: vigentes, anunciados o pendientes de confirmar, con fuente y fecha de verificación.">
+<link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="ben"><main id="main"><div class="wrap">
+<h1>Beneficios públicos e impuestos</h1>
+<p class="lead">Cada beneficio muestra su estado, a quién aplica y de dónde sale el dato. Hoy las fuentes son sobre todo prensa: <strong>falta contrastar con la norma oficial</strong>.</p>
+<div id="list" class="grid"></div>
+
+<h2>Asistente de orientación</h2>
+<form class="card" id="w"><p class="muted small">No pedimos cédula ni datos personales. Solo orienta sobre qué consultar; no confirma derechos.</p>
+<div class="row"><div><label for="who">¿Quién compra?</label><select id="who"><option value="particular">Particular</option><option value="empresa">Empresa</option><option value="flota">Flota / transporte de uso intensivo</option></select></div>
+<div><label for="cat">Tipo de vehículo</label><select id="cat"><option value="bev-pasajeros">Auto eléctrico de pasajeros</option><option value="bev-utilitario">Utilitario eléctrico</option><option value="phev-hev">Híbrido / híbrido enchufable</option><option value="moto">Moto eléctrica</option></select></div>
+<div><label for="when">¿Cuándo se factura?</label><select id="when"><option value="2026">Antes de 2027</option><option value="2027">2027 o después</option></select></div></div>
+<p><button class="btn" type="submit">Ver orientación</button></p><div id="wr"></div></form>
+</div></main>
+<script src="assets/data.js"></script><script src="assets/app.js"></script>
+<script>
+const $=id=>document.getElementById(id), e=EV.esc, B=EV.D.benefits;
+const ST={vigente:["Vigente","ok"],anunciado:["Anunciado (aún no vigente)",""],vencido:["Vencido","bad"],pendiente:["Pendiente de confirmar","warn"]};
+const WHO={particular:"Particulares",empresa:"Empresas",flota:"Flotas"};
+$("list").innerHTML=B.map(b=>`<article class="card"><span class="badge ${ST[b.status][1]}">${ST[b.status][0]}</span> <span class="badge warn">${e(b.verification)}</span>
+<h3 style="margin-top:.4em">${e(b.name)}</h3><p>${e(b.desc)}</p>
+<p class="small"><strong>Organismo:</strong> ${e(b.body)} · <strong>Quién:</strong> ${b.who.map(w=>WHO[w]).join(", ")} · <strong>Vigencia:</strong> ${e(b.validFrom||"No informada")}${b.validTo?" → "+e(b.validTo):""}<br>
+<strong>Requisitos:</strong> ${e(b.reqs)} · <strong>Exclusiones:</strong> ${e(b.excl)}<br>
+<strong>Verificado:</strong> ${e(b.lastChecked)} · <strong>Próxima revisión:</strong> ${e(b.nextReview)}<br>
+<strong>Fuentes:</strong> ${b.sources.map(s=>`<a href="${e(s.url)}" rel="noopener">${e(s.name)} (${e(s.date)})</a>`).join(" · ")}</p></article>`).join("")+
+`<div class="notice info">Fuentes oficiales para contrastar: <a href="https://www.gub.uy/ministerio-economia-finanzas" rel="noopener">MEF</a>, <a href="https://www.gub.uy/direccion-general-impositiva" rel="noopener">DGI</a> y la intendencia del departamento donde se matricule. Los beneficios a empresas o importadores no se trasladan automáticamente a compradores particulares.</div>`;
+$("w").addEventListener("submit",ev=>{ev.preventDefault();
+  const who=$("who").value,cat=$("cat").value,when=$("when").value;
+  const m=B.filter(b=>b.who.includes(who)&&b.categories.includes(cat));
+  let h="<h3>Qué podría interesarte consultar</h3>";
+  if(!m.length)h+="<p>No hay en esta base un beneficio identificado para esa combinación. Eso <strong>no</strong> significa que no exista: consultá DGI/MEF.</p>";
+  h+=m.map(b=>{const ok=(b.id==="imesi-exoneracion-actual"&&when==="2027")?" Para facturación en 2027 este régimen estaría reemplazado por el nuevo esquema (si no se posterga).":"";
+   return `<div class="card" style="margin:8px 0"><strong>${e(b.name)}</strong> <span class="badge ${ST[b.status][1]}">${ST[b.status][0]}</span><p class="small">Por qué podría aplicar: coincide con ${WHO[who].toLowerCase()} y esta categoría.${e(ok)}<br>Falta comprobar: ${e(b.reqs)}<br>Dónde confirmar: ${b.sources.map(s=>`<a href="${e(s.url)}" rel="noopener">fuente</a>`).join(", ")} y el organismo oficial (${e(b.body)}).</p></div>`}).join("");
+  if(cat==="bev-pasajeros"&&when==="2027")h+=`<div class="notice">Si el valor de importación (CIF) supera US$ 19.000, podría aplicar IMESI de 5 % o 9 % desde 2027. El valor de importación no es el precio de venta: pedí al concesionario el dato.</div>`;
+  $("wr").innerHTML=h;});
+</script></body></html>

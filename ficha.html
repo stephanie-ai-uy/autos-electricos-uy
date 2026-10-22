@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ficha de vehículo eléctrico | Autos Eléctricos UY</title>
+<meta name="description" content="Ficha detallada de un coche eléctrico en Uruguay con precio, especificaciones, garantía, fuente y fecha de consulta.">
+<link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="cat"><main id="main"><div class="wrap" id="out"></div></main>
+<script src="assets/data.js"></script><script src="assets/app.js"></script>
+<script>
+const id = new URLSearchParams(location.search).get("id"), v = EV.byId(id), e = EV.esc, ni = EV.NI;
+const out = document.getElementById("out");
+if (!v) { out.innerHTML = `<div class="empty card"><h1>Vehículo no encontrado</h1><p><a href="catalogo.html">Volver al catálogo</a></p></div>`; }
+else {
+  document.title = `${v.brand} ${v.model} ${v.version} en Uruguay: precio y ficha | Autos Eléctricos UY`;
+  const row = (k, val) => `<tr><th>${k}</th><td>${val == null || val === "" ? ni : e(val)}</td></tr>`;
+  const cyc = v.rangeKm != null ? `${v.rangeKm} km · ciclo: ${v.rangeCycle || "no informado"}` : null;
+  out.innerHTML = `<p><a href="catalogo.html">← Catálogo</a></p>
+<h1>${e(v.brand)} ${e(v.model)} <small class="muted">${e(v.version)}</small></h1>
+<div>${EV.statusBadge(v.status)} <span class="badge">BEV</span></div>
+<div class="card" style="margin:16px 0">${EV.priceHtml(v)}<p class="small muted">${e(v.price.note)}</p>
+<p class="small"><strong>No incluye (por confirmar con el vendedor):</strong> matriculación, gastos administrativos, entrega, cargador y su instalación. No hay precio promocional verificado.</p></div>
+${v.discrepancy ? `<div class="notice"><strong>Las fuentes discrepan:</strong> ${e(v.discrepancy)}</div>` : ""}
+<div class="tablewrap"><table><tbody>
+${row("Importador / representante", v.importer)}${row("Concesionarios", v.dealers.length ? v.dealers.join(", ") : null)}
+${row("Carrocería", v.body)}${row("Tracción", v.drive)}${row("Potencia", v.powerCv != null ? v.powerCv + " cv" : null)}
+${row("Batería", v.batteryKwh != null ? v.batteryKwh + " kWh" : null)}${row("Autonomía homologada", cyc)}${row("Autonomía real estimada", v.rangeReal)}
+${row("Carga rápida (DC)", v.chargeNote || (v.dcKw ? v.dcKw + " kW" : null))}${row("Carga AC", v.acKw ? v.acKw + " kW" : null)}
+${row("Garantía del vehículo", v.warranty.vehicle)}${row("Garantía de batería", v.warranty.battery)}${row("Condiciones de garantía", v.warranty.note)}
+${row("Observaciones", v.notes)}
+</tbody></table></div>
+<h2>Fuente</h2><p><a href="${e(v.source.url)}" rel="noopener">${e(v.source.name)}</a> — ${e(v.source.type)}, publicada ${e(v.source.date)}. Consultada el ${e(EV.D.checked)}.</p>
+<p class="small muted">Dato sin ficha oficial del importador: tratar como orientativo. Los vacíos se muestran como «No informado»; no se rellenan con estimaciones.</p>
+<p><a class="btn" href="comparador.html?ids=${e(v.id)}">Comparar este modelo</a> <a class="btn sec" href="guias.html">Qué revisar antes de comprar</a></p>`;
+}
+</script></body></html>

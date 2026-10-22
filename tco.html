@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calculadora de coste total de un coche eléctrico en Uruguay | Autos Eléctricos UY</title>
+<meta name="description" content="Calculá el coste anual y acumulado de tener un coche eléctrico en Uruguay: electricidad, seguro, patente, mantenimiento, y comparalo con uno de combustión.">
+<link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="tco"><main id="main"><div class="wrap">
+<h1>Coste total de propiedad (TCO)</h1>
+<p class="lead">Todos los campos los completás vos: no asumimos cifras universales. Usá tarifas reales de UTE, tu cotización de seguro y la ficha del modelo.</p>
+<form class="card" id="f" novalidate>
+<p class="small muted">Todos los importes en la misma moneda (ej. US$). Convertí antes de cargar.</p>
+<h3 style="margin-top:0">Eléctrico</h3>
+<div class="row">
+<div><label for="price">Precio de compra</label><input id="price" type="number" min="0"></div>
+<div><label for="years">Años de propiedad</label><input id="years" type="number" min="1" value="5"></div>
+<div><label for="kmYear">Km por año</label><input id="kmYear" type="number" min="0"></div>
+<div><label for="kwh100">Consumo (kWh/100 km)</label><input id="kwh100" type="number" min="0" step="0.1"></div>
+<div><label for="homePct">% carga en casa</label><input id="homePct" type="number" min="0" max="100" value="80"></div>
+<div><label for="priceHome">Precio kWh en casa</label><input id="priceHome" type="number" min="0" step="0.01"></div>
+<div><label for="pricePublic">Precio kWh carga pública</label><input id="pricePublic" type="number" min="0" step="0.01"></div>
+<div><label for="insurance">Seguro anual</label><input id="insurance" type="number" min="0"></div>
+<div><label for="patente">Patente anual</label><input id="patente" type="number" min="0"></div>
+<div><label for="maint">Mantenimiento anual</label><input id="maint" type="number" min="0"></div>
+<div><label for="tires">Neumáticos (prom. anual)</label><input id="tires" type="number" min="0"></div>
+<div><label for="otherYear">Otros gastos anuales</label><input id="otherYear" type="number" min="0"></div>
+<div><label for="charger">Cargador doméstico</label><input id="charger" type="number" min="0" value="0"></div>
+<div><label for="install">Instalación del cargador</label><input id="install" type="number" min="0" value="0"></div></div>
+<label style="margin-top:14px"><input type="checkbox" id="compare" style="width:auto"> Comparar con un vehículo de combustión</label>
+<div id="cbox" class="row" hidden>
+<div><label for="cPrice">Precio de compra</label><input id="cPrice" type="number" min="0"></div>
+<div><label for="cLper100">Consumo (L/100 km)</label><input id="cLper100" type="number" min="0" step="0.1"></div>
+<div><label for="cFuelPrice">Precio del litro</label><input id="cFuelPrice" type="number" min="0" step="0.01"></div>
+<div><label for="cInsurance">Seguro anual</label><input id="cInsurance" type="number" min="0"></div>
+<div><label for="cPatente">Patente anual</label><input id="cPatente" type="number" min="0"></div>
+<div><label for="cMaint">Mantenimiento anual</label><input id="cMaint" type="number" min="0"></div></div>
+<p><button class="btn" type="submit">Calcular</button></p></form>
+<div id="res" class="result" aria-live="polite">Completá los datos y calculá.</div>
+<h2>Supuestos y límites</h2>
+<ul class="small"><li>Costes de carga = km × consumo × (mezcla casa/pública × tarifa). No incluye pérdidas de carga (típicamente entre 10 % y 15 %): si querés incluirlas, subí el consumo.</li><li>No incluye depreciación/valor de reventa, financiación (ver <a href="financiacion.html">simulador</a>) ni inflación.</li><li>Todo lo que ves viene de lo que cargaste: son estimaciones, no datos verificados.</li></ul>
+</div></main>
+<script src="assets/finance.js"></script><script src="assets/data.js"></script><script src="assets/app.js"></script>
+<script>
+const $=id=>document.getElementById(id), ids="price years kmYear kwh100 homePct priceHome pricePublic insurance patente maint tires otherYear charger install cPrice cLper100 cFuelPrice cInsurance cPatente cMaint".split(" ");
+$("compare").onchange=()=>{$("cbox").hidden=!$("compare").checked};
+const f2=n=>EV.fmtNum(n,2);
+$("f").addEventListener("submit",ev=>{ev.preventDefault();
+  const o={compare:$("compare").checked};ids.forEach(i=>o[i]=$(i).value);
+  const miss=["price","kmYear","kwh100","priceHome"].filter(i=>$(i).value==="");
+  if(o.homePct!==""&&+o.homePct<100&&$("pricePublic").value==="")miss.push("pricePublic");
+  if(miss.length){$("res").innerHTML="<strong>Faltan datos:</strong> "+miss.map(i=>$(i).previousElementSibling.textContent).join(", ")+". No usamos valores por defecto para no mostrar un resultado engañosamente preciso.";return}
+  const r=EVFIN.tco(o);
+  let h=`<div class="muted small">Coste anual de uso (eléctrico)</div><div class="big">${f2(r.yearly)}</div><p class="small">Electricidad: ${f2(r.energyYear)}/año (${EV.fmtNum(r.kwhYear,0)} kWh/año) · Inversión inicial (vehículo+cargador+instalación): ${f2(r.upfront)}</p>
+  <p><strong>Coste total a ${r.years} año(s): ${f2(r.total)}</strong></p>`;
+  if(r.comb)h+=`<p>Combustión a ${r.years} año(s): <strong>${f2(r.comb.total)}</strong> (combustible ${f2(r.comb.fuelYear)}/año). ${r.diff>=0?`El eléctrico resulta <strong>${f2(r.diff)}</strong> más barato con estos datos.`:`El eléctrico resulta <strong>${f2(-r.diff)}</strong> más caro con estos datos.`}</p>`;
+  h+=`<div class="tablewrap"><table><thead><tr><th>Año</th><th>Gasto del año</th><th>Acumulado (incl. inversión inicial)</th></tr></thead><tbody>${r.rows.map(x=>`<tr><td>${x.year}</td><td>${f2(x.annual)}</td><td>${f2(x.cumulative)}</td></tr>`).join("")}</tbody></table></div>`;
+  $("res").innerHTML=h;});
+</script></body></html>

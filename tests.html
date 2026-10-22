@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Pruebas</title><meta name="robots" content="noindex">
+<style>body{font:15px system-ui;margin:20px}.ok{color:#146c3a}.ko{color:#b00020;font-weight:700}</style></head>
+<body><h1>Pruebas automáticas (abrir en el navegador)</h1><div id="o"></div><p id="sum"></p>
+<script src="assets/finance.js"></script><script src="assets/data.js"></script>
+<script>
+let pass=0,fail=0;const o=document.getElementById("o");
+function t(name,fn){try{const r=fn();if(r===true||r===undefined){pass++;o.innerHTML+=`<div class=ok>✔ ${name}</div>`}else throw new Error(r)}catch(e){fail++;o.innerHTML+=`<div class=ko>✘ ${name}: ${e.message}</div>`}}
+const near=(a,b,tol=0.01)=>{if(Math.abs(a-b)>tol)throw new Error(a+" ≠ "+b)};
+const F=EVFIN;
+t("cuota 10000 al 1% mensual, 12 meses = 888.49",()=>near(F.payment(10000,0.01,12),888.4879,0.001));
+t("TNA 12% → 1% mensual",()=>near(F.monthlyRate(12,"TNA"),0.01,1e-12));
+t("TEA 12.6825% → ~1% mensual",()=>near(F.monthlyRate(12.6825,"TEA"),0.01,1e-5));
+t("tasa 0% → cuota = capital/n",()=>near(F.payment(1200,0,12),100));
+t("simulate: capital = precio - entrega",()=>{const r=F.simulate({price:30000,down:6000,rate:10,rateType:"TNA",months:48});near(r.capital,24000)});
+t("simulate: intereses = cuotas*n - capital",()=>{const r=F.simulate({price:10000,down:0,rate:12,rateType:"TNA",months:12});near(r.intereses,888.4879*12-10000,0.01)});
+t("simulate: diferencia incluye comisiones",()=>{const r=F.simulate({price:10000,down:0,rate:0,rateType:"TNA",months:10,fees:200});near(r.diferencia,200)});
+t("simulate: falta tasa → error, no resultado",()=>{const r=F.simulate({price:10000,down:0,rate:"",months:12});return !r.ok&&r.errors.length>0});
+t("simulate: entrega > precio → error",()=>!F.simulate({price:100,down:200,rate:5,months:12}).ok);
+t("tco: energía 15000km*16kWh/100*0.2 = 480",()=>near(F.tco({price:0,years:1,kmYear:15000,kwh100:16,homePct:100,priceHome:0.2}).energyYear,480));
+t("tco: mezcla 50/50 casa/pública",()=>near(F.tco({years:1,kmYear:10000,kwh100:20,homePct:50,priceHome:0.1,pricePublic:0.3}).energyYear,400));
+t("tco: acumulado año 3 = inicial + 3*anual",()=>{const r=F.tco({price:30000,charger:500,install:300,years:3,kmYear:0,kwh100:0,homePct:100,insurance:600,maint:200});near(r.rows[2].cumulative,30800+3*800)});
+t("tco: comparación con combustión",()=>{const r=F.tco({price:30000,years:1,kmYear:10000,kwh100:15,homePct:100,priceHome:0.2,compare:true,cPrice:25000,cLper100:7,cFuelPrice:2});near(r.comb.fuelYear,1400);near(r.diff,(25000+1400)-(30000+300))});
+const V=EVDATA.vehicles;
+t("catálogo: ids únicos",()=>new Set(V.map(v=>v.id)).size===V.length);
+t("catálogo: solo BEV",()=>V.every(v=>v.type==="BEV"));
+t("catálogo: todo vehículo tiene fuente con URL y fecha",()=>V.every(v=>v.source&&v.source.url&&v.source.date));
+t("catálogo: precio con moneda y fecha cuando hay importe",()=>V.every(v=>v.price.list==null||(v.price.currency&&v.price.validOn)));
+t("catálogo: sin precio inventado (null cuando verification=sin dato)",()=>V.every(v=>v.price.verification!=="sin dato"||v.price.list==null));
+t("catálogo: autonomía sin ciclo no se asume (rangeCycle null permitido)",()=>V.every(v=>v.rangeKm==null||v.rangeCycle===null||typeof v.rangeCycle==="string"));
+t("beneficios: estados válidos y fuente",()=>EVDATA.benefits.every(b=>["vigente","anunciado","vencido","pendiente"].includes(b.status)&&b.sources.length&&b.lastChecked));
+t("beneficios: ninguno 'vigente' sin fuente",()=>EVDATA.benefits.filter(b=>b.status==="vigente").every(b=>b.sources.length>0));
+document.getElementById("sum").innerHTML=`<b>${pass} pasaron, ${fail} fallaron</b>`;document.title=fail?"FAIL":"PASS";
+</script></body></html>

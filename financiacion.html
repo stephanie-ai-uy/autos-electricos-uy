@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Financiación de coches eléctricos en Uruguay: bancos y simulador | Autos Eléctricos UY</title>
+<meta name="description" content="Entidades que financian coches eléctricos en Uruguay con estado de verificación, y simulador de cuota, intereses y coste total frente al contado.">
+<link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="fin"><main id="main"><div class="wrap">
+<h1>Financiación de coches eléctricos</h1>
+<p class="lead">Simulá una financiación con los datos que te dio la entidad. No inventamos tasas: si no las conocés, consultalas con el banco.</p>
+<div class="layout" style="grid-template-columns:minmax(260px,380px) 1fr">
+<form class="card" id="f" novalidate><h2 style="margin-top:0">Simulador</h2>
+<label for="cur">Moneda (todos los importes en esta moneda)</label><select id="cur"><option value="USD">Dólares (US$)</option><option value="UYU">Pesos ($)</option></select>
+<label for="price">Precio del vehículo</label><input id="price" type="number" min="0" inputmode="decimal">
+<label for="down">Entrega inicial</label><input id="down" type="number" min="0" value="0" inputmode="decimal">
+<label for="fa">Importe a financiar (opcional; por defecto precio − entrega)</label><input id="fa" type="number" min="0" inputmode="decimal">
+<label for="rate">Tasa anual (%)</label><input id="rate" type="number" min="0" step="0.01" inputmode="decimal">
+<label for="rt">Tipo de tasa</label><select id="rt"><option value="TNA">Nominal anual (TNA), capitaliz. mensual</option><option value="TEA">Efectiva anual (TEA)</option></select>
+<label for="months">Plazo (meses)</label><input id="months" type="number" min="1" step="1" inputmode="numeric">
+<label for="fees">Comisiones conocidas (pago único, no financiadas)</label><input id="fees" type="number" min="0" value="0">
+<label for="other">Otros gastos que quieras incluir</label><input id="other" type="number" min="0" value="0">
+<p><button class="btn" type="submit">Calcular</button></p></form>
+<div><div id="res" class="result" aria-live="polite">Completá los datos y calculá.</div>
+<div class="notice"><strong>Simulación orientativa. No constituye una oferta de crédito ni garantiza la aprobación de la financiación.</strong></div>
+<details><summary>Supuestos del cálculo</summary><ul class="small"><li>Sistema francés (cuota constante, pagos al fin de cada mes).</li><li>TNA se divide entre 12; TEA se convierte a tasa mensual equivalente (1+TEA)^(1/12)−1. No son lo mismo y no se tratan como equivalentes.</li><li>Comisiones y otros gastos se suman al coste total pero no se financian.</li><li>No incluye seguros obligatorios, impuestos al crédito ni IVA sobre intereses, salvo que los cargues en «Otros gastos».</li><li>No se mezclan monedas ni se convierte tipo de cambio.</li></ul></details></div></div>
+
+<h2>Entidades y productos</h2>
+<div class="notice info">«Hasta 100 % financiable» en un aviso no significa aprobación automática del 100 % para cualquier solicitante. Condiciones y tasas dependen de cada perfil.</div>
+<div class="tablewrap"><table><thead><tr><th>Entidad</th><th>Producto</th><th>Estado</th><th>Condiciones conocidas</th><th>Fuente</th></tr></thead><tbody id="ent"></tbody></table></div>
+</div></main>
+<script src="assets/data.js"></script><script src="assets/finance.js"></script><script src="assets/app.js"></script>
+<script>
+const $=id=>document.getElementById(id), e=EV.esc;
+$("ent").innerHTML = EV.D.financing.map(f=>`<tr><td><strong>${e(f.entity)}</strong></td><td>${e(f.product)}</td>
+<td><span class="badge ${f.status.startsWith("pendiente")?"warn":"bad"}">${e(f.status)}</span></td>
+<td>${f.term?`Plazo: ${e(f.term)}<br>Monedas: ${e(f.currencies)}<br>Tasa: ${e(f.rate)}<br>Comisiones/gastos: ${e(f.fees)}<br>Acepta eléctricos: ${e(f.accepts)}<br>Resto (entrega mínima, % financiable, requisitos): <em>Consultar con la entidad</em>`:"<em>Consultar con la entidad</em>"}</td>
+<td>${f.source?`<a href="${e(f.source.url)}" rel="noopener">${e(f.source.date)}</a>`:"—"}</td></tr>`).join("");
+$("f").addEventListener("submit",ev=>{ev.preventDefault();
+  const r=EVFIN.simulate({price:$("price").value,down:$("down").value,financeAmount:$("fa").value,rate:$("rate").value,rateType:$("rt").value,months:$("months").value,fees:$("fees").value,other:$("other").value});
+  const el=$("res");
+  if(!r.ok){el.innerHTML="<strong>Faltan datos:</strong><ul>"+r.errors.map(x=>`<li>${e(x)}</li>`).join("")+"</ul>";return;}
+  const c=$("cur").value, m=n=>EV.fmtMoney(Math.round(n*100)/100,c).replace(/(\d)$/,"$1");
+  const f2=n=>(c==="UYU"?"$ ":"US$ ")+EV.fmtNum(n,2);
+  el.innerHTML=`<div class="muted small">Cuota mensual estimada (${r.months} cuotas)</div><div class="big">${f2(r.cuota)}</div>
+  <table><tbody><tr><th>Capital financiado</th><td>${f2(r.capital)}</td></tr><tr><th>Total de cuotas</th><td>${f2(r.totalCuotas)}</td></tr><tr><th>Intereses estimados</th><td>${f2(r.intereses)}</td></tr>
+  <tr><th>Comisiones introducidas</th><td>${f2(r.fees)}</td></tr><tr><th>Otros gastos</th><td>${f2(r.other)}</td></tr>
+  <tr><th>Coste total financiado (entrega + cuotas + gastos)</th><td><strong>${f2(r.totalFinanciado)}</strong></td></tr>
+  <tr><th>Pago al contado (precio + otros gastos)</th><td>${f2(r.contado)}</td></tr>
+  <tr><th>Diferencia financiado − contado</th><td><strong>${f2(r.diferencia)}</strong></td></tr></tbody></table>`;});
+</script></body></html>

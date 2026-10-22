@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comparador de coches eléctricos en Uruguay | Autos Eléctricos UY</title>
+<meta name="description" content="Compará hasta 4 coches eléctricos disponibles en Uruguay lado a lado: precio, batería, autonomía y garantía, con avisos de comparabilidad.">
+<link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="cmp"><main id="main"><div class="wrap">
+<h1>Comparador</h1>
+<div class="card noprint"><label for="add">Agregar vehículo (máx. 4)</label><select id="add"></select></div>
+<div id="warn"></div><div id="out"></div>
+<p class="noprint"><button class="btn" id="print">Imprimir / guardar como PDF</button> <a class="btn sec" href="catalogo.html">Elegir en el catálogo</a></p>
+<p class="small muted">Las celdas resaltadas indican diferencias entre los vehículos. «No informado» significa que no se encontró dato con fuente.</p>
+</div></main>
+<script src="assets/data.js"></script><script src="assets/app.js"></script>
+<script>
+const $=id=>document.getElementById(id), e=EV.esc, ni=EV.NI, V=EV.getVehicles();
+let ids = (new URLSearchParams(location.search).get("ids")||"").split(",").filter(x=>EV.byId(x));
+if (!ids.length) { try { ids = JSON.parse(localStorage.getItem("cmp")||"[]").filter(x=>EV.byId(x)); } catch(_){} }
+ids = ids.slice(0,4);
+function render(){
+  $("add").innerHTML = `<option value="">— elegir —</option>` + V.filter(v=>!ids.includes(v.id)).map(v=>`<option value="${v.id}">${e(v.brand)} ${e(v.model)} ${e(v.version)}</option>`).join("");
+  $("add").disabled = ids.length>=4;
+  history.replaceState(null,"","?ids="+ids.join(","));
+  if (ids.length<2) { $("out").innerHTML = `<div class="empty card">Elegí al menos 2 vehículos para compararlos.</div>`; $("warn").innerHTML=""; }
+  const vs = ids.map(EV.byId); if (!vs.length) return;
+  const w=[]; const cycles=[...new Set(vs.filter(v=>v.rangeKm!=null).map(v=>v.rangeCycle||"no informado"))];
+  if (cycles.length>1) w.push(`<strong>Autonomías no comparables:</strong> usan ciclos distintos (${cycles.map(e).join(", ")}). Las cifras NEDC, WLTP y CLTC dan resultados diferentes para el mismo coche; no las compares como si fueran equivalentes.`);
+  if (vs.some(v=>v.price.list==null)) w.push("Algunos vehículos no tienen precio informado: no entran en la comparación de precio.");
+  if (new Set(vs.map(v=>v.price.currency)).size>1) w.push("Hay monedas distintas: no se convierten.");
+  if (new Set(vs.map(v=>v.body)).size>1) w.push("Los vehículos son de carrocerías distintas (segmentos no equivalentes).");
+  $("warn").innerHTML = w.map(x=>`<div class="notice">${x}</div>`).join("");
+  const R=[["Precio de lista",v=>v.price.list!=null?EV.fmtMoney(v.price.list,v.price.currency)+" ("+v.price.validOn+")":"Consultar"],
+  ["Estado",v=>({disponible:"Comercializado (stock a confirmar)",verificar:"Pendiente de verificación"})[v.status]||v.status],
+  ["Carrocería",v=>v.body],["Batería",v=>v.batteryKwh!=null?v.batteryKwh+" kWh":ni],
+  ["Autonomía",v=>v.rangeKm!=null?v.rangeKm+" km · "+(v.rangeCycle||"ciclo no informado"):ni],
+  ["Potencia",v=>v.powerCv!=null?v.powerCv+" cv":ni],["Carga rápida",v=>v.chargeNote||ni],
+  ["Garantía vehículo",v=>v.warranty.vehicle||ni],["Garantía batería",v=>v.warranty.battery||ni],
+  ["Importador",v=>v.importer||ni],["Fuente",v=>`<a href="${e(v.source.url)}" rel="noopener">${e(v.source.date)}</a>`]];
+  $("out").innerHTML = `<div class="tablewrap"><table><thead><tr><th></th>${vs.map(v=>`<th>${e(v.brand)} ${e(v.model)}<br><span class="small muted">${e(v.version)}</span><br><button class="btn sec noprint" data-rm="${v.id}" style="padding:2px 8px;font-size:.8rem">Quitar</button></th>`).join("")}</tr></thead><tbody>`+
+  R.map(([k,f])=>{const c=vs.map(f), d=new Set(c).size>1; return `<tr class="${d?"diff":""}"><th>${k}</th>${c.map(x=>`<td>${k==="Fuente"||typeof x==="string"&&x.startsWith("<a")?x:e(x)}</td>`).join("")}</tr>`}).join("")+`</tbody></table></div>`;
+}
+$("add").onchange=()=>{ if($("add").value&&ids.length<4){ids.push($("add").value);render();} };
+$("out").addEventListener("click",ev=>{const r=ev.target.dataset.rm; if(r){ids=ids.filter(x=>x!==r);render();}});
+$("print").onclick=()=>window.print();
+render();
+</script></body></html>
