@@ -2,6 +2,6 @@
    La "anon key" es PÚBLICA por diseño: la seguridad la dan las políticas RLS del esquema.
    NUNCA pegues aquí la "service_role key" (esa sí es secreta). */
 window.EVCONFIG = {
-  SUPABASE_URL: "",       // ej. https://abcdefgh.supabase.co
-  SUPABASE_ANON_KEY: ""   // clave "anon public"
+  SUPABASE_URL: "https://uyxggpizizqgbsssngmz.supabase.co",       // ej. https://abcdefgh.supabase.co
+  SUPABASE_ANON_KEY: "sb_publishable_ZXZnvi591nCfzCsRDPehew_LVAH2PwP"   // clave publicable (pública por diseño)
 };
