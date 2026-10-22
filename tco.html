@@ -32,6 +32,11 @@
 <div><label for="cInsurance">Seguro anual</label><input id="cInsurance" type="number" min="0"></div>
 <div><label for="cPatente">Patente anual</label><input id="cPatente" type="number" min="0"></div>
 <div><label for="cMaint">Mantenimiento anual</label><input id="cMaint" type="number" min="0"></div></div>
+<details style="margin-top:12px"><summary>Estimar la patente de un eléctrico (alícuota oficial Sucive 2026)</summary>
+<p class="small muted">Según el Texto ordenado del Sucive 2026: 3 % del valor de mercado sin IVA para 0 km empadronados en 2026, y 2,25 % para usados empadronados al 31/12/2025. El valor de mercado lo fija la tabla del Sucive; consultalo en la intendencia o en el Sucive. Estimación orientativa.</p>
+<div class="row"><div><label for="pvm">Valor de mercado sin IVA (misma moneda)</label><input id="pvm" type="number" min="0"></div>
+<div><label for="ptipo">Tipo de empadronamiento</label><select id="ptipo"><option value="0.03">0 km empadronado en 2026 (3 %)</option><option value="0.0225">Usado empadronado al 31/12/2025 (2,25 %)</option></select></div></div>
+<p><button type="button" class="btn sec" id="pcalc">Usar como patente anual</button></p></details>
 <p><button class="btn" type="submit">Calcular</button></p></form>
 <div id="res" class="result" aria-live="polite">Completá los datos y calculá.</div>
 <h2>Supuestos y límites</h2>
@@ -40,6 +45,7 @@
 <script src="assets/finance.js"></script><script src="assets/data.js"></script><script src="assets/app.js"></script>
 <script>
 const $=id=>document.getElementById(id), ids="price years kmYear kwh100 homePct priceHome pricePublic insurance patente maint tires otherYear charger install cPrice cLper100 cFuelPrice cInsurance cPatente cMaint".split(" ");
+$("pcalc").onclick=()=>{const v=+$("pvm").value;if(!(v>0)){alert("Ingresá el valor de mercado sin IVA.");return}$("patente").value=Math.round(v*+$("ptipo").value*100)/100};
 $("compare").onchange=()=>{$("cbox").hidden=!$("compare").checked};
 const f2=n=>EV.fmtNum(n,2);
 $("f").addEventListener("submit",ev=>{ev.preventDefault();
