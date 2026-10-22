@@ -49,7 +49,7 @@ function render() {
   const key = { price: v=>v.price.list, range: v=>v.rangeKm, batt: v=>v.batteryKwh, power: v=>v.powerCv }[$("sort").value], asc = $("sort").value === "price";
   r.sort((a,b)=>{ const x=key(a), y=key(b); if (x==null&&y==null) return 0; if (x==null) return 1; if (y==null) return -1; return asc? x-y : y-x; });
   $("count").textContent = `${r.length} de ${V.length} versiones`;
-  $("list").innerHTML = r.length ? r.map(v=>`<article class="card vcard">
+  $("list").innerHTML = r.length ? r.map(v=>`<article class="card vcard">${EV.CAR}
 <div>${EV.statusBadge(v.status)} ${v.discrepancy?'<span class="badge warn">Fuentes discrepan</span>':''}</div>
 <h3><a href="ficha.html?id=${v.id}">${EV.esc(v.brand)} ${EV.esc(v.model)}</a></h3><div class="muted small">${EV.esc(v.version)}</div>
 <div style="margin:8px 0">${EV.priceHtml(v)}</div>
