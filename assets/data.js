@@ -34,11 +34,23 @@ window.EVDATA = (function () {
     zeekrX: { name: "Autoblog Uruguay — Lanzamiento: Zeekr X", url: "https://www.autoblog.com.uy/2024/07/lanzamiento-zeekr-x.html", date: "2024-07-08", type: "Prensa especializada" },
     ex30: { name: "MercadoLibre Uruguay — tienda Eximar, Volvo EX30", url: "https://listado.mercadolibre.com.uy/tienda/eximar/autos/ex30/automatica/trasera/nuevo/", date: CHECKED, type: "Anuncio de concesionario (no es lista oficial)" },
     jacS1: { name: "Autoblog Uruguay — Lanzamiento: JAC e-S1", url: "https://www.autoblog.com.uy/2022/02/lanzamiento-jac-e-s1.html", date: "2022-02", type: "Prensa especializada" },
+    gwmOf: { name: "GWM Uruguay — sitio oficial", url: "https://gwm.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    leapOf: { name: "Leapmotor Uruguay — sitio oficial", url: "https://www.leapmotor.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    changanOf: { name: "Changan Uruguay — sitio oficial", url: "https://changan.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    deepalOf: { name: "Deepal Uruguay — sitio oficial", url: "https://deepal.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    zeekrOf: { name: "Zeekr Uruguay — sitio oficial", url: "https://www.zeekrlife.com/es-uy/", date: CHECKED, type: "Web oficial de la marca/importador" },
+    omodaOf: { name: "Omoda Jaecoo Uruguay — sitio oficial", url: "https://omodajaecoo.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    cheryOf: { name: "Chery Uruguay — sitio oficial", url: "https://chery.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    nissanOf: { name: "Nissan Uruguay — sitio oficial", url: "https://www.nissan.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    hyundaiOf: { name: "Hyundai Uruguay — sitio oficial", url: "https://www.hyundai.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    toyotaOf: { name: "Toyota Uruguay — sitio oficial", url: "https://www.toyota.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    xpengOf: { name: "Xpeng Uruguay — sitio oficial", url: "https://www.xpeng.com/uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    fidocarOf: { name: "Fidocar — sitio oficial (Dongfeng, Chery, Hyundai)", url: "https://www.fidocar.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     rankAutoblog: { name: "Autoblog Uruguay — Ventas 2025: los 10 electrificados más vendidos", url: "https://www.autoblog.com.uy/2026/02/ventas-2025-los-10-vehiculos.html", date: "2026-02", type: "Prensa especializada (datos ACAU)" }
   };
 
   /* verification: "parcial" = una sola fuente de prensa, sin ficha oficial del importador. */
-  const typeLabels = { BEV: "Eléctrico (BEV)", PHEV: "Híbrido enchufable (PHEV)", HEV: "Híbrido no enchufable (HEV/MHEV)" };
+  const typeLabels = { BEV: "Eléctrico (BEV)", PHEV: "Híbrido enchufable (PHEV)", HEV: "Híbrido no enchufable (HEV/MHEV)", REEV: "Eléctrico de autonomía extendida (REEV)" };
   /* Origen = país de origen de la MARCA o de su grupo propietario (no el país de fabricación de cada modelo). */
   const origins = {
     "BYD": { country: "China" }, "GAC": { country: "China" }, "JMC": { country: "China" }, "Dongfeng": { country: "China" },
@@ -48,7 +60,9 @@ window.EVDATA = (function () {
     "Tesla": { country: "EE.UU." },
     "Chevrolet": { country: "EE.UU.", note: "Marca de General Motors. Verificar el país de fabricación de cada modelo." },
     "Volvo": { country: "Suecia", note: "Propiedad del grupo chino Geely" },
-    "Toyota": { country: "Japón" },
+    "Toyota": { country: "Japón" }, "Nissan": { country: "Japón" }, "Hyundai": { country: "Corea del Sur" },
+    "GWM": { country: "China", note: "Great Wall Motor (incluye ORA, Haval y Tank)" }, "Changan": { country: "China" },
+    "Deepal": { country: "China", note: "Marca del grupo Changan" }, "Xpeng": { country: "China" },
     "Suzuki": { country: "Japón", note: "Algunos modelos (p. ej. Swift) se importan desde India según prensa" }
   };
 
@@ -244,10 +258,10 @@ window.EVDATA = (function () {
     Object.assign({}, base, {
       id: "omoda-e5", brand: "Omoda", model: "E5", version: "2027 (51 / 60 kWh)", body: "SUV",
       importer: "Santa Rosa", dealers: [], status: "disponible",
-      price: { list: 26990, promo: null, currency: "USD", validOn: "2026-07-07", note: "«Desde» según un contenido de marca (publicidad) de El Observador. En la etapa de lanzamiento, Montevideo Portal citó US$ 42.990: se conserva la discrepancia.", verification: "parcial" },
+      price: { list: 25990, promo: null, currency: "USD", validOn: CHECKED, note: "«Desde» según el sitio oficial de Omoda Jaecoo Uruguay. Un contenido de marca de El Observador (jul. 2026) daba US$ 26.990 y Montevideo Portal, en el lanzamiento, US$ 42.990: se conserva la discrepancia.", verification: "oficial" },
       powerCv: 201, batteryKwh: 51, rangeKm: 422, rangeCycle: "NEDC", chargeNote: null,
       warranty: { vehicle: "5 años o 150.000 km", battery: "8 años o 150.000 km", note: "Según contenido de marca de Omoda." },
-      source: sources.omodaE5, notes: "Dos baterías (51 y 60 kWh; una nota menciona 59) con 422 y 505 km NEDC. Más de 300 unidades vendidas en preventa (prensa, jul. 2026).", discrepancy: "Precio: desde US$ 26.990 (jul. 2026) vs US$ 42.990 (lanzamiento, Montevideo Portal)."
+      source: sources.omodaOf, notes: "Dos baterías (51 y 60 kWh; una nota menciona 59) con 422 y 505 km NEDC. Más de 300 unidades vendidas en preventa (prensa, jul. 2026).", discrepancy: "Precio: desde US$ 26.990 (jul. 2026) vs US$ 42.990 (lanzamiento, Montevideo Portal)."
     }),
     Object.assign({}, base, {
       id: "leapmotor-t03", brand: "Leapmotor", model: "T03", version: "", body: "Hatchback urbano",
@@ -381,27 +395,341 @@ window.EVDATA = (function () {
       id: "toyota-corolla-cross-hybrid", type: "HEV", brand: "Toyota", model: "Corolla Cross Hybrid", version: "SE-G 1.8 e-CVT", body: "SUV",
       importer: null, dealers: [], status: "disponible",
       price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio actual no hallado (un informe de 2022 hablaba de unos US$ 40.000).", verification: "sin dato" },
-      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      powerCv: 122, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "No informada." },
-      source: sources.rankAutoblog, notes: "465 unidades en el ranking 2025 por versión; líder de híbridos en 2022 y 2024."
+      source: sources.rankAutoblog, notes: "Versiones XEI y SEG HEV 1.8 eCVT, 122 cv (ficha del sitio oficial). 465 unidades en el ranking 2025 por versión; líder de híbridos en 2022 y 2024."
     }),
     Object.assign({}, base, {
-      id: "chery-tiggo-4-hybrid", type: "HEV", brand: "Chery", model: "Tiggo 4 Hybrid", version: "", body: "SUV compacto",
+      id: "chery-tiggo-4-hybrid", type: "HEV", brand: "Chery", model: "Tiggo 4 Hybrid (CSH)", version: "", body: "SUV compacto",
       importer: null, dealers: [], status: "disponible",
-      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no hallado.", verification: "sin dato" },
+      price: { list: 27990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio «desde» del sitio oficial de Chery Uruguay para el Tiggo 4 CSH.", verification: "oficial" },
       powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "No informada." },
-      source: sources.rankAutoblog, notes: "281 unidades vendidas en 2025 (ACAU vía Autoblog)."
+      source: sources.cheryOf, notes: "Se asume que el Tiggo 4 CSH de la web es el Tiggo 4 Hybrid (full hybrid, Fidocar, lanzado oct. 2024); 281 unidades vendidas en 2025 (ACAU vía Autoblog)."
+    }),
+    Object.assign({}, base, {
+      id: "gwm-ora-03", type: "BEV", brand: "GWM", model: "ORA 03", version: "", body: "Hatchback",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 28990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de GWM Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gwmOf, notes: "La web no indica la propulsión; se clasifica como eléctrico según prensa (modelo eléctrico de GWM)."
+    }),
+    Object.assign({}, base, {
+      id: "gwm-ora-5", type: "BEV", brand: "GWM", model: "ORA 5", version: "", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 24990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio «desde» del sitio oficial de GWM Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gwmOf, notes: "Tipo inferido: la web no indica la propulsión (ORA es la línea eléctrica de GWM). Confirmar con el importador."
+    }),
+    Object.assign({}, base, {
+      id: "gwm-h6-hev", type: "HEV", brand: "GWM", model: "H6 HEV", version: "", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 34990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de GWM Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gwmOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "gwm-h6-phev", type: "PHEV", brand: "GWM", model: "H6 PHEV", version: "", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 38990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio «desde» del sitio oficial de GWM Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gwmOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "gwm-h6-gt-phev", type: "PHEV", brand: "GWM", model: "H6 GT PHEV", version: "", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 52990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de GWM Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gwmOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "gwm-h7-phev", type: "PHEV", brand: "GWM", model: "H7 PHEV", version: "", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 38990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio «desde» del sitio oficial de GWM Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gwmOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "gwm-tank-300-hev", type: "HEV", brand: "GWM", model: "Tank 300 HEV", version: "", body: "Todo terreno",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 59990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de GWM Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gwmOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "leapmotor-c10-ev", type: "BEV", brand: "Leapmotor", model: "C10 EV", version: "", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 38990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial (IVA incluido).", verification: "oficial" },
+      powerCv: 218, batteryKwh: 69.9, rangeKm: 530, rangeCycle: "CLTC (China)", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.leapOf, notes: "Conector Tipo 2 europeo."
+    }),
+    Object.assign({}, base, {
+      id: "leapmotor-b10", type: "BEV", brand: "Leapmotor", model: "B10", version: "", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 33990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial (IVA incluido).", verification: "oficial" },
+      powerCv: 214, batteryKwh: 67.1, rangeKm: 540, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.leapOf, notes: "160 kW (214 cv)."
+    }),
+    Object.assign({}, base, {
+      id: "leapmotor-c16", type: "BEV", brand: "Leapmotor", model: "C16", version: "", body: "SUV (6 plazas)",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: 296, batteryKwh: null, rangeKm: 520, rangeCycle: "CLTC (China)", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.leapOf, notes: "218 kW; hasta 520 km CLTC según la web."
+    }),
+    Object.assign({}, base, {
+      id: "changan-lumin", type: "BEV", brand: "Changan", model: "Lumin", version: "", body: "Hatchback urbano",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: 205, rangeCycle: "CLTC (China)", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.changanOf, notes: "Autonomía eléctrica 205 km (CLTC). La web muestra «38 kWh» junto a un rótulo de potencia: posible error de la página, no se carga como batería."
+    }),
+    Object.assign({}, base, {
+      id: "changan-cs55-plus-luxury", type: "PHEV", brand: "Changan", model: "CS55 Plus PHEV", version: "Luxury", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 29990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de Changan Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: 107, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.changanOf, notes: "Autonomía eléctrica 107 km (NEDC); combinada 1.040 km (NEDC). Transmisión DHT automática."
+    }),
+    Object.assign({}, base, {
+      id: "changan-cs55-plus-elite", type: "PHEV", brand: "Changan", model: "CS55 Plus PHEV", version: "Elite", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 32990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de Changan Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: 107, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.changanOf, notes: "Autonomía eléctrica 107 km (NEDC); combinada 1.040 km (NEDC)."
+    }),
+    Object.assign({}, base, {
+      id: "changan-eado-plus-luxury", type: "PHEV", brand: "Changan", model: "EADO Plus PHEV", version: "Luxury", body: "Sedán",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 29990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de Changan Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: 125, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.changanOf, notes: "Autonomía eléctrica 125 km (NEDC); combinada 995 km (NEDC)."
+    }),
+    Object.assign({}, base, {
+      id: "changan-eado-plus-elite", type: "PHEV", brand: "Changan", model: "EADO Plus PHEV", version: "Elite", body: "Sedán",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: 32990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de Changan Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: 125, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.changanOf, notes: "Autonomía eléctrica 125 km (NEDC); combinada 995 km (NEDC)."
+    }),
+    Object.assign({}, base, {
+      id: "deepal-s05-ev", type: "BEV", brand: "Deepal", model: "S05", version: "EV", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: null, batteryKwh: 56.12, rangeKm: 458, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.deepalOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "deepal-s05-reev", type: "REEV", brand: "Deepal", model: "S05", version: "REEV", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: null, batteryKwh: 27.28, rangeKm: 158, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.deepalOf, notes: "Autonomía eléctrica 158 km; hasta 1.016 km combinados (NEDC)."
+    }),
+    Object.assign({}, base, {
+      id: "deepal-s7-ev", type: "BEV", brand: "Deepal", model: "S7", version: "EV", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: null, batteryKwh: 79.97, rangeKm: 560, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.deepalOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "deepal-s7-reev", type: "REEV", brand: "Deepal", model: "S7", version: "REEV", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: null, batteryKwh: 31.7, rangeKm: 175, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.deepalOf, notes: "Autonomía eléctrica 175 km; hasta 985 km combinados (NEDC)."
+    }),
+    Object.assign({}, base, {
+      id: "zeekr-001", type: "BEV", brand: "Zeekr", model: "001", version: "Sport RWD / Flagship AWD", body: "Crossover",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: 268, batteryKwh: 100, rangeKm: 620, rangeCycle: "WLTP", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.zeekrOf, notes: "Batería 100 kWh; WLTP 620 km (RWD, 268 hp) y 580 km (AWD, 536 hp) según la web."
+    }),
+    Object.assign({}, base, {
+      id: "zeekr-7x", type: "BEV", brand: "Zeekr", model: "7X", version: "", body: "SUV",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: null, batteryKwh: 100, rangeKm: 615, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.zeekrOf, notes: "Batería 100 kWh; «hasta 615 km» sin indicar el ciclo."
+    }),
+    Object.assign({}, base, {
+      id: "jaecoo-5-ev", type: "BEV", brand: "Omoda", model: "Jaecoo 5 EV", version: "", body: "SUV compacto",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "La web muestra «Jaecoo 5 desde US$ 27.990» sin aclarar si es la versión eléctrica; no se asigna.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: 461, rangeCycle: "NEDC", chargeNote: null,
+      warranty: { vehicle: null, battery: "8 años o 150.000 km", note: "Garantía de batería indicada para los eléctricos en general." },
+      source: sources.omodaOf, notes: "Marca Jaecoo (Grupo Chery)."
+    }),
+    Object.assign({}, base, {
+      id: "xpeng-g6", type: "BEV", brand: "Xpeng", model: "G6", version: "", body: "SUV",
+      importer: null, dealers: [], status: "verificar",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.xpengOf, notes: "La web solo muestra el nombre y una descripción; sin datos técnicos ni precio."
+    }),
+    Object.assign({}, base, {
+      id: "xpeng-g9", type: "BEV", brand: "Xpeng", model: "G9", version: "", body: "SUV",
+      importer: null, dealers: [], status: "verificar",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.xpengOf, notes: "La web solo muestra el nombre y una descripción; sin datos técnicos ni precio."
+    }),
+    Object.assign({}, base, {
+      id: "dongfeng-vigo", type: "BEV", brand: "Dongfeng", model: "Vigo", version: "", body: "SUV",
+      importer: "Fidocar", dealers: [], status: "verificar",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.fidocarOf, notes: "Descrito por Fidocar como SUV 100 % eléctrico; sin datos técnicos ni precio."
+    }),
+    Object.assign({}, base, {
+      id: "hyundai-kona-electric", type: "BEV", brand: "Hyundai", model: "Kona Eléctrica", version: "", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "El precio se muestra en un configurador que no está en la página.", verification: "sin dato" },
+      powerCv: 133, batteryKwh: 48.4, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.hyundaiOf, notes: "Batería 48,4 kWh; 133 hp."
+    }),
+    Object.assign({}, base, {
+      id: "hyundai-ioniq-5", type: "BEV", brand: "Hyundai", model: "IONIQ 5", version: "Safe 2WD / Limited AWD", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "El precio se muestra en un configurador que no está en la página.", verification: "sin dato" },
+      powerCv: 225, batteryKwh: 72.6, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.hyundaiOf, notes: "Batería 72,6 kWh; 225 hp."
+    }),
+    Object.assign({}, base, {
+      id: "hyundai-ioniq-9", type: "BEV", brand: "Hyundai", model: "IONIQ 9", version: "", body: "SUV (3 filas)",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "El precio se muestra en un configurador que no está en la página.", verification: "sin dato" },
+      powerCv: null, batteryKwh: 110.3, rangeKm: 620, rangeCycle: "WLTP", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.hyundaiOf, notes: "Batería 110,3 kWh."
+    }),
+    Object.assign({}, base, {
+      id: "hyundai-elexio", type: "BEV", brand: "Hyundai", model: "Elexio", version: "", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "El precio se muestra en un configurador que no está en la página.", verification: "sin dato" },
+      powerCv: null, batteryKwh: 88, rangeKm: 610, rangeCycle: "WLTP", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.hyundaiOf, notes: "Batería hasta 88 kWh (LFP); «Full electric»."
+    }),
+    Object.assign({}, base, {
+      id: "hyundai-kona-hibrida", type: "HEV", brand: "Hyundai", model: "Kona Híbrida", version: "Safe Limited", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "El precio se muestra en un configurador que no está en la página.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.hyundaiOf, notes: "Motor 1.6 + eléctrico."
+    }),
+    Object.assign({}, base, {
+      id: "hyundai-tucson-hev", type: "HEV", brand: "Hyundai", model: "Tucson HEV", version: "Safe Limited AWD", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "El precio se muestra en un configurador que no está en la página.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.hyundaiOf, notes: "1.6 TGDi híbrido."
+    }),
+    Object.assign({}, base, {
+      id: "hyundai-santa-fe-hev", type: "HEV", brand: "Hyundai", model: "Santa Fe HEV", version: "Limited 2WD / Caligraphy AWD", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "El precio se muestra en un configurador que no está en la página.", verification: "sin dato" },
+      powerCv: 230, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.hyundaiOf, notes: "1.6 T-GDI híbrido, 230 hp."
+    }),
+    Object.assign({}, base, {
+      id: "toyota-bz4x", type: "BEV", brand: "Toyota", model: "bZ4X", version: "Limited 4x2 / 4x4", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la página del modelo.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.toyotaOf, notes: "La página no muestra batería ni autonomía; hay ficha técnica descargable."
+    }),
+    Object.assign({}, base, {
+      id: "toyota-yaris-cross-hybrid", type: "HEV", brand: "Toyota", model: "Yaris Cross Hybrid", version: "XEI eCVT / SEG eCVT", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la página del modelo.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.toyotaOf, notes: "Híbrido 1.5 no enchufable."
+    }),
+    Object.assign({}, base, {
+      id: "toyota-corolla-hybrid", type: "HEV", brand: "Toyota", model: "Corolla Hybrid", version: "XEI / SEG HEV 1.8 eCVT", body: "Sedán",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la página del modelo.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.toyotaOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "toyota-rav4-hybrid", type: "HEV", brand: "Toyota", model: "RAV4 Hybrid", version: "S Plus 4x2 / Limited / Adventure", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la página del modelo.", verification: "sin dato" },
+      powerCv: 226, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.toyotaOf, notes: "2.5 híbrido con AWD eléctrico; 226 cv (4x2) o 236 cv (4x4/Adventure) según la ficha."
+    }),
+    Object.assign({}, base, {
+      id: "toyota-rav4-phev", type: "PHEV", brand: "Toyota", model: "RAV4 PHEV", version: "4x4", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      drive: "Integral (AWD)",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la página del modelo.", verification: "sin dato" },
+      powerCv: 330, batteryKwh: null, rangeKm: 140, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.toyotaOf, notes: "330 cv; «más de 140 km» en modo eléctrico (ciclo no indicado)."
+    }),
+    Object.assign({}, base, {
+      id: "nissan-x-trail-e-power", type: "HEV", brand: "Nissan", model: "X-Trail e-POWER", version: "Advance / Exclusive e-4ORCE", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      drive: "Integral (AWD)",
+      price: { list: 49990, promo: null, currency: "USD", validOn: CHECKED, note: "«Estrena desde» US$ 49.990 en la web oficial; las dos versiones listadas no muestran importe.", verification: "oficial" },
+      powerCv: 210, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: "3 años o 60.000 km", battery: null, note: "Garantía general Nissan; la web indica 2 años adicionales en ciertos componentes del sistema e-POWER." },
+      source: sources.nissanOf, notes: "Sistema e-POWER (motor a gasolina 1.5 que genera electricidad; las ruedas las mueve un motor eléctrico), tracción e-4ORCE. 210 hp."
+    }),
+    Object.assign({}, base, {
+      id: "chery-tiggo-7-csh", type: "HEV", brand: "Chery", model: "Tiggo 7 CSH", version: "", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 35990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de Chery Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.cheryOf, notes: "Tipo inferido por el nombre «CSH Super Híbrida»: la web no lo indica para este modelo."
     })
   ];
 
   /* Marcas detectadas en prensa, sin datos de ficha todavía. No son equivalentes a una ficha. */
   const pendingBrands = [
+    { brand: "Sin acceso a su web oficial: Volvo y MG", detail: "Volvo (bloqueo 403) y MG (conexión rechazada) no abrieron al consultarlas el " + CHECKED + ". Sus datos actuales vienen de prensa y anuncios; falta contrastarlos con la web oficial.", importer: "Eximar", source: sources.ex30 },
+    { brand: "Santa Rosa — Mitsubishi, Renault, JMC, Iveco, Farizon", detail: "Marcas del grupo cuyos modelos eléctricos/híbridos no se relevaron aún (JMC JMEV 2 sin precio; Renault Kwid E-Tech sin precio actual; Farizon son furgonetas eléctricas).", importer: "Santa Rosa", source: sources.leapmotor },
     { brand: "BYD — otros modelos", detail: "Dolphin Mini, Yuan Plus, Song Plus EV y Atto 8 aparecen en prensa o en la web del importador sin precio o sin confirmar que sean eléctricos puros.", importer: "Sadar", source: sources.bydOficial },
-    { brand: "Leapmotor C11 · Jaecoo 5 EV · JMC JMEV 2", detail: "Confirmados en prensa; sin precio verificado.", importer: "Santa Rosa", source: sources.leapmotor },
-    { brand: "Avatr 11 · Xpeng · Deepal · GWM/ORA 03 · Changan", detail: "Anunciados o presentes en el portafolio de Santa Rosa según prensa; modelos y precios por relevar.", importer: "Santa Rosa", source: sources.teslaPrecio },
-    { brand: "Chevrolet Captiva PHEV · Lynk & Co 08 PHEV", detail: "Aparecen en avisos de concesionarios de MercadoLibre Uruguay (US$ 37.990 y US$ 57.990) sin lista oficial; no se cargaron por falta de una fuente enlazable.", importer: null, source: { name: "MercadoLibre Uruguay (avisos)", url: "https://autos.mercadolibre.com.uy/", date: CHECKED, type: "Anuncios de terceros" } },
-    { brand: "Renault Kwid E-Tech", detail: "Comercializado desde 2023 (26,8 kWh, 265 km WLTP); sin precio actual hallado.", importer: null, source: { name: "Autoblog Uruguay — Lanzamiento: Renault Kwid E-Tech", url: "https://www.autoblog.com.uy/2023/12/lanzamiento-renault-kwid-e-tech.html", date: "2023-12", type: "Prensa especializada" } },
+    { brand: "Leapmotor C10 REEV · Jaecoo 5 · Jaecoo 7 SHS P", detail: "Figuran en las webs oficiales sin precio verificable (el «Jaecoo 5 desde US$ 27.990» no aclara si es eléctrico).", importer: "Santa Rosa", source: sources.omodaOf },
+    { brand: "Chevrolet Captiva PHEV · Lynk & Co 08 PHEV", detail: "Solo en avisos de MercadoLibre Uruguay (US$ 37.990 y US$ 57.990); sin fuente enlazable.", importer: null, source: { name: "MercadoLibre Uruguay (avisos)", url: "https://autos.mercadolibre.com.uy/", date: CHECKED, type: "Anuncios de terceros" } },
     { brand: "Xiaomi (SU7)", detail: "Prensa menciona preventa esperada; sin confirmación comercial.", importer: null, source: { name: "El Observador", url: "https://www.elobservador.com.uy/cafe-y-negocios/tesla/en-pie-guerra-byd-vuelve-bajar-los-precios-sus-autos-electricos-la-llegada-tesla-y-la-antesala-del-imesi-n6051761", date: "2026-07-23", type: "Prensa" } }
   ];
 
