@@ -32,6 +32,36 @@ window.EV = (function () {
     const mb=document.getElementById("menuBtn"),mn=document.getElementById("mainNav");mb.onclick=()=>{const o=mn.classList.toggle("open");mb.setAttribute("aria-expanded",o)};
     document.body.insertAdjacentHTML("beforeend", f);
     initLang();
+    keepState();
+  }
+  /* Conserva lo que la persona cargó en los campos al cambiar de pestaña del sitio y volver (sessionStorage, solo en este navegador y esta sesión).
+     Si recarga la página (F5), se borra. No se guarda en contacto ni en admin. */
+  function keepState() {
+    const page = document.body.dataset.page, main = document.getElementById("main");
+    if (!main || page === "con" || page === "adm") return;
+    const key = "st:" + location.pathname.split("/").pop() + location.search;
+    const get = () => { try { return JSON.parse(sessionStorage.getItem(key) || "null"); } catch (e) { return null; } };
+    const put = o => { try { sessionStorage.setItem(key, JSON.stringify(o)); } catch (e) {} };
+    const nav = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
+    if (nav.type === "reload") { try { sessionStorage.removeItem(key); } catch (e) {} }
+    const fields = () => [...main.querySelectorAll("input,select,textarea")].filter(e => e.id && !/^(file|password|submit|button)$/.test(e.type));
+    const val = e => e.type === "checkbox" || e.type === "radio" ? e.checked : e.value;
+    const setv = (e, v) => { if (e.type === "checkbox" || e.type === "radio") e.checked = v; else e.value = v; };
+    const save = () => { const o = get() || {}; o.v = {}; fields().forEach(e => { o.v[e.id] = val(e); }); put(o); };
+    window.addEventListener("load", () => setTimeout(() => {
+      const o = get();
+      if (o && o.v) {
+        const fs = fields(), st = o.v;
+        fs.forEach(e => { if (e.id in st && e.tagName !== "SELECT") setv(e, st[e.id]); });
+        // los select pueden tener opciones cargadas por la página: se restauran y se avisa a la página
+        fs.forEach(e => { if (e.id in st && e.tagName === "SELECT") { setv(e, st[e.id]); e.dispatchEvent(new Event("change", { bubbles: true })); } });
+        fs.forEach(e => { if (e.id in st) { setv(e, st[e.id]); if (e.tagName !== "SELECT") e.dispatchEvent(new Event("input", { bubbles: true })); } });
+        fs.forEach(e => { if (e.id in st) setv(e, st[e.id]); });
+        (o.sub || []).forEach(id => { const f = document.getElementById(id); if (f && f.requestSubmit) f.requestSubmit(); });
+      }
+      main.addEventListener("input", save, true); main.addEventListener("change", save, true);
+      main.addEventListener("submit", ev => { const o2 = get() || {}; o2.sub = [...new Set([...(o2.sub || []), ev.target.id])]; put(o2); save(); }, true);
+    }, 0));
   }
   /* Traducción al inglés y al francés con Google Translate. Solo se carga el script de Google si la persona elige un idioma
      (hasta entonces el sitio no contacta a ningún tercero). Se guarda la elección en la cookie «googtrans». */
