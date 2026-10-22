@@ -52,6 +52,13 @@ window.EVDATA = (function () {
     mercedesOf: { name: "Mercedes-Benz Uruguay — sitio oficial", url: "https://www.mercedes-benz.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     mg4Oct: { name: "El Observador — MG mueve sus fichas: nuevo eléctrico (MG4 EV Urban)", url: "https://www.elobservador.com.uy/mg-mueve-sus-fichas-uruguay-asi-es-el-nuevo-electrico-que-llega-ampliar-su-publico-n6055793", date: "2026-10-05", type: "Prensa" },
     mgs5Brand: { name: "El Observador (Brand Studio) — SUV eléctrico de MG (MGS5 EV)", url: "https://www.elobservador.com.uy/brand-studio/el-suv-electrico-el-que-mg-quiere-dar-el-gran-golpe-uruguay-450-km-autonomia-y-precios-competitivos-n6045431", date: "2026-05-29", type: "Contenido de marca (Brand Studio), no periodismo independiente" },
+    kiaOf: { name: "Kia Uruguay — sitio oficial", url: "https://www.kia.com.uy/", date: "2026-10-22", type: "Web oficial de la marca/importador" },
+    chevroletOf: { name: "Chevrolet Uruguay — sitio oficial", url: "https://www.chevrolet.com.uy/", date: "2026-10-22", type: "Web oficial de la marca/importador" },
+    peugeotOf: { name: "Peugeot Uruguay — sitio oficial", url: "https://www.peugeot.com.uy/", date: "2026-10-22", type: "Web oficial de la marca/importador" },
+    citroenOf: { name: "Citroën Uruguay — sitio oficial", url: "https://www.citroen.com.uy/", date: "2026-10-22", type: "Web oficial de la marca/importador" },
+    miniOf: { name: "MINI Uruguay — sitio oficial", url: "https://mini.com.uy/", date: "2026-10-22", type: "Web oficial de la marca/importador" },
+    fotonView: { name: "Autoblog Uruguay — Lanzamiento Foton e-View Connect", url: "https://www.autoblog.com.uy/2026/07/lanzamiento-foton-e-view-connect.html", date: "2026-07", type: "Prensa especializada" },
+    fotonTunland: { name: "Autoblog Uruguay — Lanzamiento Foton e-Tunland", url: "https://www.autoblog.com.uy/2025/02/lanzamiento-foton-e-tunland.html", date: "2025-02", type: "Prensa especializada" },
     peugeot2008: { name: "Autoblog Uruguay — Lanzamiento Peugeot 2008, 3008 y 5008 Hybrid", url: "https://www.autoblog.com.uy/2025/05/lanzamiento-peugeot-2008-3008-y-5008.html", date: "2025-05-27", type: "Prensa especializada" },
     ex90: { name: "Autoblog Uruguay — Lanzamiento Volvo EX90", url: "https://www.autoblog.com.uy/2025/09/lanzamiento-volvo-ex90-los-apuntes-del.html", date: "2025-09", type: "Prensa especializada" },
     rankAutoblog: { name: "Autoblog Uruguay — Ventas 2025: los 10 electrificados más vendidos", url: "https://www.autoblog.com.uy/2026/02/ventas-2025-los-10-vehiculos.html", date: "2026-02", type: "Prensa especializada (datos ACAU)" }
@@ -71,6 +78,7 @@ window.EVDATA = (function () {
     "Toyota": { country: "Japón" }, "Nissan": { country: "Japón" }, "Renault": { country: "Francia" }, "Peugeot": { country: "Francia" }, "Mercedes-Benz": { country: "Alemania" }, "Hyundai": { country: "Corea del Sur" },
     "GWM": { country: "China", note: "Great Wall Motor (incluye ORA, Haval y Tank)" }, "Changan": { country: "China" },
     "Deepal": { country: "China", note: "Marca del grupo Changan" }, "Xpeng": { country: "China" },
+    "Kia": { country: "Corea del Sur" }, "Citroën": { country: "Francia" }, "MINI": { country: "Reino Unido", note: "Marca del grupo alemán BMW" }, "Foton": { country: "China" },
     "Suzuki": { country: "Japón", note: "Algunos modelos (p. ej. Swift) se importan desde India según prensa" }
   };
 
@@ -234,7 +242,7 @@ window.EVDATA = (function () {
     Object.assign({}, base, {
       id: "chevrolet-spark-euv-activ", brand: "Chevrolet", model: "Spark EUV", version: "Activ", body: "SUV compacto",
       importer: null, dealers: [], status: "disponible",
-      price: { list: 24990, promo: null, currency: "USD", validOn: "2025-05-17", note: "Precio de lanzamiento (may. 2025).", verification: "parcial" },
+      price: { list: 23990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio de la web oficial de Chevrolet Uruguay; el lanzamiento (may. 2025) fue US$ 24.990.", verification: "oficial" },
       powerCv: 102, batteryKwh: 41.9, rangeKm: 298, rangeCycle: "WLTP", chargeNote: "Carga rápida DC hasta 80 % en menos de una hora (preventa).",
       warranty: { vehicle: "3 años o 100.000 km", battery: "8 años o 160.000 km", note: "Según Autoblog." },
       source: sources.spark, notes: "360 km según NEDC. Cuarto EV más vendido de 2025 (737 unidades)."
@@ -788,18 +796,18 @@ window.EVDATA = (function () {
     Object.assign({}, base, {
       id: "peugeot-e-2008-gt", type: "BEV", brand: "Peugeot", model: "E-2008", version: "GT", body: "SUV compacto",
       importer: null, dealers: [], status: "disponible",
-      price: { list: 45990, promo: null, currency: "USD", validOn: "2025-05-27", note: "Precio del listado de lanzamiento (may. 2025); la batería y el equipamiento se actualizaron después.", verification: "parcial" },
-      powerCv: null, batteryKwh: 62, rangeKm: null, rangeCycle: null, chargeNote: null,
+      price: { list: 43990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio de la web oficial de Peugeot Uruguay; el listado de lanzamiento (may. 2025) decía US$ 45.990.", verification: "oficial" },
+      powerCv: null, batteryKwh: 62, rangeKm: 406, rangeCycle: "WLTP", chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "Según la fuente indicada." },
-      source: sources.peugeot2008, notes: "Batería de 62 kWh según la nota. El sitio oficial de Peugeot Uruguay responde 403 y no pudo contrastarse."
+      source: sources.peugeotOf, notes: "Batería de 62 kWh según la nota de prensa de lanzamiento; precio y autonomía de la web oficial."
     }),
     Object.assign({}, base, {
       id: "peugeot-2008-hybrid-145-gt", type: "HEV", brand: "Peugeot", model: "2008 Hybrid 145", version: "GT", body: "SUV compacto",
       importer: null, dealers: [], status: "disponible",
-      price: { list: 37990, promo: null, currency: "USD", validOn: "2025-05-27", note: "Precio del listado de lanzamiento (may. 2025).", verification: "parcial" },
+      price: { list: 36990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio de la web oficial de Peugeot Uruguay; el listado de lanzamiento (may. 2025) decía US$ 37.990.", verification: "oficial" },
       powerCv: 145, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "Según la fuente indicada." },
-      source: sources.peugeot2008, notes: "Micro-híbrido 1.2 con sistema eléctrico de 29 cv, 145 cv en total; viene de España en una sola variante GT."
+      source: sources.peugeotOf, notes: "Micro-híbrido 1.2 con sistema eléctrico de 29 cv, 145 cv en total; viene de España en una sola variante GT."
     }),
     Object.assign({}, base, {
       id: "volvo-ex90-plus", type: "BEV", brand: "Volvo", model: "EX90", version: "Plus Twin Motor AWD", body: "SUV (7 plazas)",
@@ -816,12 +824,166 @@ window.EVDATA = (function () {
       powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "Según la fuente indicada." },
       source: sources.ex90, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "kia-ev3", type: "BEV", brand: "Kia", model: "EV3", version: "Desde", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 39990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio «desde» de la web oficial de Kia Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.kiaOf, notes: "Ficha técnica no relevada."
+    }),
+    Object.assign({}, base, {
+      id: "kia-ev5", type: "BEV", brand: "Kia", model: "EV5", version: "Desde", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 49990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio «desde» de la web oficial de Kia Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.kiaOf, notes: "Ficha técnica no relevada."
+    }),
+    Object.assign({}, base, {
+      id: "kia-sportage-hev", type: "HEV", brand: "Kia", model: "Sportage Turbo Híbrida", version: "Desde", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 59990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio «desde» de la web oficial de Kia Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.kiaOf, notes: "Ficha técnica no relevada."
+    }),
+    Object.assign({}, base, {
+      id: "kia-sorento-hev", type: "HEV", brand: "Kia", model: "Sorento Turbo Híbrida", version: "Desde", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 77990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio «desde» de la web oficial de Kia Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.kiaOf, notes: "Ficha técnica no relevada."
+    }),
+    Object.assign({}, base, {
+      id: "kia-carnival-hev", type: "HEV", brand: "Kia", model: "Carnival Turbo Híbrida", version: "Desde", body: "Minivan",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 89990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio «desde» de la web oficial de Kia Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.kiaOf, notes: "Ficha técnica no relevada."
+    }),
+    Object.assign({}, base, {
+      id: "chevrolet-blazer-rs-ev", type: "BEV", brand: "Chevrolet", model: "Blazer EV", version: "RS", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 72990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio publicado en la web oficial de Chevrolet Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.chevroletOf, notes: "Ficha técnica no relevada."
+    }),
+    Object.assign({}, base, {
+      id: "chevrolet-equinox-ev", type: "BEV", brand: "Chevrolet", model: "Equinox EV", version: "Desde", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 63990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio publicado en la web oficial de Chevrolet Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.chevroletOf, notes: "Ficha técnica no relevada."
+    }),
+    Object.assign({}, base, {
+      id: "chevrolet-captiva-ev", type: "BEV", brand: "Chevrolet", model: "Captiva EV", version: "Desde", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 33990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio publicado en la web oficial de Chevrolet Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.chevroletOf, notes: "Ficha técnica no relevada."
+    }),
+    Object.assign({}, base, {
+      id: "peugeot-e-3008-gt", type: "BEV", brand: "Peugeot", model: "E-3008", version: "GT", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 59990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio publicado en la web oficial de Peugeot Uruguay.", verification: "oficial" },
+      powerCv: 325, batteryKwh: null, rangeKm: 495, rangeCycle: "WLTP", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.peugeotOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "peugeot-3008-hev-allure", type: "HEV", brand: "Peugeot", model: "3008 Hybrid", version: "Allure", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 43990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio publicado en la web oficial de Peugeot Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.peugeotOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "peugeot-3008-hev-gt", type: "HEV", brand: "Peugeot", model: "3008 Hybrid", version: "GT", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 48490, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio publicado en la web oficial de Peugeot Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.peugeotOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "peugeot-308-hev-gt", type: "HEV", brand: "Peugeot", model: "308 Hybrid", version: "GT", body: "Hatchback",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 39990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio publicado en la web oficial de Peugeot Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.peugeotOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "peugeot-5008-hev-gt", type: "HEV", brand: "Peugeot", model: "5008 Hybrid", version: "GT", body: "SUV (7 plazas)",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 52990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio publicado en la web oficial de Peugeot Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.peugeotOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "citroen-ami", type: "BEV", brand: "Citroën", model: "Ami", version: "Cuadriciclo eléctrico", body: "Cuadriciclo",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 6990, promo: null, currency: "USD", validOn: "2026-10-22", note: "Precio publicado en la web oficial de Citroën Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: 75, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.citroenOf, notes: "Cuadriciclo urbano: no equivale a un auto convencional; ciclo de autonomía no informado."
+    }),
+    Object.assign({}, base, {
+      id: "mini-cooper-electrico", type: "BEV", brand: "MINI", model: "Cooper Eléctrico", version: "Desde", body: "Hatchback",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 42990, promo: null, currency: "USD", validOn: "2026-10-22", note: "«Desde», impuestos y gastos incluidos según la web oficial de MINI Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.miniOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "mini-aceman", type: "BEV", brand: "MINI", model: "Aceman", version: "Desde", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 44990, promo: null, currency: "USD", validOn: "2026-10-22", note: "«Desde», impuestos y gastos incluidos según la web oficial de MINI Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.miniOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "mini-countryman-electrico", type: "BEV", brand: "MINI", model: "Countryman Eléctrico", version: "Desde", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 61990, promo: null, currency: "USD", validOn: "2026-10-22", note: "«Desde», impuestos y gastos incluidos según la web oficial de MINI Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.miniOf, notes: ""
+    }),
+    Object.assign({}, base, {
+      id: "foton-e-view-connect", type: "BEV", brand: "Foton", model: "e-View Connect", version: "Furgón 8,0 m³", body: "Furgón",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 35450, promo: null, currency: "USD", validOn: "2026-07", note: "Precio según Autoblog (CIF US$ 29.057).", verification: "parcial" },
+      powerCv: 170, batteryKwh: 50.23, rangeKm: 245, rangeCycle: "WLTP", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.fotonView, notes: "Vehículo comercial de 125 kW. Garantía 3 años o 100.000 km y 5 años o 200.000 km en la batería según la nota."
+    }),
+    Object.assign({}, base, {
+      id: "foton-e-tunland", type: "BEV", brand: "Foton", model: "e-Tunland", version: "Pick-up", body: "Camioneta",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 59950, promo: null, currency: "USD", validOn: "2025-02", note: "Precio según Autoblog (CIF US$ 43.950).", verification: "parcial" },
+      powerCv: null, batteryKwh: 88.5, rangeKm: 350, rangeCycle: "WLTP", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.fotonTunland, notes: "Vehículo comercial basado en la Tunland G7."
     })
   ];
 
   /* Marcas detectadas en prensa, sin datos de ficha todavía. No son equivalentes a una ficha. */
   const pendingBrands = [
-    { brand: "Sin acceso a su web oficial: Volvo, MG, Kia, Peugeot y Citroën", detail: "Volvo, Kia, Peugeot y Citroën respondieron 403 (bloqueo) y MG dio error de conexión al consultarlas el " + CHECKED + ". Sus datos actuales, si los hay, vienen de prensa y anuncios.", importer: "Eximar (Volvo, MG)", source: sources.ex30 },
+    { brand: "Volvo y MG: precios de web oficial pendientes", detail: "Los precios de Volvo y MG provienen de prensa o anuncios: la web de MG dio error de conexión y la de Volvo no publica precio. Kia, Chevrolet, Peugeot y Citroën sí se leyeron en su web oficial el " + CHECKED + ", pero no se relevaron todas sus fichas técnicas.", importer: "Eximar (Volvo, MG)", source: sources.ex30 },
+    { brand: "Audi, Porsche y Land Rover", detail: "Sus webs bloquearon la consulta (Audi), no existe la URL probada (Porsche) o no publican precio ni indican qué modelos son eléctricos/enchufables (Land Rover); sin datos cargados.", importer: null, source: sources.ex30 },
+    { brand: "BAIC", detail: "No se halló información de modelos eléctricos de BAIC en Uruguay en la búsqueda del " + CHECKED + ".", importer: null, source: sources.ex30 },
     { brand: "Volkswagen, Mitsubishi y BMW: sin eléctricos visibles", detail: "En sus webs oficiales no aparece ningún eléctrico o híbrido: Volkswagen lista Polo, Virtus, Nivus, T-Cross, Taos, Tiguan, Amarok y otros sin indicar propulsión eléctrica; Mitsubishi lista Outlander y Eclipse Cross solo con motor a nafta; BMW muestra conceptos Neue Klasse y su web indicaba no estar completamente disponible.", importer: null, source: { name: "Volkswagen Uruguay — sitio oficial (y webs de Mitsubishi y BMW Uruguay)", url: "https://www.volkswagen.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" } },
     { brand: "Mercedes-Benz — otros modelos", detail: "La web lista GLC, Clase C y GLE en la categoría «Híbridos y Eléctricos» sin aclarar si son enchufables; no se cargaron.", importer: null, source: sources.mercedesOf },
     { brand: "Santa Rosa — Mitsubishi, Renault, JMC, Iveco, Farizon", detail: "Marcas del grupo cuyos modelos eléctricos/híbridos no se relevaron aún (JMC JMEV 2 sin precio; Renault Kwid E-Tech sin precio actual; Farizon son furgonetas eléctricas).", importer: "Santa Rosa", source: sources.leapmotor },
