@@ -1186,6 +1186,32 @@ window.EVDATA = (function () {
       { name: "Marino Sport", listings: 1 }, { name: "Oliva Automotores", listings: 1 }, { name: "R. Cristofano", listings: 1 }, { name: "Silca", listings: 1 }
     ],
     unnamed: "Otros 109 anuncios de concesionarias con identidad verificada, sin tienda propia visible, también marcan «Acepta permuta: Sí» (108 de 109).",
+    network: [
+      { brand: "Hyundai", name: "Fidocar", dept: "Montevideo", place: "Florida 1234", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Hyundai Pocitos", dept: "Montevideo", place: "Av. Brasil 3149", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Oliva Automotores", dept: "Montevideo", place: "Av. Italia 5108", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Solé y Lorenzo", dept: "Montevideo", place: "Constituyente 1832", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Zucchino Motors", dept: "Montevideo", place: "Av. Centenario 3078", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Horacio Barreiro Automóviles", dept: "Montevideo", place: "L. A. de Herrera 590", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Fidocar", dept: "Canelones", place: "Ruta Interbalnearia Km 22.500", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Lagomar Automóviles", dept: "Canelones", place: "Av. Giannattasio Km 21", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "ByPass Automotores", dept: "Artigas", place: "Bypass 164", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Hyundai Punta del Este", dept: "Maldonado", place: "Av. Roosevelt, parada 13", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Hyundai San José", dept: "San José", place: "Ruta 3 km 91", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Hyundai Colonia", dept: "Colonia", place: "José Pedro Varela 548", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Hyundai Salto", dept: "Salto", place: "Blandengues 233", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Hyundai Florida", dept: "Florida", place: "Wilson Ferreira Aldunate esq. ruta 5", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Rivero Automotores", dept: "Tacuarembó", place: "Catalogne 311", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "OV Car", dept: "", place: "Independencia 975 (el sitio no indica la ciudad)", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Hyundai", name: "Felipe Castro Automóviles", dept: "", place: "Bulevar Francisco Mata 1061 (el sitio no indica la ciudad)", url: "https://www.hyundai.com.uy/red-hyundai" },
+      { brand: "Toyota", name: "Casariego", dept: "Treinta y Tres / Cerro Largo", place: "", url: "https://www.toyota.com.uy/" },
+      { brand: "Toyota", name: "Olivera", dept: "Tacuarembó / Salto", place: "", url: "https://www.toyota.com.uy/" },
+      { brand: "Toyota", name: "Delgado", dept: "Soriano / Durazno", place: "", url: "https://www.toyota.com.uy/" },
+      { brand: "Toyota", name: "El Revoltijo", dept: "Salto / Artigas", place: "", url: "https://www.toyota.com.uy/" },
+      { brand: "Toyota", name: "Car Plus", dept: "Paysandú", place: "", url: "https://www.toyota.com.uy/" },
+      { brand: "BYD", name: "Casa Central, Portones, Punta Carretas, Car One, Ocasiones del León", dept: "Montevideo / Canelones", place: "", url: "https://byd.com.uy/" }
+    ],
+    networkNote: "Red oficial de venta según los sitios de cada marca (consultados el 22/10/2026). Figurar en la red no confirma que tomen tu usado: se confirma con cada local. Faltan marcas cuyo localizador no pudimos leer (Kia, Chevrolet, GWM, otras).",
     officialPages: [
       { name: "Fidocar (Hyundai, Chery): sitio de usados con cotizador", url: "https://www.usadosfidocar.com.uy/", detail: "Tiene sección «Cotizador»; la web no aclara si cotiza tu auto como parte de pago: consultar." }
     ]
