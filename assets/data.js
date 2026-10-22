@@ -46,6 +46,8 @@ window.EVDATA = (function () {
     toyotaOf: { name: "Toyota Uruguay — sitio oficial", url: "https://www.toyota.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     xpengOf: { name: "Xpeng Uruguay — sitio oficial", url: "https://www.xpeng.com/uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     fidocarOf: { name: "Fidocar — sitio oficial (Dongfeng, Chery, Hyundai)", url: "https://www.fidocar.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    sucive2026: { name: "Congreso de Intendentes — Texto ordenado del Sucive 2026", url: "https://www.gub.uy/congreso-intendentes/comunicacion/publicaciones/texto-ordenado-del-sucive-2026", date: CHECKED, type: "Normativa oficial (Congreso de Intendentes)" },
+    bergara: { name: "Montevideo Portal — Congreso de Intendentes analizará reducir bonificaciones de eléctricos", url: "https://www.montevideo.com.uy/Noticias/Bergara-Congreso-de-Intendentes-analizara-reducir-bonificaciones-de-coches-electricos-uc964179", date: "2026-06-04", type: "Prensa" },
     rankAutoblog: { name: "Autoblog Uruguay — Ventas 2025: los 10 electrificados más vendidos", url: "https://www.autoblog.com.uy/2026/02/ventas-2025-los-10-vehiculos.html", date: "2026-02", type: "Prensa especializada (datos ACAU)" }
   };
 
@@ -765,12 +767,15 @@ window.EVDATA = (function () {
       sources: [sources.imesiAutoblog], lastChecked: CHECKED, nextReview: "2026-11-01", verification: "prensa — falta norma oficial"
     },
     {
-      id: "patente", name: "Patente de rodados (Congreso de Intendentes / intendencias)",
-      body: "Intendencias departamentales", status: "pendiente",
-      desc: "No se pudo confirmar en esta revisión el tratamiento actual de la patente para eléctricos. Prensa (ACAU) menciona cambios en «patentes» como factor para 2027. Consultar la intendencia del departamento de matriculación.",
+      id: "patente", name: "Patente de rodados: alícuota reducida para eléctricos (Sucive 2026)",
+      body: "Congreso de Intendentes / intendencias", status: "vigente",
+      desc: "Según el Texto ordenado del Sucive 2026 (art. 2, num. 2.1), los eléctricos de Categoría A tributan una alícuota de patente de 3 % del valor de mercado sin IVA si son 0 km empadronados en 2026, y de 2,25 % si son usados empadronados al 31/12/2025. La sección de eléctricos no establece una exoneración total. Para motos eléctricas 0 km de más de 500 cc equivalentes (Categoría C) la alícuota es de 2,25 %. El valor de mercado sale de las tablas del propio texto. Riesgo de cambio: en junio de 2026 el intendente de Montevideo dijo que el Congreso de Intendentes analizará «suavizar» estas bonificaciones; no hay decisión publicada.",
       who: ["particular", "empresa", "flota"], categories: ["bev-pasajeros", "bev-utilitario", "moto"],
-      reqs: "Por verificar.", excl: "Por verificar.", validFrom: null, validTo: null,
-      sources: [sources.acau], lastChecked: CHECKED, nextReview: "2026-11-01", verification: "sin verificar"
+      reqs: "Vehículo eléctrico empadronado según las fechas indicadas; el monto exacto depende de la tabla de valor de mercado y de la intendencia.",
+      excl: "No se halló ninguna exoneración total en la sección de eléctricos (se leyó el texto hasta el carácter 100.000 de 119.813).",
+      validFrom: "2026", validTo: "Año 2026 (las tablas se fijan cada año)",
+      sources: [sources.sucive2026, sources.bergara], lastChecked: CHECKED, nextReview: "2026-12-01",
+      verification: "oficial (texto ordenado Sucive 2026)"
     },
     {
       id: "apoyo-transporte", name: "Apoyo económico para vehículos eléctricos de transporte de uso intensivo",
