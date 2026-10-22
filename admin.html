@@ -85,7 +85,7 @@ async function exportView(b){
     try{const [v,be,f,s]=await Promise.all(["vehicles","benefits","financing_products","site_settings"].map(get));
       const st=Object.fromEntries(s.map(x=>[x.id,x.data])), sources={};
       [...v.map(x=>[x.data.source]),...be.map(x=>x.data.sources||[]),...f.map(x=>[x.data.source])].flat().filter(Boolean).forEach(x=>{sources[slug(x.url).slice(-40)]=x});
-      const out={checked:new Date().toISOString().slice(0,10),sources,vehicles:v.map(x=>x.data),typeLabels:st.typeLabels||{BEV:"Eléctrico (BEV)",PHEV:"Híbrido enchufable (PHEV)",HEV:"Híbrido no enchufable (HEV/MHEV)"},origins:st.origins||{},pendingBrands:st.pendingBrands||[],benefits:be.map(x=>x.data),financing:f.map(x=>x.data),market:st.market||{}};
+      const out={checked:new Date().toISOString().slice(0,10),sources,vehicles:v.map(x=>x.data),typeLabels:st.typeLabels||{BEV:"Eléctrico (BEV)",PHEV:"Híbrido enchufable (PHEV)",HEV:"Híbrido no enchufable (HEV/MHEV)",REEV:"Eléctrico de autonomía extendida (REEV)"},origins:st.origins||{},pendingBrands:st.pendingBrands||[],benefits:be.map(x=>x.data),financing:f.map(x=>x.data),market:st.market||{}};
       $("outjs").value="/* Generado desde Supabase el "+out.checked+". No editar a mano: usar el panel admin. */\nwindow.EVDATA = "+JSON.stringify(out,null,1)+";\n";$("dl").disabled=false;
       $("dl").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([$("outjs").value],{type:"text/javascript"}));a.download="data.js";a.click()};
     }catch(x){alert("Error: "+x.message)}};}
