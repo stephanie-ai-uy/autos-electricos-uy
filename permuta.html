@@ -19,6 +19,10 @@
 <h2>Sitios oficiales para consultar</h2>
 <ul id="off"></ul>
 
+<h2>Red de concesionarias en todo el país</h2>
+<p class="small muted" id="nnote"></p>
+<div class="tablewrap"><table><thead><tr><th>Marca</th><th>Local</th><th>Departamento</th><th>Dirección</th></tr></thead><tbody id="net"></tbody></table></div>
+
 <h2>Antes de entregar tu auto</h2>
 <ol class="steps">
 <li>Pedí la <strong>tasación por escrito</strong> y preguntá si vale para el modelo, año y kilometraje exactos del tuyo: «Acepta permuta» no significa que acepten cualquier auto.</li>
@@ -38,5 +42,7 @@ $("sample").textContent=T.sample.note;
 $("dl").innerHTML=T.dealers.map(d=>`<tr><td>${e(d.name)}</td><td class="num">${d.listings}</td></tr>`).join("");
 $("unn").textContent=T.unnamed;
 $("src").innerHTML=`Fuente: <a href="${e(T.sample.source.url)}" rel="noopener">${e(T.sample.source.name)}</a>, consultada el ${e(T.checked)}. Solo se revisaron eléctricos e híbridos 0 km; la lista no es exhaustiva.`;
+$("nnote").textContent=T.networkNote;
+$("net").innerHTML=T.network.map(n=>`<tr><td><a href="${e(n.url)}" rel="noopener">${e(n.brand)}</a></td><td>${e(n.name)}</td><td>${e(n.dept||EV.NI)}</td><td>${e(n.place)}</td></tr>`).join("");
 $("off").innerHTML=T.officialPages.map(o=>`<li><a href="${e(o.url)}" rel="noopener">${e(o.name)}</a> — ${e(o.detail)}</li>`).join("");
 </script></body></html>

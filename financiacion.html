@@ -11,7 +11,9 @@
 <label for="preset">Cargar condiciones publicadas por una entidad (opcional)</label><select id="preset"><option value="">Ninguna: completo yo los datos</option></select>
 <p class="small muted" id="presetNote" style="margin:4px 0 0"></p>
 <label for="cur">Moneda (todos los importes en esta moneda)</label><select id="cur"><option value="USD">Dólares (US$)</option><option value="UYU">Pesos ($)</option><option value="UI">Unidades indexadas (UI)</option></select>
-<div id="uibox" hidden><label for="uival">Valor de la UI en pesos (para ver la cuota en $)</label><input id="uival" inputmode="decimal" value="6,6734"><p class="small muted" style="margin:4px 0 0">En UI, precio, entrega y cuota se expresan en UI y la tasa es real: la cuota en pesos sube con la inflación porque la UI se reajusta. Valor precargado: $ 6,6734 al 22/10/2026 (INE, vía datosuruguay.com); la UI cambia todos los días, confirmalo en el <a href="https://www.gub.uy/instituto-nacional-estadistica/" rel="noopener">INE</a> o el BCU y corregilo si hace falta.</p></div>
+<div id="uibox" hidden><label for="uival">Valor de la UI en pesos (para ver la cuota en $)</label><input id="uival" inputmode="decimal" value="6,6734">
+<p class="small muted" id="uinote" style="margin:4px 0 0">Valor de referencia del 22/10/2026; se actualiza solo al abrir la página si hay conexión.</p>
+<p class="small muted" style="margin:4px 0 0">En UI, precio, entrega y cuota se expresan en UI y la tasa es real: la cuota en pesos sube con la inflación porque la UI se reajusta.</p></div>
 <label for="price">Precio del vehículo</label><input id="price" type="number" min="0" inputmode="decimal">
 <label for="down">Entrega inicial</label><input id="down" type="number" min="0" value="0" inputmode="decimal">
 <label for="fa">Importe a financiar (opcional; por defecto precio − entrega)</label><input id="fa" type="number" min="0" inputmode="decimal">
@@ -53,6 +55,16 @@ const PRESETS=[
  {id:"scotia-ui",label:"Scotiabank · 0 km · desde 6,4 % en UI · hasta 60 meses",cur:"UI",rate:6.4,rt:"TEA",months:60,note:"Scotiabank publica «desde 6,4 % en UI» para 0 km y hasta 60 cuotas, pero NO aclara si es TEA o TNA: aquí se supone TEA; confirmalo con el banco. Ingresá importes en UI."},
  {id:"scotia-usd",label:"Scotiabank · 0 km · desde 7,5 % en USD · hasta 60 meses",cur:"USD",rate:7.5,rt:"TEA",months:60,note:"Scotiabank publica «desde 7,5 % en USD» para 0 km, hasta 60 cuotas y máximo US$ 100.000, pero NO aclara si es TEA o TNA: aquí se supone TEA; confirmalo con el banco."}
 ];
+// Valor de la UI del día, automático (API pública de datosUruguay.com, datos del BCU, licencia CC BY 4.0).
+(async()=>{try{
+  const hoy=new Date().toLocaleDateString("sv-SE",{timeZone:"America/Montevideo"});
+  const j=await (await fetch("https://datosuruguay.com/api/v1/indexed-units/ui?limit=60",{cache:"no-store"})).json();
+  const row=(j.data||[]).filter(x=>x.date<=hoy).sort((x,y)=>y.date<x.date?-1:1)[0];
+  if(!row||!(row.value>0))throw new Error("sin dato");
+  $("uival").value=String(row.value).replace(".",",");
+  const [y,m,d]=row.date.split("-");
+  $("uinote").innerHTML=`Valor de la UI al ${d}/${m}/${y}: $ ${EV.fmtNum(row.value,4)} (BCU). Se actualiza solo. Datos de <a href="https://datosuruguay.com/ui?utm_source=api&utm_medium=attribution&utm_campaign=backlinks" rel="noopener">datosUruguay.com</a> (CC BY 4.0).`;
+}catch(err){$("uinote").textContent="No se pudo actualizar la UI automáticamente: el valor cargado es de referencia (22/10/2026). Confirmalo en el INE o el BCU y corregilo si hace falta.";}})();
 $("cur").addEventListener("change",()=>{$("uibox").hidden=$("cur").value!=="UI"});
 PRESETS.forEach(p=>$("preset").insertAdjacentHTML("beforeend",`<option value="${p.id}">${e(p.label)}</option>`));
 $("preset").addEventListener("change",()=>{const p=PRESETS.find(x=>x.id===$("preset").value);
