@@ -34,6 +34,6 @@ ${row("Observaciones", v.notes)}
 <h2>Fuente</h2><p><strong>Precio:</strong> <a href="${e(v.source.url)}" rel="noopener">${e(v.source.name)}</a> — ${e(v.source.type)}, publicada ${e(v.source.date)}. Consultada el ${e(EV.D.checked)}.</p>
 ${v.specSource ? `<p><strong>Ficha técnica:</strong> <a href="${e(v.specSource.url)}" rel="noopener">${e(v.specSource.name)}</a> — ${e(v.specSource.type)}, ${e(v.specSource.date)}.${v.specNote ? " " + e(v.specNote) : ""}</p>` : `<p class="small muted">Aún no se halló una ficha técnica completa para esta versión.</p>`}
 <p class="small muted">Dato sin ficha oficial del importador: tratar como orientativo. Los vacíos se muestran como «No informado»; no se rellenan con estimaciones.</p>
-<p><a class="btn" href="comparador.html?ids=${e(v.id)}">Comparar este modelo</a> <a class="btn sec" href="guias.html">Qué revisar antes de comprar</a></p>`;
+<p><a class="btn" href="comparador.html?ids=${e(v.id)}">Comparar este modelo</a> <a class="btn sec" href="guias.html">Qué revisar antes de comprar</a> <a class="btn sec" href="contacto.html?v=${e(v.id)}">¿Ves un dato incorrecto? Avisanos</a></p>`;
 }
 </script></body></html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Autos eléctricos más vendidos y mejor relación precio-autonomía en Uruguay | Autos Eléctricos UY</title>
+<meta name="description" content="Los eléctricos e híbridos más vendidos de Uruguay y un ranking por precio, autonomía por dólar, consumo y costo de patente, separado por SUV y hatchback/sedán, con fuente y fecha.">
+<meta name="theme-color" content="#07090c">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.podium{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin:16px 0}
+.podium .card{padding:16px}.podium .k{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.podium .v{font-family:var(--head);font-weight:800;font-size:1.25rem;margin:.2em 0}
+.podium a{color:var(--ink);text-decoration:none}.podium a:hover{color:var(--brand)}
+.filters2{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));align-items:end}
+td.num,th.num{text-align:right;white-space:nowrap}
+</style></head>
+<body data-page="rank"><main id="main"><div class="wrap">
+<h1>Más vendidos y mejores opciones</h1>
+<p class="lead">Lo que más busca la gente: <strong>precio, autonomía, consumo y costo de tenerlo</strong>. Acá ves qué se vende más en Uruguay y cómo se comparan los modelos del catálogo, separados por tipo de carrocería.</p>
+
+<h2>Los más vendidos en Uruguay</h2>
+<div class="notice info" id="salesNote"></div>
+<div class="grid g2">
+<div><h3 style="margin-top:0">Eléctricos (2025)</h3><div class="tablewrap"><table><thead><tr><th>#</th><th>Modelo</th><th class="num">Unidades</th><th>Desde (catálogo)</th></tr></thead><tbody id="salesEv"></tbody></table></div></div>
+<div><h3 style="margin-top:0">Híbridos (2025)</h3><div class="tablewrap"><table><thead><tr><th>#</th><th>Modelo</th><th class="num">Unidades</th><th>Desde (catálogo)</th></tr></thead><tbody id="salesHy"></tbody></table></div></div>
+</div>
+<p class="small muted" id="salesSrc"></p>
+
+<h2>Mejor relación precio – autonomía – consumo</h2>
+<p class="muted">Elegí qué comparar. Los números salen de las fichas del catálogo (cada una con su fuente); lo que no está informado queda como «—» y esa versión no entra en ese criterio.</p>
+<form class="card" id="flt" onsubmit="return false">
+<div class="filters2">
+<div><label for="tipo">Tipo</label><select id="tipo"><option value="BEV">Eléctricos (BEV)</option><option value="PLUG">Enchufables (PHEV y REEV)</option><option value="HEV">Híbridos no enchufables</option></select></div>
+<div><label for="grp">Carrocería</label><select id="grp"><option value="">Todas</option><option value="SUV">SUV y crossover</option><option value="HS">Hatchback y sedán</option><option value="OT">Otros (furgón, pick-up, minivan, cuadriciclo)</option></select></div>
+<div><label for="cyc">Ciclo de autonomía</label><select id="cyc"><option value="WLTP">WLTP / WLTC (el más exigente)</option><option value="NEDC">NEDC</option><option value="CLTC">CLTC (China)</option><option value="">Todos (no comparables entre sí)</option></select></div>
+<div><label for="pmax">Precio máximo (US$)</label><input id="pmax" inputmode="decimal" placeholder="Sin tope"></div>
+<div><label for="rmin">Autonomía mínima (km)</label><input id="rmin" inputmode="decimal" placeholder="Sin mínimo"></div>
+<div><label for="tar">Tarifa de carga en casa</label><select id="tar"><option value="2.98">UTE valle (00–07 h): $ 2,98/kWh</option><option value="6.31">UTE llano: $ 6,31/kWh</option></select></div>
+<div><label for="ord">Ordenar por</label><select id="ord"><option value="km1k">Más km por cada US$ 1.000</option><option value="price">Precio (menor)</option><option value="range">Autonomía (mayor)</option><option value="eff">Consumo (menor)</option><option value="trunk">Baúl (mayor)</option></select></div>
+</div></form>
+<div class="notice" id="cycWarn" hidden><strong>Ojo con los ciclos:</strong> WLTP, NEDC y CLTC miden distinto (NEDC y CLTC prometen más km que WLTP). Comparar autonomías entre ciclos distintos favorece a los modelos medidos con los más generosos.</div>
+<div class="podium" id="podium" aria-live="polite"></div>
+<p id="cnt" class="muted" aria-live="polite"></p>
+<div class="tablewrap"><table><thead><tr><th>Modelo</th><th class="num">Precio US$</th><th class="num">Autonomía</th><th class="num">Batería</th><th class="num">Km por US$ 1.000</th><th class="num">Consumo kWh/100 km*</th><th class="num">Electricidad por 100 km ($)*</th><th class="num">Baúl</th><th class="num">Patente año 1 US$**</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="small muted" style="margin-top:10px">
+<p>* <strong>Consumo estimado</strong> = batería ÷ autonomía homologada (no es un dato declarado; con autonomías de ciclo NEDC/CLTC sale más bajo de lo real). <strong>Electricidad por 100 km</strong> = consumo × tarifa de UTE elegida (Tarifa Residencial Triple Horario, Montevideo Portal, 6/10/2026, valle con IVA). Sin pérdidas de carga (10–15 %) ni carga pública.</p>
+<p>** <strong>Patente orientativa</strong> = 3 % del valor de mercado sin IVA (alícuota Sucive 2026 para eléctricos 0 km empadronados en 2026), usando precio ÷ 1,22 como aproximación del valor de mercado. El valor real lo fija la tabla del Sucive: confirmalo con tu intendencia. Detalle en <a href="tco.html">Coste total</a> y <a href="beneficios.html">Beneficios</a>.</p>
+<p><strong>Seguro:</strong> no publicamos primas porque dependen de cada persona y de cada auto. Pedí 3 o 4 cotizaciones iguales: ver <a href="seguros.html">Seguros</a>.</p>
+<p><strong>Confort:</strong> mirá baúl, plazas y equipamiento en la ficha de cada modelo y probalo antes de decidir. Un modelo barato con poca autonomía puede salir más caro si lo cargás seguido en la red pública: usá el <a href="tco.html">coste total</a>.</p>
+</div>
+</div></main>
+<script src="assets/data.js"></script><script src="assets/app.js"></script>
+<script>
+const $=id=>document.getElementById(id), e=EV.esc, V=EV.getVehicles(), S=EV.D.sales;
+const usd=v=>v.price&&v.price.list!=null&&v.price.currency==="USD"?v.price.list:null;
+const fmt=(n,d=0)=>n==null||isNaN(n)?"—":EV.fmtNum(n,d);
+const grpOf=b=>/^(SUV|Todo terreno|Crossover)/i.test(b)?"SUV":/^(Hatchback|Sedán)/i.test(b)?"HS":"OT";
+const cycOf=c=>/WLTP|WLTC/i.test(c||"")?"WLTP":/NEDC/i.test(c||"")?"NEDC":/CLTC/i.test(c||"")?"CLTC":(c?"OTRO":"");
+// --- Más vendidos
+$("salesNote").textContent=S.note;
+$("salesSrc").innerHTML=`Fuente: <a href="${e(S.source.url)}" rel="noopener">${e(S.source.name)}</a> (${e(S.source.date)}). Las cifras incluyen ventas al público, concesionarios, licitaciones e importaciones; no son patentamientos. No se encontró un ranking por modelo de 2026.`;
+function salesRows(list){return list.map(s=>{const vs=s.ids.map(EV.byId).filter(Boolean), ps=vs.map(usd).filter(x=>x!=null);
+  const link=vs.length?`<a href="ficha.html?id=${e(vs[0].id)}">${e(s.model)}</a>`:e(s.model);
+  const from=ps.length?"US$ "+EV.fmtNum(Math.min(...ps)):(vs.length?"<span class='muted'>precio a consultar</span>":"<span class='muted'>sin ficha todavía</span>");
+  return `<tr><td>${s.pos}</td><td>${link}</td><td class="num">${EV.fmtNum(s.units)}</td><td>${from}</td></tr>`;}).join("");}
+$("salesEv").innerHTML=salesRows(S.ev); $("salesHy").innerHTML=salesRows(S.hybrid);
+// --- Ranking
+function rows(){
+  const tipo=$("tipo").value, g=$("grp").value, c=$("cyc").value, pmax=EV.num($("pmax").value), rmin=EV.num($("rmin").value), tar=+$("tar").value;
+  return V.filter(v=>(tipo==="PLUG"?["PHEV","REEV"].includes(v.type):v.type===tipo)&&usd(v)!=null).map(v=>{
+    const p=usd(v), r=v.rangeKm, bat=v.batteryKwh;
+    return {v,p,r,bat,km1k:r!=null?r/(p/1000):null,eff:(v.type==="BEV"&&bat&&r)?bat/r*100:null,trunk:v.trunkL,pat:p/1.22*0.03,cyc:cycOf(v.rangeCycle),grp:grpOf(v.body)};
+  }).map(x=>(x.cost=x.eff!=null?x.eff*tar:null,x)).filter(x=>(!g||x.grp===g)&&(!c||x.cyc===c)&&(!Number.isFinite(pmax)||x.p<=pmax)&&(!Number.isFinite(rmin)||(x.r!=null&&x.r>=rmin)));
+}
+function render(){
+  const tipo=$("tipo").value, rs=rows(), ord=$("ord").value;
+  $("cycWarn").hidden=!!$("cyc").value||tipo==="HEV";
+  const key={km1k:[x=>x.km1k,-1],price:[x=>x.p,1],range:[x=>x.r,-1],eff:[x=>x.eff,1],trunk:[x=>x.trunk,-1]}[ord];
+  const sorted=rs.slice().sort((a,b)=>{const x=key[0](a),y=key[0](b);if(x==null&&y==null)return a.p-b.p;if(x==null)return 1;if(y==null)return -1;return (x-y)*key[1];});
+  const best=(f,dir)=>{const l=rs.filter(x=>f(x)!=null).sort((a,b)=>(f(a)-f(b))*dir);return l[0];};
+  const card=(k,x,val)=>x?`<div class="card"><div class="k">${k}</div><div class="v"><a href="ficha.html?id=${e(x.v.id)}">${e(x.v.brand)} ${e(x.v.model)}</a></div><div class="small muted">${e(x.v.version||"")}</div><div>${val}</div></div>`:"";
+  $("podium").innerHTML=[card("El más barato",best(x=>x.p,1),best(x=>x.p,1)?"US$ "+fmt(best(x=>x.p,1).p):""),
+    card("Mayor autonomía",best(x=>x.r,-1),best(x=>x.r,-1)?fmt(best(x=>x.r,-1).r)+" km ("+e(best(x=>x.r,-1).v.rangeCycle||"ciclo n/i")+")":""),
+    card("Más km por dólar",best(x=>x.km1k,-1),best(x=>x.km1k,-1)?fmt(best(x=>x.km1k,-1).km1k,1)+" km por US$ 1.000":""),
+    tipo==="BEV"?card("Más eficiente",best(x=>x.eff,1),best(x=>x.eff,1)?fmt(best(x=>x.eff,1).eff,1)+" kWh/100 km":""):""].join("")||'<div class="empty card">Ningún modelo cumple esos filtros todavía.</div>';
+  $("cnt").textContent=`${sorted.length} versión(es) con precio en dólares y datos de ficha. Datos al ${EV.D.checked}.`;
+  $("rows").innerHTML=sorted.map(x=>`<tr><td><a href="ficha.html?id=${e(x.v.id)}"><strong>${e(x.v.brand)} ${e(x.v.model)}</strong></a><br><span class="small muted">${e(x.v.version||"")} · ${e(x.v.body||"")} ${x.v.price.verification==="oficial"?"":'<span class="badge warn">precio parcial</span>'}</span></td>
+  <td class="num">${fmt(x.p)}<br><span class="small muted">${e(x.v.price.validOn||"")}</span></td><td class="num">${x.r!=null?fmt(x.r)+" km<br><span class='small muted'>"+e(x.v.rangeCycle||"ciclo n/i")+"</span>":"—"}</td><td class="num">${x.bat!=null&&x.v.type!=="HEV"?fmt(x.bat,1)+" kWh":"—"}</td>
+  <td class="num">${fmt(x.km1k,1)}</td><td class="num">${fmt(x.eff,1)}</td><td class="num">${x.cost!=null?"$ "+fmt(x.cost,0):"—"}</td><td class="num">${x.trunk?fmt(x.trunk)+" L":"—"}</td><td class="num">${fmt(x.pat)}</td></tr>`).join("")||`<tr><td colspan="9" class="empty">Sin resultados. Probá con otro ciclo, otro tope de precio o «Todas» las carrocerías.</td></tr>`;
+}
+["tipo","grp","cyc","tar","ord"].forEach(i=>$(i).addEventListener("change",render));["pmax","rmin"].forEach(i=>$(i).addEventListener("input",render));
+render();
+</script></body></html>
