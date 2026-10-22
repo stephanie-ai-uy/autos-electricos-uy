@@ -23,7 +23,9 @@ t("tco: acumulado año 3 = inicial + 3*anual",()=>{const r=F.tco({price:30000,ch
 t("tco: comparación con combustión",()=>{const r=F.tco({price:30000,years:1,kmYear:10000,kwh100:15,homePct:100,priceHome:0.2,compare:true,cPrice:25000,cLper100:7,cFuelPrice:2});near(r.comb.fuelYear,1400);near(r.diff,(25000+1400)-(30000+300))});
 const V=EVDATA.vehicles;
 t("catálogo: ids únicos",()=>new Set(V.map(v=>v.id)).size===V.length);
-t("catálogo: solo BEV",()=>V.every(v=>v.type==="BEV"));
+t("catálogo: tipos válidos (BEV/PHEV/HEV)",()=>V.every(v=>["BEV","PHEV","HEV"].includes(v.type)));
+t("catálogo: toda marca tiene origen definido",()=>V.every(v=>EVDATA.origins[v.brand]&&EVDATA.origins[v.brand].country));
+t("catálogo: hay marcas chinas y de otros orígenes",()=>V.some(v=>EVDATA.origins[v.brand].country==="China")&&V.some(v=>EVDATA.origins[v.brand].country!=="China"));
 t("catálogo: todo vehículo tiene fuente con URL y fecha",()=>V.every(v=>v.source&&v.source.url&&v.source.date));
 t("catálogo: precio con moneda y fecha cuando hay importe",()=>V.every(v=>v.price.list==null||(v.price.currency&&v.price.validOn)));
 t("catálogo: sin precio inventado (null cuando verification=sin dato)",()=>V.every(v=>v.price.verification!=="sin dato"||v.price.list==null));

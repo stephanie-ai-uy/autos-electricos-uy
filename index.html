@@ -19,7 +19,7 @@
 
 <h2>Herramientas</h2>
 <div class="grid g3">
-<a class="card" href="catalogo.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Catálogo y filtros</h3><p class="muted">Eléctricos puros (BEV) con precio, batería y autonomía, y el ciclo con que se midió.</p></a>
+<a class="card" href="catalogo.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Catálogo y filtros</h3><p class="muted">Eléctricos (BEV) e híbridos, por tipo y por origen de marca, con precio y fuente.</p></a>
 <a class="card" href="comparador.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Comparador</h3><p class="muted">Hasta 4 modelos lado a lado, con avisos cuando las cifras no son comparables.</p></a>
 <a class="card" href="financiacion.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Simulador de financiación</h3><p class="muted">Cuota, intereses y coste total frente al contado.</p></a>
 <a class="card" href="tco.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Coste total de propiedad</h3><p class="muted">Electricidad, seguro, patente y mantenimiento; opcionalmente frente a nafta o diésel.</p></a>
@@ -36,9 +36,9 @@
 </div></main>
 <script src="assets/data.js"></script><script src="assets/app.js"></script>
 <script>
-const vs = EV.getVehicles();
+const vs = EV.getVehicles(), bev = vs.filter(v=>v.type==="BEV");
 document.getElementById("chk").textContent = EV.D.checked;
-document.getElementById("stats").innerHTML = [[vs.length,"versiones eléctricas cargadas"],[vs.filter(v=>v.price.list!=null).length,"con precio y fuente"],[new Set(vs.map(v=>v.brand)).size,"marcas con ficha"],[EV.D.pendingBrands.length,"grupos de marcas por relevar"]].map(a=>`<div class="stat"><b>${a[0]}</b><span>${a[1]}</span></div>`).join("");
-document.getElementById("featured").innerHTML = vs.filter(v=>v.price.list!=null).sort((a,b)=>a.price.list-b.price.list).slice(0,3).map(v=>`
+document.getElementById("stats").innerHTML = [[bev.length,"versiones eléctricas (BEV)"],[vs.length-bev.length,"híbridos cargados"],[vs.filter(v=>v.price.list!=null).length,"con precio y fuente"],[new Set(vs.map(v=>v.brand)).size,"marcas con ficha"],[new Set(vs.filter(v=>EV.originOf(v.brand).country==="China").map(v=>v.brand)).size,"marcas chinas"]].map(a=>`<div class="stat"><b>${a[0]}</b><span>${a[1]}</span></div>`).join("");
+document.getElementById("featured").innerHTML = bev.filter(v=>v.price.list!=null).sort((a,b)=>a.price.list-b.price.list).slice(0,3).map(v=>`
 <a class="card vcard" href="ficha.html?id=${v.id}" style="text-decoration:none;color:inherit">${EV.CAR}<div>${EV.statusBadge(v.status)}</div><h3>${EV.esc(v.brand)} ${EV.esc(v.model)}</h3><div class="muted small">${EV.esc(v.version)}</div>${EV.priceHtml(v)}</a>`).join("");
 </script></body></html>

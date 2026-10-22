@@ -1,41 +1,74 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Catálogo de coches eléctricos en Uruguay | Autos Eléctricos UY</title>
-<meta name="description" content="Catálogo de coches eléctricos (BEV) en Uruguay con precio, batería y autonomía, cada dato con fuente y fecha. Filtrá y ordená.">
+<title>Catálogo de autos eléctricos e híbridos en Uruguay | Autos Eléctricos UY</title>
+<meta name="description" content="Catálogo de autos eléctricos e híbridos en Uruguay, clasificados por marcas chinas y otros orígenes, con precio, batería y autonomía; cada dato con fuente y fecha.">
+<meta name="theme-color" content="#07090c">
 <link rel="stylesheet" href="assets/style.css"></head>
 <body data-page="cat"><main id="main"><div class="wrap">
-<h1>Catálogo de coches eléctricos (BEV)</h1>
-<p class="lead">Solo eléctricos de batería. Híbridos y otras categorías no se mezclan aquí. Marque hasta 4 para comparar.</p>
+<h1>Catálogo de autos eléctricos e híbridos</h1>
+<p class="lead">Elegí el tipo de vehículo y compará solo dentro del mismo tipo: un eléctrico y un híbrido no son equivalentes. Marcá hasta 4 para comparar.</p>
+<div class="cta" id="tabs" role="tablist" aria-label="Tipo de vehículo" style="margin:14px 0 6px"></div>
 <div class="layout">
 <aside class="filters card" aria-label="Filtros"><form id="f">
 <label for="q">Buscar</label><input id="q" type="search" placeholder="Marca o modelo">
+<label for="origin">Origen de la marca</label><select id="origin"><option value="">Todos</option><option value="__china">Marcas chinas</option><option value="__otros">Otros orígenes</option></select>
 <label for="brand">Marca</label><select id="brand"><option value="">Todas</option></select>
 <label for="body">Carrocería</label><select id="body"><option value="">Todas</option></select>
 <div class="row"><div><label for="pmin">Precio mín. (US$)</label><input id="pmin" type="number" min="0"></div><div><label for="pmax">Precio máx. (US$)</label><input id="pmax" type="number" min="0"></div></div>
-<label for="bmin">Batería mínima (kWh)</label><input id="bmin" type="number" min="0">
-<label for="rmin">Autonomía mínima (km)</label><input id="rmin" type="number" min="0">
+<div id="evOnly"><label for="bmin">Batería mínima (kWh)</label><input id="bmin" type="number" min="0">
+<label for="rmin">Autonomía mínima (km)</label><input id="rmin" type="number" min="0"></div>
 <label for="status">Disponibilidad</label><select id="status"><option value="">Cualquiera</option><option value="disponible">Comercializado</option><option value="verificar">Pendiente de verificación</option></select>
 <label><input type="checkbox" id="onlyPrice" style="width:auto"> Solo con precio informado</label>
+<label><input type="checkbox" id="group" style="width:auto" checked> Agrupar por origen</label>
 <label for="sort">Ordenar por</label><select id="sort"><option value="price">Precio (menor a mayor)</option><option value="range">Autonomía (mayor)</option><option value="batt">Batería (mayor)</option><option value="power">Potencia (mayor)</option></select>
 <p><button type="button" class="btn sec" id="reset">Limpiar filtros</button></p></form></aside>
-<section><p id="count" class="muted" aria-live="polite"></p><div id="list" class="grid g2"></div>
-<h2>Marcas detectadas, pendientes de relevar</h2>
-<p class="small muted">Aparecen en prensa pero todavía no tienen ficha con datos verificados. No equivalen a disponibilidad confirmada.</p>
+<section><p id="count" class="muted" aria-live="polite"></p><div id="list"></div>
+<h2>Marcas y modelos detectados, pendientes de relevar</h2>
+<p class="small muted">Aparecen en prensa o en webs de importadores pero todavía no tienen ficha con datos verificados. No equivalen a disponibilidad confirmada.</p>
 <div id="pending" class="tablewrap"></div></section></div></div></main>
 <div class="tray" id="tray"><span id="trayTxt"></span><a class="btn" id="goCmp" href="comparador.html">Comparar</a><button class="btn sec" id="clr">Vaciar</button></div>
 <script src="assets/data.js"></script><script src="assets/app.js"></script>
 <script>
-const $ = id => document.getElementById(id), V = EV.getVehicles();
+const $ = id => document.getElementById(id), V = EV.getVehicles(), TYPES = ["BEV","PHEV","HEV"];
+const qs = new URLSearchParams(location.search);
+let tab = TYPES.includes(qs.get("tipo")) ? qs.get("tipo") : "BEV";
 let sel = []; try { sel = JSON.parse(localStorage.getItem("cmp") || "[]"); } catch (e) {}
 const save = () => { try { localStorage.setItem("cmp", JSON.stringify(sel)); } catch (e) {} };
-[...new Set(V.map(v=>v.brand))].forEach(b=>$("brand").insertAdjacentHTML("beforeend",`<option>${EV.esc(b)}</option>`));
-[...new Set(V.map(v=>v.body))].forEach(b=>$("body").insertAdjacentHTML("beforeend",`<option>${EV.esc(b)}</option>`));
-const qs = new URLSearchParams(location.search); if (qs.get("q")) $("q").value = qs.get("q");
+if (qs.get("q")) $("q").value = qs.get("q");
+const country = v => EV.originOf(v.brand).country;
+[...new Set(V.map(country))].sort().forEach(c => $("origin").insertAdjacentHTML("beforeend", `<option value="${EV.esc(c)}">${EV.esc(c)}</option>`));
 const num = id => $(id).value === "" ? null : +$(id).value;
+function fillSelects() {
+  const pool = V.filter(v => v.type === tab);
+  const keepB = $("brand").value, keepC = $("body").value;
+  $("brand").innerHTML = `<option value="">Todas</option>` + [...new Set(pool.map(v => v.brand))].sort().map(b => `<option>${EV.esc(b)}</option>`).join("");
+  $("body").innerHTML = `<option value="">Todas</option>` + [...new Set(pool.map(v => v.body))].sort().map(b => `<option>${EV.esc(b)}</option>`).join("");
+  $("brand").value = keepB; $("body").value = keepC;
+}
+function renderTabs() {
+  $("tabs").innerHTML = TYPES.map(t => `<button type="button" role="tab" aria-selected="${t === tab}" class="btn ${t === tab ? "" : "sec"}" data-t="${t}">${EV.esc(EV.typeLabel(t))} <span class="badge" style="margin-left:6px">${V.filter(v => v.type === t).length}</span></button>`).join("");
+  $("evOnly").hidden = tab !== "BEV";
+}
+$("tabs").addEventListener("click", e => { const b = e.target.closest("[data-t]"); if (!b) return; tab = b.dataset.t; renderTabs(); fillSelects(); render(); });
+function card(v) {
+  return `<article class="card vcard">${EV.CAR}
+<div>${EV.typeBadge(v.type)} ${EV.statusBadge(v.status)} ${EV.originBadge(v.brand)} ${v.discrepancy ? '<span class="badge warn">Fuentes discrepan</span>' : ''}</div>
+<h3><a href="ficha.html?id=${v.id}">${EV.esc(v.brand)} ${EV.esc(v.model)}</a></h3><div class="muted small">${EV.esc(v.version || "")}</div>
+<div style="margin:8px 0">${EV.priceHtml(v)}</div>
+<dl>${v.type === "BEV" ? `<dt>Batería</dt><dd>${v.batteryKwh != null ? EV.fmtNum(v.batteryKwh, 1) + " kWh" : EV.NI}</dd>
+<dt>Autonomía</dt><dd>${v.rangeKm != null ? v.rangeKm + " km (" + EV.esc(v.rangeCycle || "ciclo no informado") + ")" : EV.NI}</dd>` : `<dt>Autonomía eléctrica</dt><dd>${v.rangeKm != null ? v.rangeKm + " km" : EV.NI}</dd>`}
+<dt>Potencia</dt><dd>${v.powerCv != null ? v.powerCv + " cv" : EV.NI}</dd>
+<dt>Garantía vehículo</dt><dd>${EV.esc(v.warranty.vehicle || EV.NI)}</dd></dl>
+<label style="font-weight:400"><input type="checkbox" data-id="${v.id}" style="width:auto" ${sel.includes(v.id) ? "checked" : ""}> Comparar</label></article>`;
+}
 function render() {
-  const q = $("q").value.trim().toLowerCase(), pmin = num("pmin"), pmax = num("pmax"), bmin = num("bmin"), rmin = num("rmin");
+  const q = $("q").value.trim().toLowerCase(), pmin = num("pmin"), pmax = num("pmax"), bmin = num("bmin"), rmin = num("rmin"), o = $("origin").value;
   let r = V.filter(v => {
-    if (q && !(v.brand+" "+v.model+" "+v.version).toLowerCase().includes(q)) return false;
+    if (v.type !== tab) return false;
+    if (q && !(v.brand + " " + v.model + " " + v.version).toLowerCase().includes(q)) return false;
+    if (o === "__china" && country(v) !== "China") return false;
+    if (o === "__otros" && country(v) === "China") return false;
+    if (o && !o.startsWith("__") && country(v) !== o) return false;
     if ($("brand").value && v.brand !== $("brand").value) return false;
     if ($("body").value && v.body !== $("body").value) return false;
     if ($("status").value && v.status !== $("status").value) return false;
@@ -43,36 +76,34 @@ function render() {
     // Un filtro numérico excluye los vehículos cuyo dato se desconoce (no se asume nada).
     if (pmin != null && (v.price.list == null || v.price.list < pmin)) return false;
     if (pmax != null && (v.price.list == null || v.price.list > pmax)) return false;
-    if (bmin != null && (v.batteryKwh == null || v.batteryKwh < bmin)) return false;
-    if (rmin != null && (v.rangeKm == null || v.rangeKm < rmin)) return false;
+    if (tab === "BEV" && bmin != null && (v.batteryKwh == null || v.batteryKwh < bmin)) return false;
+    if (tab === "BEV" && rmin != null && (v.rangeKm == null || v.rangeKm < rmin)) return false;
     return true; });
-  const key = { price: v=>v.price.list, range: v=>v.rangeKm, batt: v=>v.batteryKwh, power: v=>v.powerCv }[$("sort").value], asc = $("sort").value === "price";
-  r.sort((a,b)=>{ const x=key(a), y=key(b); if (x==null&&y==null) return 0; if (x==null) return 1; if (y==null) return -1; return asc? x-y : y-x; });
-  $("count").textContent = `${r.length} de ${V.length} versiones`;
-  $("list").innerHTML = r.length ? r.map(v=>`<article class="card vcard">${EV.CAR}
-<div>${EV.statusBadge(v.status)} ${v.discrepancy?'<span class="badge warn">Fuentes discrepan</span>':''}</div>
-<h3><a href="ficha.html?id=${v.id}">${EV.esc(v.brand)} ${EV.esc(v.model)}</a></h3><div class="muted small">${EV.esc(v.version)}</div>
-<div style="margin:8px 0">${EV.priceHtml(v)}</div>
-<dl><dt>Batería</dt><dd>${v.batteryKwh!=null?EV.fmtNum(v.batteryKwh,1)+" kWh":EV.NI}</dd>
-<dt>Autonomía</dt><dd>${v.rangeKm!=null?v.rangeKm+" km ("+EV.esc(v.rangeCycle||"ciclo no informado")+")":EV.NI}</dd>
-<dt>Potencia</dt><dd>${v.powerCv!=null?v.powerCv+" cv":EV.NI}</dd>
-<dt>Garantía batería</dt><dd>${EV.esc(v.warranty.battery||EV.NI)}</dd></dl>
-<label style="font-weight:400"><input type="checkbox" data-id="${v.id}" style="width:auto" ${sel.includes(v.id)?"checked":""}> Comparar</label></article>`).join("")
-  : `<div class="empty card" style="grid-column:1/-1">Ningún vehículo cumple esos filtros. Los filtros numéricos excluyen vehículos con ese dato aún no informado. <br><button class="btn sec" onclick="document.getElementById('reset').click()">Limpiar filtros</button></div>`;
+  const key = { price: v => v.price.list, range: v => v.rangeKm, batt: v => v.batteryKwh, power: v => v.powerCv }[$("sort").value], asc = $("sort").value === "price";
+  r.sort((a, b) => { const x = key(a), y = key(b); if (x == null && y == null) return 0; if (x == null) return 1; if (y == null) return -1; return asc ? x - y : y - x; });
+  $("count").textContent = `${r.length} de ${V.filter(v => v.type === tab).length} versiones · ${EV.typeLabel(tab)}`;
+  if (!r.length) { $("list").innerHTML = `<div class="empty card">Ningún vehículo cumple esos filtros. Los filtros numéricos excluyen vehículos con ese dato aún no informado. <br><button class="btn sec" onclick="document.getElementById('reset').click()">Limpiar filtros</button></div>`; tray(); return; }
+  const mk = list => `<div class="grid g2">${list.map(card).join("")}</div>`;
+  if ($("group").checked) {
+    const groups = {}; r.forEach(v => { const g = country(v) === "China" ? "Marcas chinas" : "Origen: " + country(v); (groups[g] = groups[g] || []).push(v); });
+    const names = Object.keys(groups).sort((a, b) => a === "Marcas chinas" ? -1 : b === "Marcas chinas" ? 1 : a.localeCompare(b));
+    $("list").innerHTML = names.map(n => `<h2 style="margin-top:1.2em">${EV.esc(n)} <span class="badge">${groups[n].length}</span></h2>` + mk(groups[n])).join("");
+  } else $("list").innerHTML = mk(r);
   tray();
 }
 function tray() {
   $("tray").classList.toggle("on", sel.length > 0);
-  $("trayTxt").textContent = `${sel.length} seleccionado(s) (máx. 4)`;
+  const types = [...new Set(sel.map(id => (EV.byId(id) || {}).type))];
+  $("trayTxt").textContent = `${sel.length} seleccionado(s) (máx. 4)` + (types.length > 1 ? " · mezclan tipos distintos" : "");
   $("goCmp").style.pointerEvents = sel.length < 2 ? "none" : ""; $("goCmp").style.opacity = sel.length < 2 ? .5 : 1;
   $("goCmp").href = "comparador.html?ids=" + sel.join(",");
 }
 $("list").addEventListener("change", e => { const id = e.target.dataset.id; if (!id) return;
-  if (e.target.checked) { if (sel.length >= 4) { e.target.checked = false; alert("Máximo 4 vehículos."); return; } sel.push(id); } else sel = sel.filter(x=>x!==id);
+  if (e.target.checked) { if (sel.length >= 4) { e.target.checked = false; alert("Máximo 4 vehículos."); return; } sel.push(id); } else sel = sel.filter(x => x !== id);
   save(); tray(); });
 $("clr").onclick = () => { sel = []; save(); render(); };
-$("reset").onclick = () => { $("f").reset(); render(); };
-$("f").addEventListener("input", render); $("f").addEventListener("submit", e=>e.preventDefault());
-$("pending").innerHTML = `<table><thead><tr><th>Marca(s)</th><th>Qué se sabe</th><th>Importador</th><th>Fuente</th></tr></thead><tbody>${EV.D.pendingBrands.map(p=>`<tr><td>${EV.esc(p.brand)}</td><td>${EV.esc(p.detail)}</td><td>${EV.esc(p.importer||EV.NI)}</td><td><a href="${p.source.url}" rel="noopener">${EV.esc(p.source.date)}</a></td></tr>`).join("")}</tbody></table>`;
-render();
+$("reset").onclick = () => { $("f").reset(); $("group").checked = true; fillSelects(); render(); };
+$("f").addEventListener("input", render); $("f").addEventListener("submit", e => e.preventDefault());
+$("pending").innerHTML = `<table><thead><tr><th>Marca(s) / modelos</th><th>Qué se sabe</th><th>Importador</th><th>Fuente</th></tr></thead><tbody>${EV.D.pendingBrands.map(p => `<tr><td>${EV.esc(p.brand)}</td><td>${EV.esc(p.detail)}</td><td>${EV.esc(p.importer || EV.NI)}</td><td><a href="${p.source.url}" rel="noopener">${EV.esc(p.source.date)}</a></td></tr>`).join("")}</tbody></table>`;
+renderTabs(); fillSelects(); render();
 </script></body></html>

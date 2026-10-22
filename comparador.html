@@ -26,10 +26,11 @@ function render(){
   if (cycles.length>1) w.push(`<strong>Autonomías no comparables:</strong> usan ciclos distintos (${cycles.map(e).join(", ")}). Las cifras NEDC, WLTP y CLTC dan resultados diferentes para el mismo coche; no las compares como si fueran equivalentes.`);
   if (vs.some(v=>v.price.list==null)) w.push("Algunos vehículos no tienen precio informado: no entran en la comparación de precio.");
   if (new Set(vs.map(v=>v.price.currency)).size>1) w.push("Hay monedas distintas: no se convierten.");
+  if (new Set(vs.map(v=>v.type)).size>1) w.push("<strong>Tipos de propulsión distintos:</strong> estás comparando eléctricos con híbridos. No son equivalentes (consumo, autonomía, costes de uso e impuestos son diferentes).");
   if (new Set(vs.map(v=>v.body)).size>1) w.push("Los vehículos son de carrocerías distintas (segmentos no equivalentes).");
   $("warn").innerHTML = w.map(x=>`<div class="notice">${x}</div>`).join("");
   const R=[["Precio de lista",v=>v.price.list!=null?EV.fmtMoney(v.price.list,v.price.currency)+" ("+v.price.validOn+")":"Consultar"],
-  ["Estado",v=>({disponible:"Comercializado (stock a confirmar)",verificar:"Pendiente de verificación"})[v.status]||v.status],
+  ["Tipo",v=>EV.typeLabel(v.type)],["Origen de la marca",v=>EV.originOf(v.brand).country],["Estado",v=>({disponible:"Comercializado (stock a confirmar)",verificar:"Pendiente de verificación"})[v.status]||v.status],
   ["Carrocería",v=>v.body],["Batería",v=>v.batteryKwh!=null?v.batteryKwh+" kWh":ni],
   ["Autonomía",v=>v.rangeKm!=null?v.rangeKm+" km · "+(v.rangeCycle||"ciclo no informado"):ni],
   ["Potencia",v=>v.powerCv!=null?v.powerCv+" cv":ni],["Carga rápida",v=>v.chargeNote||ni],

@@ -15,12 +15,12 @@ else {
   const cyc = v.rangeKm != null ? `${v.rangeKm} km · ciclo: ${v.rangeCycle || "no informado"}` : null;
   out.innerHTML = `<p><a href="catalogo.html">← Catálogo</a></p>
 <h1>${e(v.brand)} ${e(v.model)} <small class="muted">${e(v.version)}</small></h1>
-<div>${EV.statusBadge(v.status)} <span class="badge">BEV</span></div>
+<div>${EV.statusBadge(v.status)} ${EV.typeBadge(v.type)} ${EV.originBadge(v.brand)}</div>
 <div class="card" style="margin:16px 0">${EV.priceHtml(v)}<p class="small muted">${e(v.price.note)}</p>
 <p class="small"><strong>No incluye (por confirmar con el vendedor):</strong> matriculación, gastos administrativos, entrega, cargador y su instalación. No hay precio promocional verificado.</p></div>
 ${v.discrepancy ? `<div class="notice"><strong>Las fuentes discrepan:</strong> ${e(v.discrepancy)}</div>` : ""}
 <div class="tablewrap"><table><tbody>
-${row("Importador / representante", v.importer)}${row("Concesionarios", v.dealers.length ? v.dealers.join(", ") : null)}
+${row("Tipo", EV.typeLabel(v.type))}${row("Origen de la marca", EV.originOf(v.brand).country + (EV.originOf(v.brand).note ? " — " + EV.originOf(v.brand).note : ""))}${row("Importador / representante", v.importer)}${row("Concesionarios", v.dealers.length ? v.dealers.join(", ") : null)}
 ${row("Carrocería", v.body)}${row("Tracción", v.drive)}${row("Potencia", v.powerCv != null ? v.powerCv + " cv" : null)}
 ${row("Batería", v.batteryKwh != null ? v.batteryKwh + " kWh" : null)}${row("Autonomía homologada", cyc)}${row("Autonomía real estimada", v.rangeReal)}
 ${row("Carga rápida (DC)", v.chargeNote || (v.dcKw ? v.dcKw + " kW" : null))}${row("Carga AC", v.acKw ? v.acKw + " kW" : null)}

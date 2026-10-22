@@ -76,7 +76,7 @@ async function seed(){
     await up("vehicles",D.vehicles.map(v=>({id:v.id,data:v,active:true})));
     await up("benefits",D.benefits.map(x=>({id:x.id,data:x,active:true})));
     await up("financing_products",D.financing.map(x=>({id:slug(x.entity),data:x,active:true})));
-    await up("site_settings",[{id:"pendingBrands",data:D.pendingBrands},{id:"market",data:D.market}]);
+    await up("site_settings",[{id:"pendingBrands",data:D.pendingBrands},{id:"market",data:D.market},{id:"origins",data:D.origins},{id:"typeLabels",data:D.typeLabels}]);
     alert("Importación completada.");show();}catch(x){alert("Error: "+x.message)}}
 async function exportView(b){
   b.innerHTML=`<h2>Exportar al sitio público</h2><p>Genera un nuevo <code>assets/data.js</code> con lo que hay activo en la base. Reemplazá ese archivo y volvé a publicar el sitio.</p><p><button class="btn" id="gen">Generar data.js</button> <button class="btn sec" id="dl" disabled>Descargar</button></p><textarea id="outjs" readonly></textarea>`;
@@ -85,7 +85,7 @@ async function exportView(b){
     try{const [v,be,f,s]=await Promise.all(["vehicles","benefits","financing_products","site_settings"].map(get));
       const st=Object.fromEntries(s.map(x=>[x.id,x.data])), sources={};
       [...v.map(x=>[x.data.source]),...be.map(x=>x.data.sources||[]),...f.map(x=>[x.data.source])].flat().filter(Boolean).forEach(x=>{sources[slug(x.url).slice(-40)]=x});
-      const out={checked:new Date().toISOString().slice(0,10),sources,vehicles:v.map(x=>x.data),pendingBrands:st.pendingBrands||[],benefits:be.map(x=>x.data),financing:f.map(x=>x.data),market:st.market||{}};
+      const out={checked:new Date().toISOString().slice(0,10),sources,vehicles:v.map(x=>x.data),typeLabels:st.typeLabels||{BEV:"Eléctrico (BEV)",PHEV:"Híbrido enchufable (PHEV)",HEV:"Híbrido no enchufable (HEV/MHEV)"},origins:st.origins||{},pendingBrands:st.pendingBrands||[],benefits:be.map(x=>x.data),financing:f.map(x=>x.data),market:st.market||{}};
       $("outjs").value="/* Generado desde Supabase el "+out.checked+". No editar a mano: usar el panel admin. */\nwindow.EVDATA = "+JSON.stringify(out,null,1)+";\n";$("dl").disabled=false;
       $("dl").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([$("outjs").value],{type:"text/javascript"}));a.download="data.js";a.click()};
     }catch(x){alert("Error: "+x.message)}};}
