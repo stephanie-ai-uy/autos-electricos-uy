@@ -35,6 +35,7 @@
 <li>Hace falta dónde cargar; sin carga en casa, el ahorro se reduce.</li>
 <li>La autonomía real varía con velocidad, clima y carga.</li>
 <li>Reventa: el mercado de usados eléctricos es nuevo y el valor futuro es incierto; preguntá por la garantía de batería y su transferencia.</li>
+<li>Repuestos, software y servicio técnico: dependen de cada importador (ver sección 7).</li>
 <li>Red de talleres y repuestos todavía en crecimiento, sobre todo en marcas nuevas en el país. Cambios previstos de IMESI desde 2027 (ver <a href="beneficios.html">beneficios</a>).</li>
 </ul></div>
 </div>
@@ -63,6 +64,14 @@
 <h2>5. ¿Cuándo conviene cargar?</h2>
 <p class="small muted">Precios por kWh con IVA incluido, según la prensa y el decreto de tarifas de UTE (ver fuentes abajo). Pueden cambiar: confirmalos en UTE.</p>
 <div class="tablewrap"><table><thead><tr><th>Dónde y cuándo</th><th class="num">$U por kWh</th><th class="num" id="th100">$U cada 100 km</th><th>Cuándo conviene</th></tr></thead><tbody id="tcar"></tbody></table></div>
+<h3>Cargá por porcentaje de batería</h3>
+<p class="small muted">En el tablero lo que ves es el porcentaje (%). Indicá de cuánto a cuánto vas a cargar y mirá cuánto cuesta en cada opción. Usa el modelo elegido en la calculadora de arriba, o escribí la batería de tu auto.</p>
+<form class="card" id="fp" novalidate><div class="row">
+<div><label for="b0">Batería al llegar (%)</label><input id="b0" type="text" inputmode="decimal" placeholder="Ej.: 20"></div>
+<div><label for="b1">Batería al terminar (%)</label><input id="b1" type="text" inputmode="decimal" placeholder="Ej.: 80"></div>
+<div><label for="bk">Capacidad de la batería (kWh)</label><input id="bk" type="text" inputmode="decimal" placeholder="Se completa con el modelo"></div></div>
+<p><button class="btn" type="submit">Calcular la carga</button></p></form>
+<div id="rp" class="result" aria-live="polite">Completá los porcentajes y calculá.</div>
 <ul class="steps">
 <li><strong>Lo más barato es cargar en casa de madrugada</strong> (horario valle, de 00:00 a 07:00) con la Tarifa Residencial Triple Horario: la mayoría de los autos permite programar la hora de inicio de carga.</li>
 <li><strong>Evitá cargar en punta</strong> (cuatro horas que elegís entre las 17:00 y las 23:00 de días hábiles): es el kWh más caro de la factura. Si cargás en casa, programá el auto para que no arranque a esa hora.</li>
@@ -72,7 +81,18 @@
 </ul>
 <p class="small muted">Cargo fijo por conexión pública: $U 54,8 en corriente alterna y $U 132,9 en continua; cargo por quedarse conectado sin cargar después de 20 minutos: $U 9,6 y $U 12,3 por minuto. Fuentes: <a href="https://www.montevideo.com.uy/Airbag/Como-cargar-autos-electricos-la-tarifa-recomendada-por-UTE-y-cuanto-puede-costar-uc977602" rel="noopener">Montevideo Portal</a> (tarifa triple horario residencial), <a href="https://www.elobservador.com.uy/ute-aplico-un-nuevo-ajuste-el-precio-la-carga-vehiculos-electricos-la-red-publica-n6030591" rel="noopener">El Observador, 10/1/2026</a> (carga en la red pública) y el <a href="https://www.impo.com.uy/bases/decretos/339-2025" rel="noopener">decreto 339/2025</a>. UTE anunció que seguirá ajustando la carga pública (<a href="https://www.elobservador.com.uy/hacia-el-fin-las-bonificaciones-ute-proyecta-nuevos-ajustes-el-precio-la-carga-vehiculos-electricos-n6045583" rel="noopener">El Observador, 29/5/2026</a>). Las tarifas de empresas privadas de carga pueden ser distintas.</p>
 
-<h2>6. Antes de firmar: lista rápida</h2>
+<h2>7. Repuestos, software y servicio técnico</h2>
+<p>Es un punto que casi no se compara y que puede pesar tanto como el precio. <strong>Este sitio todavía no tiene datos verificados de repuestos ni de soporte de software por marca</strong>: depende de cada importador o concesionario y conviene pedirlo por escrito antes de comprar.</p>
+<ul class="steps">
+<li><strong>Idioma del sistema:</strong> confirmá que el auto viene con el software en español y que se puede cambiar el idioma. Hay usuarios que reportan en foros autos con el sistema en otro idioma que el concesionario no resolvió; no lo verificamos, pero es motivo suficiente para probarlo y dejarlo documentado antes de firmar.</li>
+<li><strong>Actualizaciones de software:</strong> ¿se hacen en el taller o a distancia (OTA)? ¿Son gratis y hasta cuándo? ¿Quién las hace en Uruguay?</li>
+<li><strong>Repuestos:</strong> ¿hay stock local? ¿Cuánto demora un repuesto importado (parabrisas, paragolpes, ópticas, módulos)? ¿Dan auto de cortesía si se demora?</li>
+<li><strong>Garantía:</strong> qué cubre exactamente (software y componentes electrónicos incluidos), hasta qué kilometraje, y si se pierde por mantener el auto en un taller no oficial.</li>
+<li><strong>Servicio técnico:</strong> ¿hay técnicos formados en alta tensión y en tu departamento? Mirá la red oficial de cada marca en <a href="permuta.html">la red de concesionarias</a>.</li>
+<li><strong>Si algo falla:</strong> pedí que las promesas de la venta (idioma, aplicación, garantía) figuren por escrito. Ante un reclamo, podés acudir al Área de Defensa del Consumidor del MEF.</li>
+</ul>
+
+<h2>8. Antes de firmar: lista rápida</h2>
 <ol class="steps">
 <li>Probá el auto (también en ruta) y mirá el consumo real en el tablero.</li>
 <li>Pedí por escrito el <strong>precio final</strong>: flete, patente, gastos y accesorios.</li>
@@ -110,4 +130,15 @@ $("f").addEventListener("submit",ev=>{ev.preventDefault();
  if(v)h+=`<p class="small">Con la autonomía publicada de ${v.rangeKm} km (${EV.esc(v.rangeCycle||"ciclo no informado")}), serían unos ${EV.fmtNum(v.rangeKm/km,1)} días de uso entre cargas completas, <em>antes</em> de descontar el efecto de ruta, clima y reserva de seguridad: contá con menos.</p>`;
  if(nl>0&&pl>0){const c=km*nl/100*pl*d;h+=`<p>Combustión: <strong>${f2(c)}</strong> por mes. ${c>=cMes?`Diferencia a favor del eléctrico: <strong>${f2(c-cMes)}</strong> por mes.`:`El eléctrico saldría <strong>${f2(cMes-c)}</strong> más caro por mes.`} Solo energía; no incluye compra, seguro ni mantenimiento.</p>`}
  $("res").innerHTML=h});
+$("veh").addEventListener("change",()=>{const v=EV.byId($("veh").value);if(v&&v.batteryKwh)$("bk").value=String(v.batteryKwh).replace(".",",")});
+$("fp").addEventListener("submit",ev=>{ev.preventDefault();
+ const a=EV.num($("b0").value),b=EV.num($("b1").value),c=EV.num($("bk").value),k=EV.num($("kwh").value);
+ if([a,b,c,k].some(x=>Number.isNaN(x))){$("rp").textContent="No se entiende algún número. Escribí solo cifras, por ejemplo 20 o 62,5.";return}
+ if(a===""||b===""||c===""||!(c>0)){$("rp").textContent="Faltan los porcentajes o la capacidad de la batería (elegí un modelo arriba o escribila).";return}
+ if(a<0||b>100||b<=a){$("rp").textContent="El porcentaje final tiene que ser mayor que el inicial, entre 0 y 100.";return}
+ const e=c*(b-a)/100;
+ let h=`<p>Cargar de <strong>${EV.fmtNum(a,0)} %</strong> a <strong>${EV.fmtNum(b,0)} %</strong> son <strong>${EV.fmtNum(e,1)} kWh</strong> (${EV.fmtNum(c,1)} kWh de batería).`;
+ if(k!==""&&k>0)h+=` Alcanzan para unos ${EV.fmtNum(e/k*100,0)} km con tu consumo.`;
+ h+=`</p><div class="tablewrap"><table><thead><tr><th>Dónde y cuándo</th><th class="num">Costo de esa carga</th></tr></thead><tbody>${CARGA.map(x=>`<tr><td>${x[0]}</td><td class="num">${f2(e*x[1])}</td></tr>`).join("")}</tbody></table></div><p class="small muted">Es la energía que entra a la batería. Se suman pérdidas de carga y, en puntos públicos, el cargo fijo por conexión. La capacidad es la publicada por la marca; puede diferir de la útil.</p>`;
+ $("rp").innerHTML=h});
 </script></body></html>
