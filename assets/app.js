@@ -23,7 +23,7 @@ window.EV = (function () {
 <nav class="main" aria-label="Principal">${NAV.map(n => `<a href="${n[0]}" class="${n[2] === page ? "on" : ""}">${n[1]}</a>`).join("")}</nav></div></header>
 <div class="banner"><div class="wrap">Herramienta independiente de información. No vende vehículos ni da asesoramiento financiero o jurídico. Datos con fuente y fecha de consulta (${esc(D.checked)}); lo no verificado se marca como tal.</div></div>`;
     const f = `<footer class="site"><div class="wrap">
-<p><strong>Autos Eléctricos UY</strong> — Comparador independiente de coches eléctricos en Uruguay. Última revisión de datos: ${esc(D.checked)}.</p>
+<p><strong>Autos Eléctricos UY</strong> — Comparativa independiente de autos eléctricos en Uruguay. Un proyecto de <strong>Stephanie AI</strong>. Última revisión de datos: ${esc(D.checked)}.</p>
 <p><a href="metodologia.html">Fuentes y metodología</a> · <a href="legal.html">Privacidad, cookies y condiciones</a> · No hay publicidad ni patrocinios activos en este sitio.</p></div></footer>`;
     document.body.insertAdjacentHTML("afterbegin", h);
     document.body.insertAdjacentHTML("beforeend", f);
