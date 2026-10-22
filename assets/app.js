@@ -31,8 +31,12 @@ window.EV = (function () {
     document.body.insertAdjacentHTML("beforeend", f);
   }
   const CAR='<div class="car" aria-hidden="true"><svg viewBox="0 0 220 70" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 48h14M196 48h14M30 48c-8 0-12-3-12-9 0-8 6-12 16-14l28-6c8-6 18-12 34-12h28c18 0 30 8 40 18l16 5c8 2 12 6 12 12 0 4-3 6-8 6h-6"/><path d="M62 24h38M118 24h34M100 14v12M118 14v12"/><circle cx="56" cy="50" r="10"/><circle cx="164" cy="50" r="10"/><path d="M92 48h24"/></svg></div>';
+  const typeLabel = t => (D.typeLabels||{})[t] || t;
+  const typeBadge = t => `<span class="badge ${t==="BEV"?"ok":t==="PHEV"?"":"warn"}">${t}</span>`;
+  const originOf = brand => (D.origins||{})[brand] || { country: "No informado" };
+  const originBadge = brand => { const o = originOf(brand); return `<span class="badge" title="${esc(o.note||"País de origen de la marca")}">${esc(o.country)}</span>`; };
   function getVehicles() { return D.vehicles; }
   function byId(id) { return D.vehicles.find(v => v.id === id); }
   document.addEventListener("DOMContentLoaded", layout);
-  return { D, CAR, esc, NI, fmtNum, fmtMoney, statusBadge, priceHtml, priceStale, getVehicles, byId, daysSince };
+  return { D, CAR, typeLabel, typeBadge, originOf, originBadge, esc, NI, fmtNum, fmtMoney, statusBadge, priceHtml, priceStale, getVehicles, byId, daysSince };
 })();

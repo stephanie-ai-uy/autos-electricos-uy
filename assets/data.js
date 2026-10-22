@@ -38,6 +38,20 @@ window.EVDATA = (function () {
   };
 
   /* verification: "parcial" = una sola fuente de prensa, sin ficha oficial del importador. */
+  const typeLabels = { BEV: "Eléctrico (BEV)", PHEV: "Híbrido enchufable (PHEV)", HEV: "Híbrido no enchufable (HEV/MHEV)" };
+  /* Origen = país de origen de la MARCA o de su grupo propietario (no el país de fabricación de cada modelo). */
+  const origins = {
+    "BYD": { country: "China" }, "GAC": { country: "China" }, "JMC": { country: "China" }, "Dongfeng": { country: "China" },
+    "Geely": { country: "China" }, "Omoda": { country: "China", note: "Grupo Chery" }, "Chery": { country: "China" }, "Leapmotor": { country: "China" },
+    "Zeekr": { country: "China", note: "Grupo Geely" }, "JAC": { country: "China" },
+    "MG": { country: "China", note: "Marca de origen británico, hoy propiedad del grupo chino SAIC" },
+    "Tesla": { country: "EE.UU." },
+    "Chevrolet": { country: "EE.UU.", note: "Marca de General Motors. Verificar el país de fabricación de cada modelo." },
+    "Volvo": { country: "Suecia", note: "Propiedad del grupo chino Geely" },
+    "Toyota": { country: "Japón" },
+    "Suzuki": { country: "Japón", note: "Algunos modelos (p. ej. Swift) se importan desde India según prensa" }
+  };
+
   const base = { type: "BEV", year: null, seats: null, acKw: null, dcKw: null, accel: null, trunkL: null, rangeReal: null, drive: null };
 
   const vehicles = [
@@ -282,14 +296,111 @@ window.EVDATA = (function () {
       powerCv: null, batteryKwh: 30.2, rangeKm: 302, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: "3 años o 100.000 km", battery: "8 años o 150.000 km", note: "Garantía del lanzamiento 2022 (tren motriz y batería)." },
       source: sources.jacS1, notes: "Ficha técnica del lanzamiento 2022. JAC E-S3 también figura entre los más vendidos de 2025 (394 unidades) pero no se hallaron datos."
+    }),
+    Object.assign({}, base, {
+      id: "gac-emkoo-ge-hev", type: "HEV", brand: "GAC", model: "Emkoo GE HEV", version: "", body: "SUV",
+      importer: "Lestido", dealers: [], status: "disponible",
+      price: { list: 28990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de GAC Motor Uruguay (IVA incluido).", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gacOficial, notes: "Motor 2.0 híbrido no enchufable; la web indica «140 cv + 134 kW (eléctrico)» y 300 Nm. Sin capacidad de batería."
+    }),
+    Object.assign({}, base, {
+      id: "gac-gs4-max-hev", type: "HEV", brand: "GAC", model: "GS4 MAX HEV", version: "", body: "SUV",
+      importer: "Lestido", dealers: [], status: "disponible",
+      price: { list: 31990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de GAC Motor Uruguay (IVA incluido).", verification: "oficial" },
+      powerCv: 232, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gacOficial, notes: "Motor 2.0 híbrido; potencia combinada 232 hp y 480 Nm según la web."
+    }),
+    Object.assign({}, base, {
+      id: "gac-s7-ultra-awd", type: "PHEV", brand: "GAC", model: "S7 ULTRA AWD", version: "", body: "SUV", drive: "Integral (AWD)",
+      importer: "Lestido", dealers: [], status: "disponible",
+      price: { list: 55990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de GAC Motor Uruguay (IVA incluido).", verification: "oficial" },
+      powerCv: 493, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.gacOficial, notes: "Híbrido enchufable 1.5 T; potencia combinada 493 hp y 470 Nm. La web no informa batería ni autonomía eléctrica."
+    }),
+    Object.assign({}, base, {
+      id: "byd-yuan-pro-dmi", type: "PHEV", brand: "BYD", model: "Yuan Pro DM-i", version: "", body: "SUV compacto",
+      importer: "Sadar", dealers: [], status: "disponible",
+      price: { list: 29990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio «desde» del sitio oficial de BYD Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.bydOficial, notes: "La web lo presenta como «super híbrido» (DMI); se clasifica como enchufable según la tecnología DM-i de BYD, a confirmar con el importador."
+    }),
+    Object.assign({}, base, {
+      id: "byd-song-plus-dmi", type: "PHEV", brand: "BYD", model: "Song Plus DM-i", version: "", body: "SUV",
+      importer: "Sadar", dealers: [], status: "disponible",
+      price: { list: 39990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de BYD Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.bydOficial, notes: "Ver nota de clasificación en Yuan Pro DM-i. Existe también el Song Plus EV (eléctrico) sin precio hallado."
+    }),
+    Object.assign({}, base, {
+      id: "geely-ex5-em-i", type: "PHEV", brand: "Geely", model: "EX5 EM-i", version: "Pro", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 34990, promo: null, currency: "USD", validOn: "2025-06", note: "Precio de lanzamiento (jun. 2025); la misma nota cita una versión de US$ 38.990.", verification: "parcial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No confirmada." },
+      source: sources.ex5, notes: "Versión híbrida enchufable del EX5. Un aviso de MercadoLibre 2026 (Grupo Fiancar) también lo ofrece a US$ 34.990."
+    }),
+    Object.assign({}, base, {
+      id: "mg3-hybrid-plus", type: "HEV", brand: "MG", model: "MG3 Hybrid+", version: "", body: "Hatchback",
+      importer: "Eximar", dealers: [], status: "disponible",
+      price: { list: 24990, promo: null, currency: "USD", validOn: "2026-09-01", note: "Precio «desde» según prensa.", verification: "parcial" },
+      powerCv: 191, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: "6 años o 120.000 km", battery: null, note: "Garantía mecánica citada para MG vía Eximar." },
+      source: sources.mg, notes: "Híbrido no enchufable; 191 cv combinados, 425 Nm, 4,4 L/100 km homologado."
+    }),
+    Object.assign({}, base, {
+      id: "omoda-5-shs", type: "HEV", brand: "Omoda", model: "5 SHS", version: "", body: "SUV compacto",
+      importer: "Santa Rosa", dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no informado en la fuente.", verification: "sin dato" },
+      powerCv: 224, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada." },
+      source: { name: "Autoblog Uruguay — Lanzamiento Omoda 5 SHS y Jaecoo 5 EV", url: "https://www.autoblog.com.uy/2025/10/lanzamiento-omoda-5-shs-y-jaecoo-5-ev.html", date: "2025-10", type: "Prensa especializada" }, notes: "Sistema híbrido SHS (1.5 turbo + motor eléctrico), 224 hp combinados. Reemplaza al C5 MHEV."
+    }),
+    Object.assign({}, base, {
+      id: "suzuki-fronx-hybrid", type: "HEV", brand: "Suzuki", model: "Fronx Hybrid", version: "", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no hallado.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada." },
+      source: sources.rankAutoblog, notes: "Electrificado más vendido de 2025 (999 unidades, ACAU vía Autoblog). La fuente no distingue entre MHEV/HEV."
+    }),
+    Object.assign({}, base, {
+      id: "suzuki-swift-hybrid", type: "HEV", brand: "Suzuki", model: "Swift Hybrid", version: "1.2 GLX", body: "Hatchback",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no hallado.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada." },
+      source: sources.rankAutoblog, notes: "686 unidades vendidas en 2025 según el ranking de Autoblog (otra tabla del mismo informe cita 985 para el modelo, con origen India)."
+    }),
+    Object.assign({}, base, {
+      id: "toyota-corolla-cross-hybrid", type: "HEV", brand: "Toyota", model: "Corolla Cross Hybrid", version: "SE-G 1.8 e-CVT", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio actual no hallado (un informe de 2022 hablaba de unos US$ 40.000).", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada." },
+      source: sources.rankAutoblog, notes: "465 unidades en el ranking 2025 por versión; líder de híbridos en 2022 y 2024."
+    }),
+    Object.assign({}, base, {
+      id: "chery-tiggo-4-hybrid", type: "HEV", brand: "Chery", model: "Tiggo 4 Hybrid", version: "", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no hallado.", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada." },
+      source: sources.rankAutoblog, notes: "281 unidades vendidas en 2025 (ACAU vía Autoblog)."
     })
   ];
 
   /* Marcas detectadas en prensa, sin datos de ficha todavía. No son equivalentes a una ficha. */
   const pendingBrands = [
-    { brand: "BYD — otros modelos", detail: "Dolphin Mini, Yuan Plus, Song Plus EV y Atto 8 aparecen en prensa o en la web del importador sin precio o sin confirmar que sean eléctricos puros. Los modelos DMI (híbridos enchufables) no pertenecen al comparador BEV.", importer: "Sadar", source: sources.bydOficial },
+    { brand: "BYD — otros modelos", detail: "Dolphin Mini, Yuan Plus, Song Plus EV y Atto 8 aparecen en prensa o en la web del importador sin precio o sin confirmar que sean eléctricos puros.", importer: "Sadar", source: sources.bydOficial },
     { brand: "Leapmotor C11 · Jaecoo 5 EV · JMC JMEV 2", detail: "Confirmados en prensa; sin precio verificado.", importer: "Santa Rosa", source: sources.leapmotor },
     { brand: "Avatr 11 · Xpeng · Deepal · GWM/ORA 03 · Changan", detail: "Anunciados o presentes en el portafolio de Santa Rosa según prensa; modelos y precios por relevar.", importer: "Santa Rosa", source: sources.teslaPrecio },
+    { brand: "Chevrolet Captiva PHEV · Lynk & Co 08 PHEV", detail: "Aparecen en avisos de concesionarios de MercadoLibre Uruguay (US$ 37.990 y US$ 57.990) sin lista oficial; no se cargaron por falta de una fuente enlazable.", importer: null, source: { name: "MercadoLibre Uruguay (avisos)", url: "https://autos.mercadolibre.com.uy/", date: CHECKED, type: "Anuncios de terceros" } },
     { brand: "Renault Kwid E-Tech", detail: "Comercializado desde 2023 (26,8 kWh, 265 km WLTP); sin precio actual hallado.", importer: null, source: { name: "Autoblog Uruguay — Lanzamiento: Renault Kwid E-Tech", url: "https://www.autoblog.com.uy/2023/12/lanzamiento-renault-kwid-e-tech.html", date: "2023-12", type: "Prensa especializada" } },
     { brand: "Xiaomi (SU7)", detail: "Prensa menciona preventa esperada; sin confirmación comercial.", importer: null, source: { name: "El Observador", url: "https://www.elobservador.com.uy/cafe-y-negocios/tesla/en-pie-guerra-byd-vuelve-bajar-los-precios-sus-autos-electricos-la-llegada-tesla-y-la-antesala-del-imesi-n6051761", date: "2026-07-23", type: "Prensa" } }
   ];
@@ -361,5 +472,5 @@ window.EVDATA = (function () {
     source: sources.acau
   };
 
-  return { checked: CHECKED, sources, vehicles, pendingBrands, benefits, financing, market };
+  return { checked: CHECKED, typeLabels, origins, sources, vehicles, pendingBrands, benefits, financing, market };
 })();
