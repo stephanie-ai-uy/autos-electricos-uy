@@ -1133,6 +1133,37 @@ window.EVDATA = (function () {
   ];
 
 
+  /* Ventas 2025 por modelo (ACAU, vía Autoblog Uruguay). Incluye ventas al público, concesionarios, licitaciones e importaciones; no son patentamientos.
+     No se halló un ranking por modelo de 2026. «ids» enlaza con las fichas del catálogo cuando existen. */
+  const sales = {
+    year: 2025, source: sources.rankAutoblog,
+    note: "Cifras de 2025 de la Asociación del Comercio Automotor (ACAU) publicadas por Autoblog Uruguay el 17/02/2026. Un modelo muy vendido no es necesariamente el mejor: úsalo como señal de popularidad y de disponibilidad de servicio.",
+    ev: [
+      { pos: 1, model: "BYD Yuan Pro", units: 3362, ids: ["byd-yuan-pro-ev"] },
+      { pos: 2, model: "BYD Seagull", units: 2061, ids: ["byd-seagull"] },
+      { pos: 3, model: "Dongfeng Nammi", units: 1196, ids: ["dongfeng-nammi-330", "dongfeng-nammi-430"] },
+      { pos: 4, model: "BYD New e2", units: 832, ids: ["byd-new-e2-x"] },
+      { pos: 5, model: "Chevrolet Spark EUV", units: 737, ids: ["chevrolet-spark-euv-activ"] },
+      { pos: 6, model: "JMC JMEV EV3 / 3", units: 589, ids: ["jmc-jmev-3"] },
+      { pos: 7, model: "Geely EX5", units: 515, ids: ["geely-ex5-urban", "geely-ex5-pro", "geely-ex5-max"] },
+      { pos: 8, model: "BYD Yuan Plus", units: 475, ids: [] },
+      { pos: 9, model: "Omoda E5", units: 469, ids: ["omoda-e5"] },
+      { pos: 10, model: "JAC Ytterby / E-S3 Ytterby", units: 394, ids: [] }
+    ],
+    hybrid: [
+      { pos: 1, model: "Suzuki Fronx Hybrid", units: 999, ids: ["suzuki-fronx-hybrid"] },
+      { pos: 2, model: "Suzuki Swift Hybrid (India)", units: 985, ids: ["suzuki-swift-hybrid"] },
+      { pos: 3, model: "Toyota Corolla Cross Hybrid", units: 597, ids: ["toyota-corolla-cross-hybrid"] },
+      { pos: 4, model: "Chery Tiggo 4 Hybrid", units: 281, ids: ["chery-tiggo-4-hybrid"] },
+      { pos: 5, model: "Omoda C5 MHEV", units: 246, ids: [] },
+      { pos: 6, model: "Omoda 5 SHS", units: 220, ids: ["omoda-5-shs"] },
+      { pos: 7, model: "Hyundai Kona Hybrid", units: 194, ids: ["hyundai-kona-hibrida"] },
+      { pos: 8, model: "Changan Q05 / CS55 Plus iDD", units: 189, ids: ["changan-cs55-plus-luxury", "changan-cs55-plus-elite"] },
+      { pos: 9, model: "BMW X3", units: 161, ids: [] },
+      { pos: 10, model: "BYD Song Plus DM-i", units: 142, ids: ["byd-song-plus-dmi"] }
+    ]
+  };
+
   const market = {
     ev2025: 14387, growth2025: "147 %", share2026ZeroKm: "36,7 %", shareNote: "Cifras ACAU citadas por prensa (ene–ago 2026).",
     source: sources.acau
@@ -1269,5 +1300,5 @@ window.EVDATA = (function () {
     });
   });
 
-  return { checked: CHECKED, typeLabels, origins, sources, vehicles, pendingBrands, benefits, financing, market };
+  return { checked: CHECKED, typeLabels, origins, sources, vehicles, pendingBrands, benefits, financing, market, sales };
 })();

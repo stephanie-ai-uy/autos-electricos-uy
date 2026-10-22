@@ -1,7 +1,7 @@
 /* Utilidades compartidas: layout, formato, estados */
 window.EV = (function () {
   const D = window.EVDATA;
-  const NAV = [["index.html", "Inicio", "home"], ["catalogo.html", "Catálogo", "cat"], ["comparador.html", "Comparador", "cmp"], ["financiacion.html", "Financiación", "fin"], ["beneficios.html", "Beneficios", "ben"], ["tco.html", "Coste total", "tco"], ["guias.html", "Guías y garantías", "gui"], ["seguros.html", "Seguros", "seg"], ["metodologia.html", "Fuentes", "met"], ["contacto.html", "Contacto", "con"]];
+  const NAV = [["index.html", "Inicio", "home"], ["catalogo.html", "Catálogo", "cat"], ["comparador.html", "Comparador", "cmp"], ["ranking.html", "Mejores y más vendidos", "rank"], ["financiacion.html", "Financiación", "fin"], ["beneficios.html", "Beneficios", "ben"], ["tco.html", "Coste total", "tco"], ["guias.html", "Guías y garantías", "gui"], ["seguros.html", "Seguros", "seg"], ["metodologia.html", "Fuentes", "met"], ["contacto.html", "Sugerencias", "con"]];
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const NI = "No informado";
   const fmtNum = (n, d = 0) => n == null ? NI : Number(n).toLocaleString("es-UY", { minimumFractionDigits: d, maximumFractionDigits: d });
