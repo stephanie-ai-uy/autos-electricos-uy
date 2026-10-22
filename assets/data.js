@@ -66,6 +66,10 @@ window.EVDATA = (function () {
     scotiaAuto: { name: "Scotiabank Uruguay — Préstamo Automotor (sitio oficial)", url: "https://www.scotiabank.com.uy/Personas/Prestamos/Prestamo-Automotor/prestamo-automotor", date: "2026-10-22", type: "Web oficial de la entidad" },
     santanderMiAuto: { name: "Santander Uruguay — Préstamos: Mi Auto (menú del sitio oficial)", url: "https://www.miauto.com.uy/", date: "2026-10-22", type: "Web oficial de la entidad" },
     santanderMiAuto2023: { name: "El Observador — Cómo es la nueva apuesta de Santander para facilitar la compra de autos", url: "https://www.elobservador.com.uy/nota/como-es-la-nueva-apuesta-de-santander-para-facilitar-la-compra-de-autos-nuevos-y-usados--202351720100", date: "2023-05-18", type: "Prensa" },
+    santanderMiAutoCC: { name: "Santander MiAuto — Crédito Convencional (sitio oficial)", url: "https://www.miauto.com.uy/credito-convencional/", date: "2026-10-22", type: "Web oficial de la entidad" },
+    itauAuto: { name: "Itaú Uruguay — Préstamos Automotores (sitio oficial)", url: "https://www.itau.com.uy/inst/prestamosautomotores.html", date: "2026-10-22", type: "Web oficial de la entidad" },
+    autoblogTesla: { name: "Autoblog Uruguay — Editorial: Tesla llegó a Uruguay", url: "https://www.autoblog.com.uy/2026/07/editorial-tesla-llego-uruguay-para.html", date: "2026-07-20", type: "Prensa especializada" },
+    mlPermuta: { name: "MercadoLibre Uruguay — anuncios de autos eléctricos e híbridos 0 km (campo «Acepta permuta»)", url: "https://autos.mercadolibre.com.uy/electrico/nuevo/", date: "2026-10-22", type: "Anuncios de concesionarias (declaración del vendedor)" },
     peugeot2008: { name: "Autoblog Uruguay — Lanzamiento Peugeot 2008, 3008 y 5008 Hybrid", url: "https://www.autoblog.com.uy/2025/05/lanzamiento-peugeot-2008-3008-y-5008.html", date: "2025-05-27", type: "Prensa especializada" },
     ex90: { name: "Autoblog Uruguay — Lanzamiento Volvo EX90", url: "https://www.autoblog.com.uy/2025/09/lanzamiento-volvo-ex90-los-apuntes-del.html", date: "2025-09", type: "Prensa especializada" },
     rankAutoblog: { name: "Autoblog Uruguay — Ventas 2025: los 10 electrificados más vendidos", url: "https://www.autoblog.com.uy/2026/02/ventas-2025-los-10-vehiculos.html", date: "2026-02", type: "Prensa especializada (datos ACAU)" }
@@ -1122,14 +1126,16 @@ window.EVDATA = (function () {
       rate: "Desde 6,4 % en UI y 7,5 % en USD (0 km); usados desde 6,4 % en UI y 8 % en USD. La página no aclara si es TEA o TNA.", financed: "Hasta 100 % del valor, máximo US$ 100.000; a sola firma (sin prenda)",
       requirements: "Edad de 18 a 74 años; cédula vigente; constancia de domicilio (nuevos clientes); ingreso mínimo $ 30.000", fees: "No informadas en la página",
       url: sources.scotiaAuto.url, simulator: "https://www.scotiabank.com.uy/Personas/Prestamos/Herramientas/calculadora-de-prestamos", source: sources.scotiaAuto, date: "2026-10-22" },
-    { entity: "Santander", product: "Mi Auto — préstamo para vehículos nuevos y usados", status: "listado en el sitio oficial; condiciones sin confirmar",
-      accepts: "No informado", condition: "Nuevos y usados (según prensa de 2023)", currencies: "No informado", term: "Entre 60 y 72 meses según prensa de 2023",
-      rate: "«Tasa diferencial» según prensa de 2023; valor no publicado", financed: "Hasta US$ 50.000 según prensa de 2023",
-      requirements: "Se solicita en automotoras asociadas o en puntos de Santander y Creditel (según prensa)", fees: "No informadas",
-      url: sources.santanderMiAuto.url, simulator: "https://www.miauto.com.uy/", source: sources.santanderMiAuto2023, date: "2023-05-18" },
-    { entity: "Itaú", product: "No relevado (la web oficial no mostró un producto automotor)", status: "pendiente de verificar", url: "https://www.itau.com.uy", simulator: null },
-    { entity: "HSBC", product: "Cartilla de préstamos automotores de enero de 2024 (tasa 0 %, hasta 50 % del valor); no se confirmó que opere hoy en Uruguay", status: "pendiente de verificar", url: null, simulator: null },
-    { entity: "BROU", product: "Prensa 2022 mencionaba préstamos «blandos» en preparación; no confirmado si existen", status: "pendiente de verificar", url: "https://www.brou.com.uy/personas/prestamos", simulator: null, source: { name: "Bloomberg Línea (2022)", url: "https://www.bloomberglinea.com/2022/08/18/vehiculos-electricos-en-uruguay-gobierno-prepara-prestamos-blandos-en-banco-estatal/", date: "2022-08-18", type: "Prensa" } }
+    { entity: "Santander", product: "MiAuto — Crédito Convencional (tasa fija)", status: "vigente (web oficial)",
+      accepts: "Sí (plazo ampliado para híbridos y eléctricos)", condition: "Autos nuevos y usados en automotoras adheridas; también ofrece «Compra Inteligente» (20 % de entrega, 30 % en 24 cuotas y 50 % de valor futuro mínimo garantizado)", currencies: "UI, dólares o pesos", term: "De 6 a 60 cuotas; hasta 72 cuotas para híbridos o eléctricos",
+      rate: "TEA: UI desde 5,8 % hasta 13,8 %; pesos desde 18,5 % hasta 29 %; dólares desde 6,4 % hasta 15,5 %. La tasa depende del perfil y es fija durante todo el préstamo.", financed: "Hasta US$ 50.000",
+      requirements: "El contrato se firma en la automotora según el vehículo, la entrega y el plazo; seguro de vida incluido", fees: "Gastos de otorgamiento: 40 UI más 8 UI por cuota, con tope de 120 UI. Precancelación: 3 meses de interés sobre el capital financiado.",
+      url: sources.santanderMiAutoCC.url, simulator: "https://www.miauto.com.uy/#simulador", source: sources.santanderMiAutoCC, date: "2026-10-22" },
+    { entity: "Itaú", product: "Préstamos Automotores: amortizable a sola firma y amortizable tasa 0", status: "vigente (web oficial)",
+      accepts: "Sí (la página lista «Eléctricos e híbridos»)", condition: "0 km y usados sin límite de antigüedad (tasa 0: solo 0 km y solo en automotoras o concesionarias); a sola firma sirve también para comprar a un particular", currencies: "Pesos, dólares o UI (tasa 0: solo dólares)", term: "Hasta 60 meses (tasa 0: hasta 36 meses)",
+      rate: "A sola firma: la tasa no se publica, se obtiene en el simulador. Tasa 0 %: sin interés, pero con comisión única de 5,5 % + IVA (12 meses) o 7 % + IVA (24 a 36 meses) sobre el monto; 6 % + IVA con Paquete Personal Bank.", financed: "Hasta 100 % del valor del vehículo",
+      requirements: "12 meses de antigüedad laboral; edad de 18 a 74 años; estar al día con el banco; comprobante de ingresos y factura proforma", fees: "Sin gastos para el cliente en el préstamo a sola firma; seguro de vida incluido",
+      url: sources.itauAuto.url, simulator: "https://www.itau.com.uy/inst/prestamosMiautoCalculador.html", source: sources.itauAuto, date: "2026-10-22" }
   ];
 
 
@@ -1161,6 +1167,27 @@ window.EVDATA = (function () {
       { pos: 8, model: "Changan Q05 / CS55 Plus iDD", units: 189, ids: ["changan-cs55-plus-luxury", "changan-cs55-plus-elite"] },
       { pos: 9, model: "BMW X3", units: 161, ids: [] },
       { pos: 10, model: "BYD Song Plus DM-i", units: 142, ids: ["byd-song-plus-dmi"] }
+    ]
+  };
+
+  /* Qué concesionarias toman tu usado como parte de pago. Evidencia: (1) Autoblog afirma que casi todas las marcas lo hacen y que Tesla no;
+     (2) el campo «Acepta permuta» que declaran los vendedores en MercadoLibre (muestra del 22/10/2026). Cada concesionaria decide qué usados acepta: consultar. */
+  const tradeIn = {
+    checked: "2026-10-22",
+    general: "Según Autoblog Uruguay (jul. 2026), tomar un usado como parte de pago de un 0 km es algo que hacen casi todas las marcas en el país.",
+    generalSource: sources.autoblogTesla,
+    exceptions: [{ name: "Tesla", detail: "No toma usados como parte de pago de un 0 km (compra directa y en línea).", source: sources.autoblogTesla }],
+    sample: { listings: 184, accept: 183, note: "De 184 anuncios de eléctricos e híbridos 0 km revisados en MercadoLibre Uruguay que muestran el campo «Acepta permuta», 183 lo marcan «Sí». Es lo que declara cada vendedor: no garantiza que acepten tu modelo, año o estado.", source: sources.mlPermuta },
+    dealers: [
+      { name: "Vipercar Automóviles", listings: 24 }, { name: "Moreira Automóviles", listings: 11 }, { name: "Eximar (MG, Volvo)", listings: 9 },
+      { name: "Carrica", listings: 6 }, { name: "Alonso Automóviles", listings: 5 }, { name: "Grupo Fiancar", listings: 4 }, { name: "Barriola", listings: 3 },
+      { name: "Dongfeng (tienda oficial en MercadoLibre)", listings: 3 }, { name: "Califano Automóviles", listings: 1 }, { name: "Chery (tienda oficial en MercadoLibre)", listings: 1 },
+      { name: "Chevrolet Montevideo", listings: 1 }, { name: "Gonzalo Garage Automóviles", listings: 1 }, { name: "Leapmotor (tienda oficial en MercadoLibre)", listings: 1 },
+      { name: "Marino Sport", listings: 1 }, { name: "Oliva Automotores", listings: 1 }, { name: "R. Cristofano", listings: 1 }, { name: "Silca", listings: 1 }
+    ],
+    unnamed: "Otros 109 anuncios de concesionarias con identidad verificada, sin tienda propia visible, también marcan «Acepta permuta: Sí» (108 de 109).",
+    officialPages: [
+      { name: "Fidocar (Hyundai, Chery): sitio de usados con cotizador", url: "https://www.usadosfidocar.com.uy/", detail: "Tiene sección «Cotizador»; la web no aclara si cotiza tu auto como parte de pago: consultar." }
     ]
   };
 
@@ -1300,5 +1327,5 @@ window.EVDATA = (function () {
     });
   });
 
-  return { checked: CHECKED, typeLabels, origins, sources, vehicles, pendingBrands, benefits, financing, market, sales };
+  return { checked: CHECKED, typeLabels, origins, sources, vehicles, pendingBrands, benefits, financing, market, sales, tradeIn };
 })();
