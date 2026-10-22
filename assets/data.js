@@ -62,6 +62,10 @@ window.EVDATA = (function () {
     mlBmw: { name: "MercadoLibre Uruguay — BMW eléctricos (anuncios de Magna Motors)", url: "https://autos.mercadolibre.com.uy/bmw/electrico/", date: "2026-10-22", type: "Anuncio de concesionario (no es lista oficial)" },
     montevideoTesla: { name: "Montevideo Portal — Tesla ya anunció fecha de entrega de sus primeros vehículos en Uruguay", url: "https://www.montevideo.com.uy/Airbag/Tesla-ya-anuncio-fecha-de-entrega-de-sus-primeros-vehiculos-en-Uruguay-cuando-sera-uc977778", date: "2026-10-07", type: "Prensa" },
     autoanuarioElexio: { name: "Autoanuario — Lanzamiento local: Hyundai Elexio, nuevo SUV eléctrico que debuta en Sudamérica", url: "https://www.autoanuario.uy/post/lanzamiento-local-hyundai-elexio-nuevo-suv-el%C3%A9ctrico-que-debuta-en-sudam%C3%A9rica", date: "2026-10", type: "Prensa especializada" },
+    bbvaAuto: { name: "BBVA Uruguay — Préstamo para autos eléctricos (sitio oficial)", url: "https://www.bbva.com.uy/personas/productos/prestamos/automotor/prestamo-para-autos-electricos.html", date: "2026-10-22", type: "Web oficial de la entidad" },
+    scotiaAuto: { name: "Scotiabank Uruguay — Préstamo Automotor (sitio oficial)", url: "https://www.scotiabank.com.uy/Personas/Prestamos/Prestamo-Automotor/prestamo-automotor", date: "2026-10-22", type: "Web oficial de la entidad" },
+    santanderMiAuto: { name: "Santander Uruguay — Préstamos: Mi Auto (menú del sitio oficial)", url: "https://www.miauto.com.uy/", date: "2026-10-22", type: "Web oficial de la entidad" },
+    santanderMiAuto2023: { name: "El Observador — Cómo es la nueva apuesta de Santander para facilitar la compra de autos", url: "https://www.elobservador.com.uy/nota/como-es-la-nueva-apuesta-de-santander-para-facilitar-la-compra-de-autos-nuevos-y-usados--202351720100", date: "2023-05-18", type: "Prensa" },
     peugeot2008: { name: "Autoblog Uruguay — Lanzamiento Peugeot 2008, 3008 y 5008 Hybrid", url: "https://www.autoblog.com.uy/2025/05/lanzamiento-peugeot-2008-3008-y-5008.html", date: "2025-05-27", type: "Prensa especializada" },
     ex90: { name: "Autoblog Uruguay — Lanzamiento Volvo EX90", url: "https://www.autoblog.com.uy/2025/09/lanzamiento-volvo-ex90-los-apuntes-del.html", date: "2025-09", type: "Prensa especializada" },
     rankAutoblog: { name: "Autoblog Uruguay — Ventas 2025: los 10 electrificados más vendidos", url: "https://www.autoblog.com.uy/2026/02/ventas-2025-los-10-vehiculos.html", date: "2026-02", type: "Prensa especializada (datos ACAU)" }
@@ -1108,15 +1112,26 @@ window.EVDATA = (function () {
 
   /* Entidades financieras: SOLO se cargan productos con fuente. El resto: «Consultar». */
   const financing = [
-    { entity: "BBVA Uruguay", product: "Préstamo sostenible para vehículos eléctricos (particulares)", status: "histórico — vigencia no confirmada",
-      accepts: "Sí (según comunicado de 2020)", condition: "Nuevo/usado: no informado", currencies: "Pesos, unidades indexadas o dólares", term: "Hasta 60 meses",
-      rate: "Tasa «bonificada»; valor no informado", fees: "Paquete de cuentas sin costo; otros no informados", url: sources.bbva.url, source: sources.bbva, date: "2020-09-04" },
-    { entity: "Santander", product: "No relevado", status: "pendiente de verificar", url: null },
-    { entity: "Itaú", product: "No relevado", status: "pendiente de verificar", url: null },
-    { entity: "Scotiabank", product: "No relevado", status: "pendiente de verificar", url: null },
-    { entity: "HSBC", product: "No relevado (verificar si opera hoy en Uruguay)", status: "pendiente de verificar", url: null },
-    { entity: "BROU", product: "Prensa 2022 mencionaba préstamos «blandos» en preparación; no confirmado si existen", status: "pendiente de verificar", url: "https://www.brou.com.uy", source: { name: "Bloomberg Línea (2022)", url: "https://www.bloomberglinea.com/2022/08/18/vehiculos-electricos-en-uruguay-gobierno-prepara-prestamos-blandos-en-banco-estatal/", date: "2022-08-18", type: "Prensa" } }
+    { entity: "BBVA Uruguay", product: "Préstamo para autos eléctricos", status: "vigente (web oficial)",
+      accepts: "Sí (producto específico para eléctricos)", condition: "Vehículos 0 km", currencies: "Pesos, unidades indexadas (UI) o dólares", term: "Hasta 72 meses (hasta 36 meses con tasa 0 %, según la automotora)",
+      rate: "TEA: 5 % en UI, 5,5 % en USD y 9,25 % en pesos (promoción hasta el 31/10/2026). Tasa 0 % hasta 36 meses: la aplicación depende de cada automotora.", financed: "Hasta 100 % del valor del vehículo 0 km",
+      requirements: "Ingreso mínimo $ 25.000 (pesos o UI) o $ 50.000 (dólares); sujeto a aprobación crediticia", fees: "No informadas en la página",
+      url: sources.bbvaAuto.url, simulator: null, source: sources.bbvaAuto, date: "2026-10-22" },
+    { entity: "Scotiabank", product: "Préstamo Automotor (0 km y usados, incluye híbridos y eléctricos)", status: "vigente (web oficial)",
+      accepts: "Sí (la página lista «Híbridos y Eléctricos» y «Tasa 0 %» sin dar el detalle)", condition: "0 km y usados de hasta 15 años; valor mínimo US$ 6.000; todas las marcas", currencies: "UI y dólares", term: "Hasta 60 cuotas mensuales",
+      rate: "Desde 6,4 % en UI y 7,5 % en USD (0 km); usados desde 6,4 % en UI y 8 % en USD. La página no aclara si es TEA o TNA.", financed: "Hasta 100 % del valor, máximo US$ 100.000; a sola firma (sin prenda)",
+      requirements: "Edad de 18 a 74 años; cédula vigente; constancia de domicilio (nuevos clientes); ingreso mínimo $ 30.000", fees: "No informadas en la página",
+      url: sources.scotiaAuto.url, simulator: "https://www.scotiabank.com.uy/Personas/Prestamos/Herramientas/calculadora-de-prestamos", source: sources.scotiaAuto, date: "2026-10-22" },
+    { entity: "Santander", product: "Mi Auto — préstamo para vehículos nuevos y usados", status: "listado en el sitio oficial; condiciones sin confirmar",
+      accepts: "No informado", condition: "Nuevos y usados (según prensa de 2023)", currencies: "No informado", term: "Entre 60 y 72 meses según prensa de 2023",
+      rate: "«Tasa diferencial» según prensa de 2023; valor no publicado", financed: "Hasta US$ 50.000 según prensa de 2023",
+      requirements: "Se solicita en automotoras asociadas o en puntos de Santander y Creditel (según prensa)", fees: "No informadas",
+      url: sources.santanderMiAuto.url, simulator: "https://www.miauto.com.uy/", source: sources.santanderMiAuto2023, date: "2023-05-18" },
+    { entity: "Itaú", product: "No relevado (la web oficial no mostró un producto automotor)", status: "pendiente de verificar", url: "https://www.itau.com.uy", simulator: null },
+    { entity: "HSBC", product: "Cartilla de préstamos automotores de enero de 2024 (tasa 0 %, hasta 50 % del valor); no se confirmó que opere hoy en Uruguay", status: "pendiente de verificar", url: null, simulator: null },
+    { entity: "BROU", product: "Prensa 2022 mencionaba préstamos «blandos» en preparación; no confirmado si existen", status: "pendiente de verificar", url: "https://www.brou.com.uy/personas/prestamos", simulator: null, source: { name: "Bloomberg Línea (2022)", url: "https://www.bloomberglinea.com/2022/08/18/vehiculos-electricos-en-uruguay-gobierno-prepara-prestamos-blandos-en-banco-estatal/", date: "2022-08-18", type: "Prensa" } }
   ];
+
 
   const market = {
     ev2025: 14387, growth2025: "147 %", share2026ZeroKm: "36,7 %", shareNote: "Cifras ACAU citadas por prensa (ene–ago 2026).",
