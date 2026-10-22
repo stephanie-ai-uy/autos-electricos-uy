@@ -39,7 +39,7 @@ window.EV = (function () {
   function keepState() {
     const page = document.body.dataset.page, main = document.getElementById("main");
     if (!main || page === "con" || page === "adm") return;
-    const key = "st:" + location.pathname.split("/").pop() + location.search;
+    const key = "st:" + (location.pathname.split("/").pop() || "index.html");
     const get = () => { try { return JSON.parse(sessionStorage.getItem(key) || "null"); } catch (e) { return null; } };
     const put = o => { try { sessionStorage.setItem(key, JSON.stringify(o)); } catch (e) {} };
     const nav = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
@@ -55,7 +55,7 @@ window.EV = (function () {
         fs.forEach(e => { if (e.id in st && e.tagName !== "SELECT") setv(e, st[e.id]); });
         // los select pueden tener opciones cargadas por la página: se restauran y se avisa a la página
         fs.forEach(e => { if (e.id in st && e.tagName === "SELECT") { setv(e, st[e.id]); e.dispatchEvent(new Event("change", { bubbles: true })); } });
-        fs.forEach(e => { if (e.id in st) { setv(e, st[e.id]); if (e.tagName !== "SELECT") e.dispatchEvent(new Event("input", { bubbles: true })); } });
+        fs.forEach(e => { if (e.id in st) { setv(e, st[e.id]); if (e.tagName !== "SELECT") e.dispatchEvent(new Event(e.type === "checkbox" || e.type === "radio" ? "change" : "input", { bubbles: true })); } });
         fs.forEach(e => { if (e.id in st) setv(e, st[e.id]); });
         (o.sub || []).forEach(id => { const f = document.getElementById(id); if (f && f.requestSubmit) f.requestSubmit(); });
       }
