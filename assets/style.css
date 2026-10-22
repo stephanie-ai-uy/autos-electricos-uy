@@ -79,3 +79,11 @@ td.num,th.num{text-align:right;white-space:nowrap}
 .steps li{margin:6px 0}
 textarea{min-height:340px;font:13px/1.4 ui-monospace,Menlo,monospace}
 @media print{header.site,footer.site,.banner,.tray,.noprint{display:none!important}body{background:#fff;color:#000}.card,.tablewrap{background:#fff;border-color:#ccc}th,td,.muted,.small{color:#000}thead th{background:#eee}}
+
+.lang{display:flex;gap:2px;margin-left:auto;padding:3px;border:1px solid var(--line2);border-radius:999px;background:var(--surface)}
+.lang button{border:0;background:transparent;color:var(--muted);font:inherit;font-size:.78rem;font-weight:700;padding:5px 10px;border-radius:999px;cursor:pointer}
+.lang button.on{background:var(--brand);color:var(--brand-ink)}.lang button:hover:not(.on){color:var(--ink)}
+nav.main{margin-left:0}
+.goog-te-banner-frame,.skiptranslate>iframe,#goog-gt-tt,.goog-te-balloon-frame{display:none!important}body{top:0!important;position:static!important}
+.goog-text-highlight{background:none!important;box-shadow:none!important}
+@media(max-width:860px){.lang{margin-left:auto}.menu{margin-left:8px}}
