@@ -45,13 +45,14 @@
 <script src="assets/finance.js"></script><script src="assets/data.js"></script><script src="assets/app.js"></script>
 <script>
 const $=id=>document.getElementById(id), ids="price years kmYear kwh100 homePct priceHome pricePublic insurance patente maint tires otherYear charger install cPrice cLper100 cFuelPrice cInsurance cPatente cMaint".split(" ");
-$("pcalc").onclick=()=>{const v=+$("pvm").value;if(!(v>0)){alert("Ingresá el valor de mercado sin IVA.");return}$("patente").value=Math.round(v*+$("ptipo").value*100)/100};
+$("pcalc").onclick=()=>{const v=EV.num($("pvm").value);if(!(v>0)){alert("Ingresá el valor de mercado sin IVA (solo cifras, por ejemplo 30000).");return}$("patente").value=String(Math.round(v*+$("ptipo").value*100)/100).replace(".",",")};
 $("compare").onchange=()=>{$("cbox").hidden=!$("compare").checked};
 const f2=n=>EV.fmtNum(n,2);
 $("f").addEventListener("submit",ev=>{ev.preventDefault();
-  const o={compare:$("compare").checked};ids.forEach(i=>o[i]=$(i).value);
-  const miss=["price","kmYear","kwh100","priceHome"].filter(i=>$(i).value==="");
-  if(o.homePct!==""&&+o.homePct<100&&$("pricePublic").value==="")miss.push("pricePublic");
+  const o={compare:$("compare").checked},bad=[];ids.forEach(i=>{o[i]=EV.num($(i).value);if(Number.isNaN(o[i]))bad.push($(i).previousElementSibling.textContent);});
+  if(bad.length){$("res").innerHTML="<strong>No se entiende el número en:</strong> "+bad.join(", ")+". Escribí solo cifras, por ejemplo 35000 o 35.000,50.";return}
+  const miss=["price","kmYear","kwh100","priceHome"].filter(i=>o[i]==="");
+  if(o.homePct!==""&&+o.homePct<100&&o.pricePublic==="")miss.push("pricePublic");
   if(miss.length){$("res").innerHTML="<strong>Faltan datos:</strong> "+miss.map(i=>$(i).previousElementSibling.textContent).join(", ")+". No usamos valores por defecto para no mostrar un resultado engañosamente preciso.";return}
   const r=EVFIN.tco(o);
   let h=`<div class="muted small">Coste anual de uso (eléctrico)</div><div class="big">${f2(r.yearly)}</div><p class="small">Electricidad: ${f2(r.energyYear)}/año (${EV.fmtNum(r.kwhYear,0)} kWh/año) · Inversión inicial (vehículo+cargador+instalación): ${f2(r.upfront)}</p>

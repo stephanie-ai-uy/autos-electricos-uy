@@ -34,8 +34,10 @@ $("ent").innerHTML = EV.D.financing.map(f=>`<tr><td><strong>${e(f.entity)}</stro
 <td>${f.term?`Plazo: ${e(f.term)}<br>Monedas: ${e(f.currencies)}<br>Tasa: ${e(f.rate)}<br>Comisiones/gastos: ${e(f.fees)}<br>Acepta eléctricos: ${e(f.accepts)}<br>Resto (entrega mínima, % financiable, requisitos): <em>Consultar con la entidad</em>`:"<em>Consultar con la entidad</em>"}</td>
 <td>${f.source?`<a href="${e(f.source.url)}" rel="noopener">${e(f.source.date)}</a>`:"—"}</td></tr>`).join("");
 $("f").addEventListener("submit",ev=>{ev.preventDefault();
-  const r=EVFIN.simulate({price:$("price").value,down:$("down").value,financeAmount:$("fa").value,rate:$("rate").value,rateType:$("rt").value,months:$("months").value,fees:$("fees").value,other:$("other").value});
-  const el=$("res");
+  const el=$("res"), v={}, bad=[];
+  ["price","down","fa","rate","months","fees","other"].forEach(k=>{v[k]=EV.num($(k).value); if(Number.isNaN(v[k]))bad.push($(k).previousElementSibling.textContent);});
+  if(bad.length){el.innerHTML="<strong>No se entiende el número en:</strong><ul>"+bad.map(x=>`<li>${e(x)}</li>`).join("")+"</ul><p class='small'>Escribí solo cifras, por ejemplo 35000 o 35.000,50.</p>";return;}
+  const r=EVFIN.simulate({price:v.price,down:v.down,financeAmount:v.fa,rate:v.rate,rateType:$("rt").value,months:v.months,fees:v.fees,other:v.other});
   if(!r.ok){el.innerHTML="<strong>Faltan datos:</strong><ul>"+r.errors.map(x=>`<li>${e(x)}</li>`).join("")+"</ul>";return;}
   const c=$("cur").value, m=n=>EV.fmtMoney(Math.round(n*100)/100,c).replace(/(\d)$/,"$1");
   const f2=n=>(c==="UYU"?"$ ":"US$ ")+EV.fmtNum(n,2);

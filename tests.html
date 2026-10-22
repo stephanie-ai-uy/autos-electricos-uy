@@ -2,7 +2,7 @@
 <html lang="es"><head><meta charset="utf-8"><title>Pruebas</title><meta name="robots" content="noindex">
 <style>body{font:15px system-ui;margin:20px}.ok{color:#146c3a}.ko{color:#b00020;font-weight:700}</style></head>
 <body><h1>Pruebas automáticas (abrir en el navegador)</h1><div id="o"></div><p id="sum"></p>
-<script src="assets/finance.js"></script><script src="assets/data.js"></script>
+<script src="assets/finance.js"></script><script src="assets/data.js"></script><script src="assets/app.js"></script>
 <script>
 let pass=0,fail=0;const o=document.getElementById("o");
 function t(name,fn){try{const r=fn();if(r===true||r===undefined){pass++;o.innerHTML+=`<div class=ok>✔ ${name}</div>`}else throw new Error(r)}catch(e){fail++;o.innerHTML+=`<div class=ko>✘ ${name}: ${e.message}</div>`}}
@@ -15,6 +15,11 @@ t("tasa 0% → cuota = capital/n",()=>near(F.payment(1200,0,12),100));
 t("simulate: capital = precio - entrega",()=>{const r=F.simulate({price:30000,down:6000,rate:10,rateType:"TNA",months:48});near(r.capital,24000)});
 t("simulate: intereses = cuotas*n - capital",()=>{const r=F.simulate({price:10000,down:0,rate:12,rateType:"TNA",months:12});near(r.intereses,888.4879*12-10000,0.01)});
 t("simulate: diferencia incluye comisiones",()=>{const r=F.simulate({price:10000,down:0,rate:0,rateType:"TNA",months:10,fees:200});near(r.diferencia,200)});
+t("num: 35.000 → 35000 (miles con punto)",()=>near(EV.num("35.000"),35000));
+t("num: 35.000,50 → 35000.5",()=>near(EV.num("35.000,50"),35000.5));
+t("num: 0,25 y 0.25 → 0.25",()=>{near(EV.num("0,25"),0.25);near(EV.num("0.25"),0.25)});
+t("num: US$ 1.200 → 1200",()=>near(EV.num("US$ 1.200"),1200));
+t("num: vacío → '' y texto → NaN (no inventa)",()=>EV.num("")===""&&Number.isNaN(EV.num("abc")));
 t("simulate: falta tasa → error, no resultado",()=>{const r=F.simulate({price:10000,down:0,rate:"",months:12});return !r.ok&&r.errors.length>0});
 t("simulate: entrega > precio → error",()=>!F.simulate({price:100,down:200,rate:5,months:12}).ok);
 t("tco: energía 15000km*16kWh/100*0.2 = 480",()=>near(F.tco({price:0,years:1,kmYear:15000,kwh100:16,homePct:100,priceHome:0.2}).energyYear,480));
