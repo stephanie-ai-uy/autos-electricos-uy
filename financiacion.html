@@ -26,6 +26,7 @@
 
 <h2>Entidades y productos</h2>
 <div class="notice info">«Hasta 100 % financiable» en un aviso no significa aprobación automática del 100 % para cualquier solicitante. Condiciones y tasas dependen de cada perfil.</div>
+<p class="small muted">Incluimos solo entidades con un préstamo específico para comprar vehículos. No figuran el BROU (solo préstamos al consumo generales) ni HSBC (no hay oferta vigente confirmada). ¿Querés vender tu usado para comprar? Mirá <a href="permuta.html">quién toma tu usado como parte de pago</a>.</p>
 <div class="tablewrap"><table><thead><tr><th>Entidad</th><th>Producto y condiciones publicadas</th><th>Estado</th><th>Fuente y enlaces</th></tr></thead><tbody id="ent"></tbody></table></div>
 </div></main>
 <script src="assets/data.js"></script><script src="assets/finance.js"></script><script src="assets/app.js"></script>
@@ -43,6 +44,9 @@ const PRESETS=[
  {id:"bbva-usd",label:"BBVA · autos eléctricos 0 km · USD 5,5 % TEA · hasta 72 meses",cur:"USD",rate:5.5,rt:"TEA",months:72,note:"BBVA publica 5,5 % TEA en dólares, hasta 100 % del valor del 0 km y hasta 72 meses (web oficial, 22/10/2026). Tu tasa final depende de la aprobación crediticia."},
  {id:"bbva-uyu",label:"BBVA · autos eléctricos 0 km · pesos 9,25 % TEA (promo hasta 31/10/2026)",cur:"UYU",rate:9.25,rt:"TEA",months:72,note:"Tasa promocional en pesos válida hasta el 31/10/2026 según la web oficial de BBVA. Después puede cambiar."},
  {id:"bbva-0",label:"BBVA · tasa 0 % hasta 36 meses (según automotora)",cur:"USD",rate:0,rt:"TEA",months:36,note:"BBVA indica que la tasa 0 % depende de cada automotora y se limita a 36 meses y a vehículos 0 km."},
+ {id:"santander-usd",label:"Santander (MiAuto) · USD desde 6,4 % TEA · hasta 72 meses (eléctricos/híbridos)",cur:"USD",rate:6.4,rt:"TEA",months:72,note:"MiAuto publica un rango de 6,4 % a 15,5 % TEA en dólares (según perfil); se carga la tasa mínima. Hasta 72 cuotas para híbridos y eléctricos y máximo US$ 50.000. Suma gastos de otorgamiento (40 UI + 8 UI por cuota, tope 120 UI) en «Comisiones»."},
+ {id:"santander-uyu",label:"Santander (MiAuto) · pesos desde 18,5 % TEA · hasta 72 meses",cur:"UYU",rate:18.5,rt:"TEA",months:72,note:"MiAuto publica de 18,5 % a 29 % TEA en pesos (según perfil); se carga la tasa mínima. La tasa en pesos es mucho más alta que en dólares o UI: compará el costo total."},
+ {id:"itau-0",label:"Itaú · tasa 0 % en dólares · hasta 36 meses (solo automotoras)",cur:"USD",rate:0,rt:"TEA",months:36,note:"Itaú ofrece tasa 0 % pero cobra una comisión única de 5,5 % + IVA (12 meses) o 7 % + IVA (24 a 36 meses) sobre el monto: cargala en «Comisiones» (por ejemplo, 7 % + IVA = 8,54 % del préstamo) para ver el costo real."},
  {id:"scotia-usd",label:"Scotiabank · 0 km · desde 7,5 % en USD · hasta 60 meses",cur:"USD",rate:7.5,rt:"TEA",months:60,note:"Scotiabank publica «desde 7,5 % en USD» para 0 km, hasta 60 cuotas y máximo US$ 100.000, pero NO aclara si es TEA o TNA: aquí se supone TEA; confirmalo con el banco."}
 ];
 PRESETS.forEach(p=>$("preset").insertAdjacentHTML("beforeend",`<option value="${p.id}">${e(p.label)}</option>`));
