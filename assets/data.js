@@ -48,6 +48,12 @@ window.EVDATA = (function () {
     fidocarOf: { name: "Fidocar — sitio oficial (Dongfeng, Chery, Hyundai)", url: "https://www.fidocar.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     sucive2026: { name: "Congreso de Intendentes — Texto ordenado del Sucive 2026", url: "https://www.gub.uy/congreso-intendentes/comunicacion/publicaciones/texto-ordenado-del-sucive-2026", date: CHECKED, type: "Normativa oficial (Congreso de Intendentes)" },
     bergara: { name: "Montevideo Portal — Congreso de Intendentes analizará reducir bonificaciones de eléctricos", url: "https://www.montevideo.com.uy/Noticias/Bergara-Congreso-de-Intendentes-analizara-reducir-bonificaciones-de-coches-electricos-uc964179", date: "2026-06-04", type: "Prensa" },
+    renaultOf: { name: "Renault Uruguay — sitio oficial", url: "https://www.renault.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    mercedesOf: { name: "Mercedes-Benz Uruguay — sitio oficial", url: "https://www.mercedes-benz.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    mg4Oct: { name: "El Observador — MG mueve sus fichas: nuevo eléctrico (MG4 EV Urban)", url: "https://www.elobservador.com.uy/mg-mueve-sus-fichas-uruguay-asi-es-el-nuevo-electrico-que-llega-ampliar-su-publico-n6055793", date: "2026-10-05", type: "Prensa" },
+    mgs5Brand: { name: "El Observador (Brand Studio) — SUV eléctrico de MG (MGS5 EV)", url: "https://www.elobservador.com.uy/brand-studio/el-suv-electrico-el-que-mg-quiere-dar-el-gran-golpe-uruguay-450-km-autonomia-y-precios-competitivos-n6045431", date: "2026-05-29", type: "Contenido de marca (Brand Studio), no periodismo independiente" },
+    peugeot2008: { name: "Autoblog Uruguay — Lanzamiento Peugeot 2008, 3008 y 5008 Hybrid", url: "https://www.autoblog.com.uy/2025/05/lanzamiento-peugeot-2008-3008-y-5008.html", date: "2025-05-27", type: "Prensa especializada" },
+    ex90: { name: "Autoblog Uruguay — Lanzamiento Volvo EX90", url: "https://www.autoblog.com.uy/2025/09/lanzamiento-volvo-ex90-los-apuntes-del.html", date: "2025-09", type: "Prensa especializada" },
     rankAutoblog: { name: "Autoblog Uruguay — Ventas 2025: los 10 electrificados más vendidos", url: "https://www.autoblog.com.uy/2026/02/ventas-2025-los-10-vehiculos.html", date: "2026-02", type: "Prensa especializada (datos ACAU)" }
   };
 
@@ -62,7 +68,7 @@ window.EVDATA = (function () {
     "Tesla": { country: "EE.UU." },
     "Chevrolet": { country: "EE.UU.", note: "Marca de General Motors. Verificar el país de fabricación de cada modelo." },
     "Volvo": { country: "Suecia", note: "Propiedad del grupo chino Geely" },
-    "Toyota": { country: "Japón" }, "Nissan": { country: "Japón" }, "Hyundai": { country: "Corea del Sur" },
+    "Toyota": { country: "Japón" }, "Nissan": { country: "Japón" }, "Renault": { country: "Francia" }, "Peugeot": { country: "Francia" }, "Mercedes-Benz": { country: "Alemania" }, "Hyundai": { country: "Corea del Sur" },
     "GWM": { country: "China", note: "Great Wall Motor (incluye ORA, Haval y Tank)" }, "Changan": { country: "China" },
     "Deepal": { country: "China", note: "Marca del grupo Changan" }, "Xpeng": { country: "China" },
     "Suzuki": { country: "Japón", note: "Algunos modelos (p. ej. Swift) se importan desde India según prensa" }
@@ -74,10 +80,10 @@ window.EVDATA = (function () {
     Object.assign({}, base, {
       id: "mg4-urban", brand: "MG", model: "MG4 EV", version: "Urban (Comfort / Deluxe)", body: "Hatchback",
       importer: "Eximar", dealers: [], status: "disponible",
-      price: { list: 21490, promo: null, currency: "USD", validOn: "2026-09-01", note: "Precio «desde» según prensa; varía por versión y equipamiento.", verification: "parcial" },
+      price: { list: 21490, promo: null, currency: "USD", validOn: "2026-10-05", note: "Comfort US$ 21.490 y Deluxe US$ 23.990 según El Observador (oct. 2026); se muestra el precio de la versión Comfort.", verification: "parcial" },
       powerCv: 147, batteryKwh: 42.8, rangeKm: 382, rangeCycle: "NEDC", chargeNote: "10–80 % en 28 min (carga rápida DC; potencia no informada)",
       warranty: { vehicle: "6 años o 120.000 km", battery: "8 años o 160.000 km", note: "Citada para modelos electrificados MG vía Eximar; confirmar condiciones y exclusiones por escrito." },
-      source: sources.mg, notes: ""
+      source: sources.mg4Oct, notes: "Batería LFP de 42,8 kWh (neta); 325 km WLTP y 382 km NEDC. Garantía 6 años/120.000 km y batería 8 años/160.000 km. La versión Deluxe cuesta US$ 23.990."
     }),
     Object.assign({}, base, {
       id: "mg4-deluxe-er", brand: "MG", model: "MG4 EV", version: "Deluxe Extended Range", body: "Hatchback",
@@ -98,10 +104,10 @@ window.EVDATA = (function () {
     Object.assign({}, base, {
       id: "mgs5-lr", brand: "MG", model: "MGS5 EV", version: "Long Range", body: "SUV compacto",
       importer: "Eximar", dealers: [], status: "disponible",
-      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio de esta versión no informado por separado.", verification: "sin dato" },
+      price: { list: 33990, promo: null, currency: "USD", validOn: "2026-05-29", note: "Precio de la versión Luxury Long Range según un contenido de marca (Brand Studio) de El Observador; no es una lista oficial.", verification: "parcial" },
       powerCv: 231, batteryKwh: 62.2, rangeKm: 430, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: "6 años o 120.000 km", battery: "8 años o 160.000 km", note: "Ver nota en MG4 Urban." },
-      source: sources.mg, notes: "Autonomía «hasta 430 km»; ciclo no informado."
+      source: sources.mgs5Brand, notes: "Esta nota da batería NMC de 64 kWh y hasta 450 km WLTP, 170 kW (231 cv) y 350 Nm; otra nota de El Observador (sep. 2026) daba 62,2 kWh y 430 km: se conserva la discrepancia.", discrepancy: "Batería 64 kWh/450 km WLTP (may. 2026) vs 62,2 kWh/430 km (sep. 2026)."
     }),
     Object.assign({}, base, {
       id: "tesla-m3-sr", brand: "Tesla", model: "Model 3", version: "Standard Range RWD", body: "Sedán",
@@ -722,12 +728,102 @@ window.EVDATA = (function () {
       powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
       source: sources.cheryOf, notes: "Tipo inferido por el nombre «CSH Super Híbrida»: la web no lo indica para este modelo."
+    }),
+    Object.assign({}, base, {
+      id: "renault-kangoo-etech", type: "BEV", brand: "Renault", model: "Kangoo E-Tech", version: "", body: "Furgoneta / monovolumen",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 44900, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de Renault Uruguay.", verification: "oficial" },
+      powerCv: 120, batteryKwh: 45, rangeKm: 291, rangeCycle: "WLTP", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.renaultOf, notes: "Batería de 45 kWh «100 % utilizable»; hasta 291 km WLTP según versión y equipamiento; cargador estándar de 22 kW y opción de carga rápida DC. 90 kW (120 hp)."
+    }),
+    Object.assign({}, base, {
+      id: "renault-4-e-tech", type: "BEV", brand: "Renault", model: "4 E-Tech Electric", version: "", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: 150, batteryKwh: null, rangeKm: 409, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.renaultOf, notes: "Hasta 409 km sin indicar el ciclo; hasta 150 CV. Sin capacidad de batería en la web."
+    }),
+    Object.assign({}, base, {
+      id: "renault-koleos-full-hybrid", type: "HEV", brand: "Renault", model: "Koleos Full Hybrid E-Tech", version: "esprit Alpine", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 58000, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial; la web no aclara si corresponde a la versión esprit Alpine o a la base.", verification: "oficial" },
+      powerCv: 241, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.renaultOf, notes: "Full hybrid 1.5 con caja dedicada DHT, 241 hp (142 hp combustión + 134 hp eléctrico), 350 Nm, 4x2. La web lo lista en la categoría «eléctricos» pero es un híbrido no enchufable."
+    }),
+    Object.assign({}, base, {
+      id: "renault-filante-hybrid", type: "HEV", brand: "Renault", model: "Filante Full Hybrid E-Tech", version: "", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no publicado en la web oficial.", verification: "sin dato" },
+      powerCv: 250, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.renaultOf, notes: "Full hybrid, 250 hp máximos; hasta 75 % de la conducción urbana en modo eléctrico (según la web)."
+    }),
+    Object.assign({}, base, {
+      id: "mercedes-glb-eq", type: "BEV", brand: "Mercedes-Benz", model: "GLB EQ", version: "", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 89990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de Mercedes-Benz Uruguay.", verification: "oficial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.mercedesOf, notes: "La web no muestra batería ni autonomía."
+    }),
+    Object.assign({}, base, {
+      id: "mercedes-glc-eq", type: "BEV", brand: "Mercedes-Benz", model: "New GLC EQ", version: "", body: "SUV",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: null, promo: null, currency: "USD", validOn: null, note: "La web indica «precio a consultar».", verification: "sin dato" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
+      source: sources.mercedesOf, notes: "GLC eléctrico (BEV). Sin batería ni autonomía en la web."
+    }),
+    Object.assign({}, base, {
+      id: "mgs5-luxury-sr", type: "BEV", brand: "MG", model: "MGS5 EV", version: "Luxury Standard Range", body: "SUV compacto",
+      importer: "Eximar", dealers: [], status: "disponible",
+      price: { list: 29990, promo: null, currency: "USD", validOn: "2026-05-29", note: "Precio según un contenido de marca (Brand Studio) de El Observador; no es una lista oficial.", verification: "parcial" },
+      powerCv: 167, batteryKwh: 49, rangeKm: 350, rangeCycle: "WLTP", chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "Según la fuente indicada." },
+      source: sources.mgs5Brand, notes: "Se asignan las especificaciones de las «versiones de acceso» (49 kWh LFP, hasta 350 km WLTP, 125 kW/167 cv) por inferencia de la nota."
+    }),
+    Object.assign({}, base, {
+      id: "peugeot-e-2008-gt", type: "BEV", brand: "Peugeot", model: "E-2008", version: "GT", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 45990, promo: null, currency: "USD", validOn: "2025-05-27", note: "Precio del listado de lanzamiento (may. 2025); la batería y el equipamiento se actualizaron después.", verification: "parcial" },
+      powerCv: null, batteryKwh: 62, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "Según la fuente indicada." },
+      source: sources.peugeot2008, notes: "Batería de 62 kWh según la nota. El sitio oficial de Peugeot Uruguay responde 403 y no pudo contrastarse."
+    }),
+    Object.assign({}, base, {
+      id: "peugeot-2008-hybrid-145-gt", type: "HEV", brand: "Peugeot", model: "2008 Hybrid 145", version: "GT", body: "SUV compacto",
+      importer: null, dealers: [], status: "disponible",
+      price: { list: 37990, promo: null, currency: "USD", validOn: "2025-05-27", note: "Precio del listado de lanzamiento (may. 2025).", verification: "parcial" },
+      powerCv: 145, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "Según la fuente indicada." },
+      source: sources.peugeot2008, notes: "Micro-híbrido 1.2 con sistema eléctrico de 29 cv, 145 cv en total; viene de España en una sola variante GT."
+    }),
+    Object.assign({}, base, {
+      id: "volvo-ex90-plus", type: "BEV", brand: "Volvo", model: "EX90", version: "Plus Twin Motor AWD", body: "SUV (7 plazas)",
+      importer: "Eximar", dealers: [], status: "disponible",
+      price: { list: 144900, promo: null, currency: "USD", validOn: "2025-09", note: "Precio de lanzamiento (sep. 2025) según Autoblog; anuncios de MercadoLibre 2026 muestran US$ 129.900 y US$ 144.900.", verification: "parcial" },
+      powerCv: null, batteryKwh: 111, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "Según la fuente indicada." },
+      source: sources.ex90, notes: "Batería de 111 kWh."
+    }),
+    Object.assign({}, base, {
+      id: "volvo-ex90-ultra", type: "BEV", brand: "Volvo", model: "EX90", version: "Ultra Twin Motor Performance AWD", body: "SUV (7 plazas)",
+      importer: "Eximar", dealers: [], status: "disponible",
+      price: { list: 164900, promo: null, currency: "USD", validOn: "2025-09", note: "Precio de lanzamiento (sep. 2025) según Autoblog.", verification: "parcial" },
+      powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: null, battery: null, note: "Según la fuente indicada." },
+      source: sources.ex90, notes: ""
     })
   ];
 
   /* Marcas detectadas en prensa, sin datos de ficha todavía. No son equivalentes a una ficha. */
   const pendingBrands = [
-    { brand: "Sin acceso a su web oficial: Volvo y MG", detail: "Volvo (bloqueo 403) y MG (conexión rechazada) no abrieron al consultarlas el " + CHECKED + ". Sus datos actuales vienen de prensa y anuncios; falta contrastarlos con la web oficial.", importer: "Eximar", source: sources.ex30 },
+    { brand: "Sin acceso a su web oficial: Volvo, MG, Kia, Peugeot y Citroën", detail: "Volvo, Kia, Peugeot y Citroën respondieron 403 (bloqueo) y MG dio error de conexión al consultarlas el " + CHECKED + ". Sus datos actuales, si los hay, vienen de prensa y anuncios.", importer: "Eximar (Volvo, MG)", source: sources.ex30 },
+    { brand: "Volkswagen, Mitsubishi y BMW: sin eléctricos visibles", detail: "En sus webs oficiales no aparece ningún eléctrico o híbrido: Volkswagen lista Polo, Virtus, Nivus, T-Cross, Taos, Tiguan, Amarok y otros sin indicar propulsión eléctrica; Mitsubishi lista Outlander y Eclipse Cross solo con motor a nafta; BMW muestra conceptos Neue Klasse y su web indicaba no estar completamente disponible.", importer: null, source: { name: "Volkswagen Uruguay — sitio oficial (y webs de Mitsubishi y BMW Uruguay)", url: "https://www.volkswagen.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" } },
+    { brand: "Mercedes-Benz — otros modelos", detail: "La web lista GLC, Clase C y GLE en la categoría «Híbridos y Eléctricos» sin aclarar si son enchufables; no se cargaron.", importer: null, source: sources.mercedesOf },
     { brand: "Santa Rosa — Mitsubishi, Renault, JMC, Iveco, Farizon", detail: "Marcas del grupo cuyos modelos eléctricos/híbridos no se relevaron aún (JMC JMEV 2 sin precio; Renault Kwid E-Tech sin precio actual; Farizon son furgonetas eléctricas).", importer: "Santa Rosa", source: sources.leapmotor },
     { brand: "BYD — otros modelos", detail: "Dolphin Mini, Yuan Plus, Song Plus EV y Atto 8 aparecen en prensa o en la web del importador sin precio o sin confirmar que sean eléctricos puros.", importer: "Sadar", source: sources.bydOficial },
     { brand: "Leapmotor C10 REEV · Jaecoo 5 · Jaecoo 7 SHS P", detail: "Figuran en las webs oficiales sin precio verificable (el «Jaecoo 5 desde US$ 27.990» no aclara si es eléctrico).", importer: "Santa Rosa", source: sources.omodaOf },
