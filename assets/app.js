@@ -35,8 +35,23 @@ window.EV = (function () {
   const typeBadge = t => `<span class="badge ${t==="BEV"?"ok":t==="PHEV"?"":"warn"}">${t}</span>`;
   const originOf = brand => (D.origins||{})[brand] || { country: "No informado" };
   const originBadge = brand => { const o = originOf(brand); return `<span class="badge" title="${esc(o.note||"País de origen de la marca")}">${esc(o.country)}</span>`; };
+  /* Números escritos a la uruguaya: "35.000" = 35000, "35.000,50" = 35000,5, "0,25" = 0,25 y "0.25" = 0,25.
+     Devuelve "" si el campo está vacío y NaN si no se entiende (nunca inventa un valor). */
+  function num(raw) {
+    let t = String(raw == null ? "" : raw).trim().replace(/\s|US\$|\$|u\$s/gi, "");
+    if (t === "") return "";
+    if (t.includes(",")) t = t.replace(/\./g, "").replace(",", ".");
+    else if (/^\d{1,3}(\.\d{3})+$/.test(t)) t = t.replace(/\./g, "");
+    return /^-?\d*\.?\d+$/.test(t) ? Number(t) : NaN;
+  }
+  /* Los campos type=number cambian solos con la rueda del mouse o el trackpad y malinterpretan «35.000»:
+     en los simuladores se usan campos de texto con teclado numérico y se interpretan con num(). */
+  function plainNumbers() {
+    document.querySelectorAll("form#f input[type=number]").forEach(i => { i.type = "text"; i.inputMode = "decimal"; i.autocomplete = "off"; i.removeAttribute("min"); i.removeAttribute("max"); i.removeAttribute("step"); });
+  }
   function getVehicles() { return D.vehicles; }
   function byId(id) { return D.vehicles.find(v => v.id === id); }
   document.addEventListener("DOMContentLoaded", layout);
-  return { D, CAR, typeLabel, typeBadge, originOf, originBadge, esc, NI, fmtNum, fmtMoney, statusBadge, priceHtml, priceStale, getVehicles, byId, daysSince };
+  if (["fin", "tco"].includes(document.body && document.body.dataset.page)) document.addEventListener("DOMContentLoaded", plainNumbers);
+  return { D, CAR, typeLabel, typeBadge, originOf, originBadge, esc, NI, num, fmtNum, fmtMoney, statusBadge, priceHtml, priceStale, getVehicles, byId, daysSince };
 })();
