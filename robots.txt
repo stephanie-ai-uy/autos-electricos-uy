@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /tests.html
 Disallow: /admin.html
-# Reemplazar TU-DOMINIO por el dominio real al publicar
-Sitemap: https://TU-DOMINIO/sitemap.xml
+# Al contratar dominio propio, reemplazar esta dirección
+Sitemap: https://stephanie-ai-uy.github.io/autos-electricos-uy/sitemap.xml
