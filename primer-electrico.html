@@ -40,18 +40,25 @@
 </div>
 
 <h2>4. Calculá cuánto necesitás</h2>
+<p class="small muted">Todos los importes están en <strong>pesos uruguayos ($U)</strong>. Completá los campos de a uno; los de combustión son opcionales y sirven para comparar.</p>
 <form class="card" id="f" novalidate>
+<h3 style="margin-top:0">Tu uso</h3>
 <div class="row">
-<div><label for="km">Km por día</label><input id="km" type="text" inputmode="decimal" placeholder="Ej.: 40"></div>
-<div><label for="dias">Días de uso por mes</label><input id="dias" type="text" inputmode="decimal" value="30"></div>
-<div><label for="veh">Modelo de referencia (del catálogo)</label><select id="veh"><option value="">Elegí un modelo</option></select></div>
-<div><label for="kwh">Consumo (kWh/100 km)</label><input id="kwh" type="text" inputmode="decimal" placeholder="Se completa con el modelo"></div>
-<div><label for="tar">Precio del kWh (tu tarifa)</label><input id="tar" type="text" inputmode="decimal" placeholder="Ej.: 2,98"></div>
-<div><label for="nl">Tu auto actual: L/100 km</label><input id="nl" type="text" inputmode="decimal" placeholder="Opcional"></div>
-<div><label for="pl">Precio del litro</label><input id="pl" type="text" inputmode="decimal" placeholder="Opcional"></div></div>
-<p class="small muted">Tarifas de UTE publicadas por <a href="https://www.montevideo.com.uy/" rel="noopener">Montevideo Portal</a> el 6/10/2026: valle $ 2,98 y llano $ 6,31 por kWh (pueden cambiar; confirmalas en tu factura). Usá la misma moneda en todos los campos.</p>
+<div><label for="km">Kilómetros que recorrés por día (km)</label><input id="km" type="text" inputmode="decimal" placeholder="Ej.: 40"><span class="small muted">Sumá ida y vuelta al trabajo y otros trayectos.</span></div>
+<div><label for="dias">Días que usás el auto por mes (días)</label><input id="dias" type="text" inputmode="decimal" value="30"><span class="small muted">30 si lo usás todos los días.</span></div></div>
+<h3>El auto eléctrico</h3>
+<div class="row">
+<div><label for="veh">Modelo de referencia</label><select id="veh"><option value="">Elegí un modelo</option></select><span class="small muted">Del catálogo; completa el consumo y la autonomía.</span></div>
+<div><label for="kwh">Consumo (kWh cada 100 km)</label><input id="kwh" type="text" inputmode="decimal" placeholder="Se completa con el modelo"><span class="small muted">Es la energía que gasta: calculado como batería ÷ autonomía publicada. Podés cambiarlo.</span></div>
+<div><label for="tsel">Tarifa de electricidad ($U por kWh)</label><select id="tsel"><option value="2,98">UTE valle: $U 2,98</option><option value="6,31">UTE llano: $U 6,31</option><option value="">Otra (escribila abajo)</option></select></div>
+<div><label for="tar">Precio del kWh que usás ($U por kWh)</label><input id="tar" type="text" inputmode="decimal" value="2,98"><span class="small muted">Mirá tu factura de UTE. Cargando de noche suele aplicar la tarifa valle.</span></div></div>
+<h3>Tu auto actual de combustión (opcional)</h3>
+<div class="row">
+<div><label for="nl">Consumo (litros cada 100 km)</label><input id="nl" type="text" inputmode="decimal" placeholder="Ej.: 7"></div>
+<div><label for="pl">Precio del litro de combustible ($U por litro)</label><input id="pl" type="text" inputmode="decimal" placeholder="Ej.: el de tu estación"></div></div>
+<p class="small muted">Tarifas de UTE publicadas por <a href="https://www.montevideo.com.uy/" rel="noopener">Montevideo Portal</a> el 6/10/2026 (pueden cambiar; confirmalas en tu factura). El precio del litro no lo fijamos nosotros: usá el que pagás hoy.</p>
 <p><button class="btn" type="submit">Calcular</button></p></form>
-<div id="res" class="result" aria-live="polite">Completá km por día, consumo y precio del kWh.</div>
+<div id="res" class="result" aria-live="polite">Completá los kilómetros por día, el consumo y el precio del kWh, y tocá Calcular.</div>
 
 <h2>5. Antes de firmar: lista rápida</h2>
 <ol class="steps">
@@ -74,8 +81,9 @@
 <script>
 const $=id=>document.getElementById(id), V=EV.getVehicles().filter(v=>v.type==="BEV"&&v.batteryKwh&&v.rangeKm);
 V.sort((a,b)=>(a.brand+a.model).localeCompare(b.brand+b.model)).forEach(v=>$("veh").insertAdjacentHTML("beforeend",`<option value="${EV.esc(v.id)}">${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version||"")}</option>`));
+$("tsel").onchange=()=>{if($("tsel").value)$("tar").value=$("tsel").value;else{$("tar").value="";$("tar").focus()}};
 $("veh").onchange=()=>{const v=EV.byId($("veh").value);if(v)$("kwh").value=(v.batteryKwh/v.rangeKm*100).toFixed(1).replace(".",",")};
-const f2=n=>EV.fmtNum(n,2);
+const f2=n=>"$U "+EV.fmtNum(n,2);
 $("f").addEventListener("submit",ev=>{ev.preventDefault();
  const km=EV.num($("km").value),d=EV.num($("dias").value),k=EV.num($("kwh").value),t=EV.num($("tar").value),nl=EV.num($("nl").value),pl=EV.num($("pl").value);
  if([km,d,k,t,nl,pl].some(x=>Number.isNaN(x))){$("res").textContent="No se entiende algún número. Escribí solo cifras, por ejemplo 40 o 2,98.";return}
