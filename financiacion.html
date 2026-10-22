@@ -8,6 +8,8 @@
 <p class="lead">Simulá una financiación con los datos que te dio la entidad. No inventamos tasas: si no las conocés, consultalas con el banco.</p>
 <div class="layout" style="grid-template-columns:minmax(260px,380px) 1fr">
 <form class="card" id="f" novalidate><h2 style="margin-top:0">Simulador</h2>
+<label for="preset">Cargar condiciones publicadas por una entidad (opcional)</label><select id="preset"><option value="">Ninguna: completo yo los datos</option></select>
+<p class="small muted" id="presetNote" style="margin:4px 0 0"></p>
 <label for="cur">Moneda (todos los importes en esta moneda)</label><select id="cur"><option value="USD">Dólares (US$)</option><option value="UYU">Pesos ($)</option></select>
 <label for="price">Precio del vehículo</label><input id="price" type="number" min="0" inputmode="decimal">
 <label for="down">Entrega inicial</label><input id="down" type="number" min="0" value="0" inputmode="decimal">
@@ -24,15 +26,29 @@
 
 <h2>Entidades y productos</h2>
 <div class="notice info">«Hasta 100 % financiable» en un aviso no significa aprobación automática del 100 % para cualquier solicitante. Condiciones y tasas dependen de cada perfil.</div>
-<div class="tablewrap"><table><thead><tr><th>Entidad</th><th>Producto</th><th>Estado</th><th>Condiciones conocidas</th><th>Fuente</th></tr></thead><tbody id="ent"></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>Entidad</th><th>Producto y condiciones publicadas</th><th>Estado</th><th>Fuente y enlaces</th></tr></thead><tbody id="ent"></tbody></table></div>
 </div></main>
 <script src="assets/data.js"></script><script src="assets/finance.js"></script><script src="assets/app.js"></script>
 <script>
 const $=id=>document.getElementById(id), e=EV.esc;
-$("ent").innerHTML = EV.D.financing.map(f=>`<tr><td><strong>${e(f.entity)}</strong></td><td>${e(f.product)}</td>
-<td><span class="badge ${f.status.startsWith("pendiente")?"warn":"bad"}">${e(f.status)}</span></td>
-<td>${f.term?`Plazo: ${e(f.term)}<br>Monedas: ${e(f.currencies)}<br>Tasa: ${e(f.rate)}<br>Comisiones/gastos: ${e(f.fees)}<br>Acepta eléctricos: ${e(f.accepts)}<br>Resto (entrega mínima, % financiable, requisitos): <em>Consultar con la entidad</em>`:"<em>Consultar con la entidad</em>"}</td>
-<td>${f.source?`<a href="${e(f.source.url)}" rel="noopener">${e(f.source.date)}</a>`:"—"}</td></tr>`).join("");
+$("ent").innerHTML = EV.D.financing.map(f=>{
+  const ok=f.status.startsWith("vigente"), pend=f.status.startsWith("pendiente");
+  const cond=f.term?`<strong>${e(f.product)}</strong><br>Condición: ${e(f.condition)}<br>Plazo: ${e(f.term)}<br>Monedas: ${e(f.currencies)}<br>Tasa: ${e(f.rate)}<br>Financia: ${e(f.financed||"No informado")}<br>Requisitos: ${e(f.requirements||"Consultar con la entidad")}<br>Comisiones/gastos: ${e(f.fees)}<br>Acepta eléctricos: ${e(f.accepts)}`:`${e(f.product)}<br><em>Consultar con la entidad</em>`;
+  const links=[f.simulator?`<a href="${e(f.simulator)}" rel="noopener">Simulador oficial</a>`:"",f.url?`<a href="${e(f.url)}" rel="noopener">Sitio de la entidad</a>`:""].filter(Boolean).join("<br>");
+  return `<tr><td><strong>${e(f.entity)}</strong></td><td>${cond}</td>
+<td><span class="badge ${ok?"ok":pend?"warn":"bad"}">${e(f.status)}</span></td>
+<td>${f.source?`<a href="${e(f.source.url)}" rel="noopener">${e(f.source.name)}</a><br><span class="small muted">${e(f.source.date)}</span><br>`:""}${links||"—"}</td></tr>`;}).join("");
+// Condiciones publicadas que se pueden cargar en el simulador (solo lo que la entidad publica; la tasa real depende del perfil).
+const PRESETS=[
+ {id:"bbva-usd",label:"BBVA · autos eléctricos 0 km · USD 5,5 % TEA · hasta 72 meses",cur:"USD",rate:5.5,rt:"TEA",months:72,note:"BBVA publica 5,5 % TEA en dólares, hasta 100 % del valor del 0 km y hasta 72 meses (web oficial, 22/10/2026). Tu tasa final depende de la aprobación crediticia."},
+ {id:"bbva-uyu",label:"BBVA · autos eléctricos 0 km · pesos 9,25 % TEA (promo hasta 31/10/2026)",cur:"UYU",rate:9.25,rt:"TEA",months:72,note:"Tasa promocional en pesos válida hasta el 31/10/2026 según la web oficial de BBVA. Después puede cambiar."},
+ {id:"bbva-0",label:"BBVA · tasa 0 % hasta 36 meses (según automotora)",cur:"USD",rate:0,rt:"TEA",months:36,note:"BBVA indica que la tasa 0 % depende de cada automotora y se limita a 36 meses y a vehículos 0 km."},
+ {id:"scotia-usd",label:"Scotiabank · 0 km · desde 7,5 % en USD · hasta 60 meses",cur:"USD",rate:7.5,rt:"TEA",months:60,note:"Scotiabank publica «desde 7,5 % en USD» para 0 km, hasta 60 cuotas y máximo US$ 100.000, pero NO aclara si es TEA o TNA: aquí se supone TEA; confirmalo con el banco."}
+];
+PRESETS.forEach(p=>$("preset").insertAdjacentHTML("beforeend",`<option value="${p.id}">${e(p.label)}</option>`));
+$("preset").addEventListener("change",()=>{const p=PRESETS.find(x=>x.id===$("preset").value);
+  if(!p){$("presetNote").textContent="";return}
+  $("cur").value=p.cur;$("rate").value=String(p.rate).replace(".",",");$("rt").value=p.rt;$("months").value=p.months;$("presetNote").textContent=p.note+" Cuota estimada con sistema francés; no es una oferta.";});
 $("f").addEventListener("submit",ev=>{ev.preventDefault();
   const el=$("res"), v={}, bad=[];
   ["price","down","fa","rate","months","fees","other"].forEach(k=>{v[k]=EV.num($(k).value); if(Number.isNaN(v[k]))bad.push($(k).previousElementSibling.textContent);});
