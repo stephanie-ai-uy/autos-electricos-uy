@@ -59,7 +59,7 @@
 </div></main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
-<script src="assets/chargers.js?v=1"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=15"></script>
+<script src="assets/chargers.js?v=1"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=16"></script>
 <script>
 const $=id=>document.getElementById(id), e=EV.esc, D=window.EVCHARGERS;
 $("dt").textContent=D.date.split("-").reverse().join("/");
@@ -82,9 +82,9 @@ function render(fit){
 }
 ["dep","con"].forEach(i=>$(i).addEventListener("change",()=>render(true)));$("q").addEventListener("input",()=>render(false));
 render(false);
-$("near").onclick=()=>{if(!navigator.geolocation){alert("Tu navegador no permite ubicarte.");return}
+$("near").onclick=()=>{window.EVTRACK&&EVTRACK("map_near_me");if(!navigator.geolocation){alert("Tu navegador no permite ubicarte.");return}
   navigator.geolocation.getCurrentPosition(p=>{const a=[p.coords.latitude,p.coords.longitude];let best=null,bd=1e9;S.forEach(s=>{const d=map.distance(a,[s.lat,s.lng]);if(d<bd){bd=d;best=s}});
     map.setView(a,12);L.circleMarker(a,{radius:8,color:"#fff",fillColor:"#9b7bff",fillOpacity:1}).addTo(map).bindPopup("Estás acá").openPopup();
     $("chips").insertAdjacentHTML("beforeend",`<span class="chip">Más cercano: <b>${e(best.name)}</b> a ${EV.fmtNum(bd/1000,1)} km</span>`);},()=>alert("No pudimos obtener tu ubicación. Revisá el permiso del navegador."),{timeout:10000});};
-$("showlive").onclick=()=>{const l=$("live");if(l.hidden){l.innerHTML='<iframe src="https://movilidad.ute.com.uy/mapa.html" title="Mapa de estaciones de carga de UTE (en vivo)" loading="lazy" referrerpolicy="no-referrer"></iframe>';l.hidden=false;$("showlive").textContent="Ocultar el mapa en vivo"}else{l.innerHTML="";l.hidden=true;$("showlive").textContent="Ver el mapa de UTE en vivo"}};
+$("showlive").onclick=()=>{window.EVTRACK&&EVTRACK("map_live_open");const l=$("live");if(l.hidden){l.innerHTML='<iframe src="https://movilidad.ute.com.uy/mapa.html" title="Mapa de estaciones de carga de UTE (en vivo)" loading="lazy" referrerpolicy="no-referrer"></iframe>';l.hidden=false;$("showlive").textContent="Ocultar el mapa en vivo"}else{l.innerHTML="";l.hidden=true;$("showlive").textContent="Ver el mapa de UTE en vivo"}};
 </script></body></html>

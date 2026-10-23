@@ -50,11 +50,11 @@
 <h2>Supuestos y límites</h2>
 <ul class="small"><li>Costes de carga = km × consumo × (mezcla casa/pública × tarifa). No incluye pérdidas de carga (típicamente entre 10 % y 15 %): si querés incluirlas, subí el consumo.</li><li>No incluye depreciación/valor de reventa, financiación (ver <a href="financiacion.html">simulador</a>) ni inflación.</li><li>Todo lo que ves viene de lo que cargaste: son estimaciones, no datos verificados.</li></ul>
 </div></main>
-<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=15"></script>
+<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=16"></script>
 <script>
 const $=id=>document.getElementById(id), ids="price years kmYear kwh100 homePct priceHome pricePublic insurance patente maint tires otherYear charger install cPrice cLper100 cFuelPrice cInsurance cPatente cMaint".split(" ");
 $("ptipo").onchange=()=>{const c=$("ptipo").value==="custom";$("prbox").hidden=!c;$("cifbox").hidden=!c};
-$("pcalc").onclick=()=>{const v=EV.num($("pvm").value),tc=EV.num($("tc").value),f2=n=>EV.fmtNum(n,2);if(!(v>0)){$("pres").innerHTML="Ingresá el valor de mercado sin sin IVA (solo cifras, por ejemplo 30000).".replace("sin sin","sin");return}
+$("pcalc").onclick=()=>{window.EVTRACK&&EVTRACK("patente_calc");const v=EV.num($("pvm").value),tc=EV.num($("tc").value),f2=n=>EV.fmtNum(n,2);if(!(v>0)){$("pres").innerHTML="Ingresá el valor de mercado sin sin IVA (solo cifras, por ejemplo 30000).".replace("sin sin","sin");return}
   const vu=$("pvm_cur").value==="USD";if(vu&&!(tc>0)){$("pres").innerHTML="El valor está en dólares y la patente se paga en pesos: cargá el tipo de cambio (arriba, en «Monedas»).";return}
   const cu=$("ptipo").value==="custom",rate=cu?EV.num($("prate").value)/100:+$("ptipo").value;if(!(rate>=0)){$("pres").innerHTML="Ingresá una alícuota válida.";return}
   const p=Math.round((vu?v*tc:v)*rate*100)/100;$("patente").value=String(p).replace(".",",");$("patente_cur").value="UYU";
@@ -72,6 +72,7 @@ $("f").addEventListener("submit",ev=>{ev.preventDefault();
   const mon="price priceHome pricePublic insurance patente maint tires otherYear charger install cPrice cFuelPrice cInsurance cPatente cMaint".split(" "),tc=EV.num($("tc").value);
   if(mon.some(i=>o[i]!==""&&$(i+"_cur").value==="UYU"&&!(tc>0))){$("res").innerHTML="<strong>Falta el tipo de cambio.</strong> Hay importes en pesos: cargá cuántos pesos vale 1 US$ (campo «Tipo de cambio», arriba) para convertir todo a una misma moneda. No usamos una cotización por defecto.";return}
   mon.forEach(i=>{if(o[i]!==""&&$(i+"_cur").value==="UYU")o[i]=o[i]/tc;});
+  window.EVTRACK&&EVTRACK("tco_calc",o.compare?"con_comparacion":"solo_electrico");
   const r=EVFIN.tco(o),m=n=>"US$ "+f2(n)+(tc>0?" (≈ $ "+EV.fmtNum(n*tc,0)+")":"");
   let h=`<div class="muted small">Coste anual de uso (eléctrico)</div><div class="big">${m(r.yearly)}</div><p class="small">Electricidad: ${m(r.energyYear)}/año (${EV.fmtNum(r.kwhYear,0)} kWh/año) · Inversión inicial (vehículo+cargador+instalación): ${m(r.upfront)}. Todo convertido a dólares${tc>0?" con tipo de cambio $ "+f2(tc):""}.</p>
   <p><strong>Coste total a ${r.years} año(s): ${m(r.total)}</strong></p>`;

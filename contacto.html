@@ -6,6 +6,7 @@
 <body data-page="con"><main id="main"><div class="wrap" style="max-width:640px">
 <h1>Corregir un dato o <span class="grad">sugerir</span> una mejora</h1>
 <p class="lead">Los precios cambian seguido y un solo ojo no alcanza. Si viste un dato incorrecto, falta un modelo o tenés una idea para la web, contanos. <strong>Dejar tu nombre o contacto es opcional</strong>: solo hace falta si querés que te respondamos.</p>
+<p class="small">También podés escribirnos directamente a <a href="mailto:stephanie.inteligenciart@gmail.com" data-ev="email_click">stephanie.inteligenciart@gmail.com</a> (consultas generales y sobre el certificado de eficiencia energética).</p>
 <div id="off" class="notice bad" hidden><strong>Formulario no activado todavía.</strong> Falta conectar la base de datos (ver <code>docs/FASE2-SUPABASE.md</code>). Mientras tanto no se recoge ningún dato.</div>
 <form class="card" id="f" novalidate>
 <label for="topic">¿Qué querés contarnos?</label><select id="topic"><option value="dato">Un dato está mal (precio, ficha, garantía)</option><option value="faltante">Falta un modelo o una versión</option><option value="sugerencia">Una sugerencia para la web</option><option value="otro">Otro</option></select>
@@ -18,8 +19,9 @@
 <p class="small muted">No pedimos cédula, datos bancarios ni documentación. Guardamos el mensaje 180 días y luego se borra. Si dejás un contacto, solo lo usamos para responderte; podés pedir acceso o eliminación por el mismo medio. <strong>No</strong> compartimos nada con concesionarios, bancos ni terceros. Este formulario no es una consulta comercial: no vendemos autos, seguros ni préstamos.</p>
 <p><button class="btn" id="go" type="submit">Enviar mensaje</button></p><div id="msgout" aria-live="polite"></div></form>
 </div></main>
+<script>document.addEventListener("click",ev=>{const a=ev.target.closest("[data-ev]");if(a&&window.EVTRACK)EVTRACK(a.dataset.ev)});</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
-<script src="assets/config.js"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=15"></script>
+<script src="assets/config.js"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=16"></script>
 <script>
 const $=id=>document.getElementById(id), C=window.EVCONFIG||{}, CV="2026-10-v2";
 const CT="Acepto que Autos Eléctricos UY guarde este mensaje 180 días para revisar y mejorar el sitio. Si dejé un contacto, solo se usará para responderme. No se compartirá con terceros.";
@@ -30,7 +32,7 @@ if(P.get("tema")==="cee"){ $("topic").value="otro"; const m=(P.get("msg")||"").s
 const sb=(C.SUPABASE_URL&&C.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY):null;
 if(!sb){$("off").hidden=false;$("go").disabled=true;}
 let last=0;
-$("f").addEventListener("submit",async ev=>{ev.preventDefault();const out=$("msgout");
+$("f").addEventListener("submit",async ev=>{ev.preventDefault();window.EVTRACK&&EVTRACK("contact_submit",P.get("tema")||"general");const out=$("msgout");
   if($("hp").value)return;                                   // honeypot anti-bots
   if(Date.now()-last<15000){out.textContent="Esperá unos segundos antes de reenviar.";return}
   const name=$("name").value.trim(),contact=$("contact").value.trim(),msg=$("msg").value.trim();

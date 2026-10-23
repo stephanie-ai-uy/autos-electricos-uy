@@ -27,7 +27,7 @@
 <p class="small muted">Aparecen en prensa o en webs de importadores pero todavía no tienen ficha con datos verificados. No equivalen a disponibilidad confirmada.</p>
 <div id="pending" class="tablewrap"></div></section></div></div></main>
 <div class="tray" id="tray"><span id="trayTxt"></span><a class="btn" id="goCmp" href="comparador.html">Comparar</a><button class="btn sec" id="clr">Vaciar</button></div>
-<script src="assets/images.js?v=2"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=15"></script>
+<script src="assets/images.js?v=2"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=16"></script>
 <script>
 const $ = id => document.getElementById(id), V = EV.getVehicles(), TYPES = ["BEV","PHEV","HEV","REEV"];
 const qs = new URLSearchParams(location.search);
@@ -106,6 +106,7 @@ $("list").addEventListener("change", e => { const id = e.target.dataset.id; if (
   save(); tray(); });
 $("clr").onclick = () => { sel = []; save(); render(); };
 $("reset").onclick = () => { $("f").reset(); $("group").checked = true; fillSelects(); render(); };
+let usedF = false; $("f").addEventListener("input", () => { if (!usedF) { usedF = true; window.EVTRACK&&EVTRACK("cat_filter"); } });
 $("f").addEventListener("input", render); $("f").addEventListener("submit", e => e.preventDefault());
 $("pending").innerHTML = `<table><thead><tr><th>Marca(s) / modelos</th><th>Qué se sabe</th><th>Importador</th><th>Fuente</th></tr></thead><tbody>${EV.D.pendingBrands.map(p => `<tr><td>${EV.esc(p.brand)}</td><td>${EV.esc(p.detail)}</td><td>${EV.esc(p.importer || EV.NI)}</td><td><a href="${p.source.url}" rel="noopener">${EV.esc(p.source.date)}</a></td></tr>`).join("")}</tbody></table>`;
 renderTabs(); fillSelects(); render();

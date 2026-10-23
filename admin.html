@@ -16,12 +16,12 @@
 <div id="body"></div>
 </div></div></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
-<script src="assets/config.js"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=15"></script>
+<script src="assets/config.js"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=16"></script>
 <script>
 const $=id=>document.getElementById(id), e=EV.esc, C=window.EVCONFIG||{};
 const sb=(C.SUPABASE_URL&&C.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY):null;
-const TABS={vehicles:"Vehículos",benefits:"Beneficios",financing_products:"Financiación",site_settings:"Ajustes",lead_requests:"Contactos",vehicle_reviews:"Opiniones",audit_logs:"Historial",export:"Exportar al sitio"};
-let tab="vehicles";
+const TABS={stats:"Estadísticas",vehicles:"Vehículos",benefits:"Beneficios",financing_products:"Financiación",site_settings:"Ajustes",lead_requests:"Contactos",vehicle_reviews:"Opiniones",audit_logs:"Historial",export:"Exportar al sitio"};
+let tab="stats";
 if(!sb)$("off").hidden=false;else init();
 async function init(){const {data:{session}}=await sb.auth.getSession();session?await enter(session):($("login").hidden=false);}
 $("login").addEventListener("submit",async ev=>{ev.preventDefault();const {data,error}=await sb.auth.signInWithPassword({email:$("em").value,password:$("pw").value});
@@ -45,9 +45,47 @@ function validate(table,id,d){
   if(table==="benefits"){if(!d.name||!["vigente","anunciado","vencido","pendiente"].includes(d.status))return "Beneficio: falta nombre o estado válido.";
     if(d.status==="vigente"&&!(d.sources&&d.sources.length))return "Un beneficio «vigente» necesita al menos una fuente.";}
   return null;}
+
+/* ===== Estadísticas (tabla site_events, anónima) ===== */
+let statDays=30;
+async function statsView(b){
+  b.innerHTML='<p class="muted">Cargando…</p>';
+  const since=new Date(Date.now()-statDays*864e5).toISOString().slice(0,10);let rows=[],from=0;
+  for(;;){const {data,error}=await sb.from("site_events").select("day,sid,kind,name,ref,dev,meta").gte("day",since).order("id",{ascending:true}).range(from,from+999);
+    if(error){b.innerHTML=`<div class="notice bad">${e(error.message)}</div>`;return}rows=rows.concat(data.filter(r=>!/^test_/.test(r.name)));if(data.length<1000||rows.length>=20000)break;from+=1000;}
+  const V=rows.filter(r=>r.kind==="view"),A=rows.filter(r=>r.kind==="action");
+  const uniq=a=>new Set(a.map(r=>r.sid||Math.random())).size, cnt=(a,f)=>{const m={};a.forEach(r=>{const k=f(r);if(k!=null&&k!=="")m[k]=(m[k]||0)+1});return Object.entries(m).sort((x,y)=>y[1]-x[1])};
+  const by=n=>A.filter(r=>r.name===n), sess=n=>uniq(by(n));
+  const bar=(l,n,max)=>`<div style="display:flex;gap:8px;align-items:center;margin:3px 0"><span style="min-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${e(l)}">${e(l)}</span><span style="flex:1;background:var(--surface2);border-radius:6px"><span style="display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--brand),var(--blue));width:${Math.max(2,Math.round(n/Math.max(max,1)*100))}%"></span></span><b style="min-width:40px;text-align:right">${n}</b></div>`;
+  const list=(arr,n=10)=>arr.length?arr.slice(0,n).map(([k,v])=>bar(k,v,arr[0][1])).join(""):'<p class="small muted">Todavía sin datos.</p>';
+  const visits=uniq(V),pv=V.length,days={};V.forEach(r=>{(days[r.day]=days[r.day]||new Set()).add(r.sid)});
+  const dayArr=[];for(let i=statDays-1;i>=0;i--){const d=new Date(Date.now()-i*864e5).toISOString().slice(0,10);dayArr.push([d.slice(5),days[d]?days[d].size:0])}
+  const mx=Math.max(1,...dayArr.map(x=>x[1]));
+  const ch=`<div style="display:flex;align-items:flex-end;gap:2px;height:90px;margin:10px 0">${dayArr.map(([d,n])=>`<div title="${d}: ${n}" style="flex:1;background:linear-gradient(0deg,var(--brand),var(--blue));height:${Math.max(2,n/mx*100)}%;border-radius:3px 3px 0 0;opacity:${n?1:.25}"></div>`).join("")}</div>`;
+  const pages=cnt(V,r=>r.name), models=cnt(V.filter(r=>r.name==="ficha.html"),r=>r.meta), srcs=cnt(V.filter(r=>r.ref),r=>r.ref);
+  const direct=V.filter(r=>!r.ref).length, devs=cnt(V,r=>r.dev), acts=cnt(A,r=>r.name);
+  const cmpIds=cnt(V.filter(r=>r.name==="comparador.html"&&r.meta),r=>r.meta);
+  const f=[["Entraron a «Beneficios»",uniq(V.filter(r=>r.name==="beneficios.html"))],["Abrieron el verificador del certificado",sess("cee_open")],["Completaron el verificador",sess("cee_check")],["Tocaron «más información» o el email",new Set([...by("cee_info_click"),...by("cee_email_click")].map(r=>r.sid)).size],["Enviaron un mensaje de contacto",sess("contact_submit")]];
+  const monthly=statDays===30?visits:Math.round(visits*30/statDays);
+  const sem=(n,g,y)=>n>=g?"🟢":n>=y?"🟡":"🔴";
+  b.innerHTML=`<h2>Estadísticas del sitio</h2>
+  <p class="small muted">Datos anónimos propios (sin cookies ni IP). «Visitas» = pestañas distintas que entraron (no son personas únicas: una persona que vuelve otro día cuenta otra vez). Se excluyen los datos de prueba. Período:
+  ${[7,30,90].map(d=>`<button class="btn ${d===statDays?"":"sec"}" data-d="${d}" style="padding:2px 10px">${d} días</button>`).join(" ")}</p>
+  <div class="grid g2" style="margin:10px 0"><div class="card"><div class="muted small">Visitas</div><div class="big">${visits}</div><div class="small muted">${pv} páginas vistas · ${visits?(pv/visits).toFixed(1):0} por visita</div></div>
+  <div class="card"><div class="muted small">Semáforo (orientativo)</div><div class="small" style="line-height:1.8">${sem(monthly,500,150)} Visitas por mes: ${monthly} <span class="muted">(🟢 ≥ 500 · 🟡 ≥ 150)</span><br>${sem(sess("cee_check"),20,5)} Verificador del certificado completado: ${sess("cee_check")} <span class="muted">(🟢 ≥ 20 · 🟡 ≥ 5)</span><br>${sem(sess("contact_submit")+sess("cee_email_click"),5,2)} Consultas (formulario o email): ${sess("contact_submit")+sess("cee_email_click")} <span class="muted">(🟢 ≥ 5 · 🟡 ≥ 2)</span></div></div></div>
+  <div class="card"><strong>Visitas por día</strong>${ch}</div>
+  <div class="card" style="margin-top:12px"><strong>Embudo del certificado (CEE)</strong><p class="small muted">Cuántas visitas llegan a cada paso. De acá sale si hay demanda para la guía o la revisión.</p>${f.map(([l,n])=>bar(l,n,f[0][1])).join("")}</div>
+  <div class="grid g2" style="margin-top:12px"><div class="card"><strong>Páginas más vistas</strong>${list(pages)}</div><div class="card"><strong>Modelos más consultados (fichas)</strong>${list(models)}</div>
+  <div class="card"><strong>De dónde llegan</strong><div class="small muted">Directo o sin dato: ${direct}. Para medir cada publicación, compartí el sitio con <code>?utm_source=nombre</code> al final (ej. <code>?utm_source=facebook-ev</code>).</div>${list(srcs)}</div>
+  <div class="card"><strong>Dispositivo</strong>${list(devs)}</div>
+  <div class="card"><strong>Qué herramientas usan</strong>${list(acts,15)}</div><div class="card"><strong>Modelos comparados</strong><p class="small muted">Combinaciones de comparador abiertas.</p>${list(cmpIds)}</div></div>`;
+  b.onclick=ev=>{const d=ev.target.dataset&&ev.target.dataset.d;if(d){statDays=+d;statsView(b)}};
+}
 async function show(){
   const b=$("body");
   if(tab==="export")return exportView(b);
+  if(tab==="stats")return statsView(b);
+
   if(tab==="vehicle_reviews"){
     const {data,error}=await sb.from("vehicle_reviews").select("*").order("created_at",{ascending:false}).limit(200);
     if(error){b.innerHTML=`<div class="notice bad">${e(error.message)}</div>`;return}

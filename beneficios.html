@@ -51,7 +51,7 @@
 <div><label for="when">¿Cuándo se factura?</label><select id="when"><option value="2026">Antes de 2027</option><option value="2027">2027 o después</option></select></div></div>
 <p><button class="btn" type="submit">Ver orientación</button></p><div id="wr"></div></form>
 </div></main>
-<script src="assets/data.js?v=8"></script><script src="assets/app.js?v=15"></script>
+<script src="assets/data.js?v=8"></script><script src="assets/app.js?v=16"></script>
 <script>
 const $=id=>document.getElementById(id), e=EV.esc, B=EV.D.benefits;
 const ST={vigente:["Vigente","ok"],anunciado:["Anunciado (aún no vigente)",""],vencido:["Vencido","bad"],pendiente:["Pendiente de confirmar","warn"]};
@@ -79,7 +79,7 @@ const $=id=>document.getElementById(id), e=EV.esc, D=s=>new Date(s+"T00:00:00");
 const VEN_INI=D("2023-12-16"), VEN_FIN=D("2025-12-14"), CIERRE=D("2026-12-15"), TOPE=45000;
 const TASA={m1:5173/20, taxi:5173/20, cityc:2072/20, moto:1542/20};
 const fmt=d=>d.toLocaleDateString("es-UY");
-$("cee-open").onclick=()=>{const b=$("cee-box"),o=b.hidden;b.hidden=!o;$("cee-open").setAttribute("aria-expanded",String(o));if(o)b.scrollIntoView({behavior:"smooth",block:"start"})};
+$("cee-open").onclick=()=>{const b=$("cee-box"),o=b.hidden;b.hidden=!o;$("cee-open").setAttribute("aria-expanded",String(o));if(o){window.EVTRACK&&EVTRACK("cee_open");b.scrollIntoView({behavior:"smooth",block:"start"})}};
 $("c-tit").onchange=()=>{$("c-dgi-w").hidden=$("c-tit").value!=="juridica"};
 $("cee-f").addEventListener("submit",ev=>{ev.preventDefault();
   const hoy=new Date();hoy.setHours(0,0,0,0);
@@ -118,9 +118,11 @@ $("cee-f").addEventListener("submit",ev=>{ev.preventDefault();
   const msg=fails?"Consulta sobre el CEE: mi vehículo no cumpliría algún requisito y quiero revisar mi caso.":"Consulta sobre el CEE: el verificador indica que podría aplicar.";
   const qm="contacto.html?tema=cee&msg="+encodeURIComponent(msg);
   $("cee-res").innerHTML=`<div class="result">${head}<ul class="steps" style="list-style:none;padding:0">${R.map(([s,t])=>`<li><span class="badge ${cl[s]}" style="margin-right:8px">${ic[s]}</span>${t}</li>`).join("")}</ul>${est}
-  <p style="margin-top:14px"><a class="btn" href="${qm}">Quiero más información</a></p>
+  <p style="margin-top:14px"><a class="btn" href="${qm}" data-ev="cee_info_click">Quiero más información</a> <span class="small">o escribinos a <a href="mailto:stephanie.inteligenciart@gmail.com?subject=Consulta%20sobre%20el%20certificado%20CEE" data-ev="cee_email_click">stephanie.inteligenciart@gmail.com</a></span></p>
   <p class="small muted">Resultado orientativo según las condiciones de la convocatoria vigente del MIEM. No es una resolución ni una confirmación.</p></div>`;
-  $("cee-res").scrollIntoView({behavior:"smooth",block:"nearest"});});
+  $("cee-res").scrollIntoView({behavior:"smooth",block:"nearest"});
+  window.EVTRACK&&EVTRACK("cee_check",fails?"requisitos_pendientes":"podria_aplicar");});
+$("cee-res").addEventListener("click",ev=>{const a=ev.target.closest("[data-ev]");if(a)window.EVTRACK&&EVTRACK(a.dataset.ev)});
 })();
 </script>
 </body></html>
