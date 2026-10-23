@@ -107,10 +107,19 @@ window.EV = (function () {
   document.addEventListener("DOMContentLoaded", layout);
   if (["fin", "tco"].includes(document.body && document.body.dataset.page)) document.addEventListener("DOMContentLoaded", plainNumbers);
   /* Miniatura del vehículo si hay imagen con licencia libre; si no, el dibujo genérico. */
+  const SIL = { "Hatchback": "hatch", "Hatchback urbano": "hatch", "Sedán": "sedan", "SUV compacto": "suv-compacto", "Crossover": "suv-compacto", "SUV": "suv", "Todo terreno": "suv", "SUV (6 plazas)": "suv-7", "SUV (3 filas)": "suv-7", "SUV (7 plazas)": "suv-7", "SUV de 7 plazas": "suv-7", "Minivan": "suv-7", "Pick-up": "pickup", "Camioneta": "pickup", "Furgón": "furgon", "Furgoneta / monovolumen": "furgon", "Cuadriciclo": "citycar" };
+  function silhouette(v) {
+    const t = SIL[v.body];
+    if (!t) return CAR;
+    return `<div class="car"><img class="sil" src="assets/car-${t}.svg" alt="Silueta ilustrativa (${esc(v.body)}), no es el modelo real" loading="lazy" decoding="async"></div>`;
+  }
   function thumb(v, big) {
     const m = (window.EVIMAGES || {})[v.id];
-    if (!m) return CAR;
-    return `<figure class="thumb" style="margin:0 0 8px"><img src="${m.src}" alt="${esc(v.brand + " " + v.model)}" loading="lazy" decoding="async" style="width:100%;${big ? "max-width:560px;" : "aspect-ratio:16/10;object-fit:cover;"}border-radius:10px;background:#1a1f27"><figcaption class="small muted">${esc(m.note)} Foto: <a href="${esc(m.page)}" rel="noopener">${esc(m.author)}</a>, <a href="${esc(m.licenseUrl)}" rel="noopener">${esc(m.license)}</a> (Wikimedia Commons)</figcaption></figure>`;
+    if (!m) return silhouette(v);
+    const cap = m.page
+      ? `${esc(m.note)} Foto: <a href="${esc(m.page)}" rel="noopener">${esc(m.author)}</a>, <a href="${esc(m.licenseUrl)}" rel="noopener">${esc(m.license)}</a> (Wikimedia Commons)`
+      : "Imagen ilustrativa generada con IA; el vehículo real puede diferir.";
+    return `<figure class="thumb" style="margin:0 0 8px"><img src="${m.src}" alt="${esc(v.brand + " " + v.model)}" loading="lazy" decoding="async" style="width:100%;${big ? "max-width:560px;" : "aspect-ratio:16/10;object-fit:cover;"}border-radius:10px;background:#1a1f27"><figcaption class="small muted">${cap}</figcaption></figure>`;
   }
   return { D, CAR, thumb, typeLabel, typeBadge, originOf, originBadge, esc, NI, num, fmtNum, fmtMoney, statusBadge, priceHtml, priceStale, getVehicles, byId, daysSince };
 })();
