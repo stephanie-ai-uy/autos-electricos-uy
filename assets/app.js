@@ -35,6 +35,7 @@ window.EV = (function () {
     initLang();
     keepState();
     { const hs = document.createElement("script"); hs.src = "assets/hero.js?v=7"; document.head.appendChild(hs); }
+    if (document.body.dataset.page !== "adm") { const ts = () => { const t = document.createElement("script"); t.src = "assets/track.js?v=1"; document.head.appendChild(t); }; if (window.EVCONFIG) ts(); else { const c = document.createElement("script"); c.src = "assets/config.js"; c.onload = ts; document.head.appendChild(c); } }
   }
   /* Conserva lo que la persona cargó en los campos al cambiar de pestaña del sitio y volver (sessionStorage, solo en este navegador y esta sesión).
      Si recarga la página (F5), se borra. No se guarda en contacto ni en admin. */
