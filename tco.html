@@ -2,7 +2,7 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Calculadora de coste total de un coche eléctrico en Uruguay | Autos Eléctricos UY</title>
 <meta name="description" content="Calculá el coste anual y acumulado de tener un coche eléctrico en Uruguay: electricidad, seguro, patente, mantenimiento, y comparalo con uno de combustión.">
-<link rel="stylesheet" href="assets/style.css?v=16"></head>
+<link rel="stylesheet" href="assets/style.css?v=17"></head>
 <body data-page="tco"><main id="main"><div class="wrap">
 <h1>Coste total de <span class="grad">propiedad</span> (TCO)</h1>
 <p class="lead">Todos los campos los completás vos: no asumimos cifras universales. Usá tarifas reales de UTE, tu cotización de seguro y la ficha del modelo.</p>
@@ -42,7 +42,7 @@
 <h2>Supuestos y límites</h2>
 <ul class="small"><li>Costes de carga = km × consumo × (mezcla casa/pública × tarifa). No incluye pérdidas de carga (típicamente entre 10 % y 15 %): si querés incluirlas, subí el consumo.</li><li>No incluye depreciación/valor de reventa, financiación (ver <a href="financiacion.html">simulador</a>) ni inflación.</li><li>Todo lo que ves viene de lo que cargaste: son estimaciones, no datos verificados.</li></ul>
 </div></main>
-<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=14"></script>
+<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=15"></script>
 <script>
 const $=id=>document.getElementById(id), ids="price years kmYear kwh100 homePct priceHome pricePublic insurance patente maint tires otherYear charger install cPrice cLper100 cFuelPrice cInsurance cPatente cMaint".split(" ");
 $("pcalc").onclick=()=>{const v=EV.num($("pvm").value);if(!(v>0)){alert("Ingresá el valor de mercado sin IVA (solo cifras, por ejemplo 30000).");return}$("patente").value=String(Math.round(v*+$("ptipo").value*100)/100).replace(".",",")};

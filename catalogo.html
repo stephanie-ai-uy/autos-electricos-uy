@@ -3,7 +3,7 @@
 <title>Catálogo de autos eléctricos e híbridos en Uruguay | Autos Eléctricos UY</title>
 <meta name="description" content="Catálogo de autos eléctricos e híbridos en Uruguay, clasificados por marcas chinas y otros orígenes, con precio, batería y autonomía; cada dato con fuente y fecha.">
 <meta name="theme-color" content="#07090c">
-<link rel="stylesheet" href="assets/style.css?v=16"></head>
+<link rel="stylesheet" href="assets/style.css?v=17"></head>
 <body data-page="cat"><main id="main"><div class="wrap">
 <h1>Catálogo de autos <span class="grad">eléctricos</span> e híbridos</h1>
 <p class="lead">Elegí el tipo de vehículo y compará solo dentro del mismo tipo: un eléctrico y un híbrido no son equivalentes. Marcá hasta 4 para comparar.</p>
@@ -22,12 +22,12 @@
 <label><input type="checkbox" id="group" style="width:auto" checked> Agrupar por origen</label>
 <label for="sort">Ordenar por</label><select id="sort"><option value="price">Precio (menor a mayor)</option><option value="range">Autonomía (mayor)</option><option value="batt">Batería (mayor)</option><option value="power">Potencia (mayor)</option></select>
 <p><button type="button" class="btn sec" id="reset">Limpiar filtros</button></p></form></aside>
-<section><p id="count" class="muted" aria-live="polite"></p><div id="list"></div>
+<section><p id="count" class="muted" aria-live="polite"></p><div id="list"></div><p class="small muted">Las siluetas son ilustraciones genéricas según la carrocería (no representan el modelo exacto). Las fotos indicadas como generadas con IA son ilustrativas.</p>
 <h2>Marcas y modelos detectados, pendientes de relevar</h2>
 <p class="small muted">Aparecen en prensa o en webs de importadores pero todavía no tienen ficha con datos verificados. No equivalen a disponibilidad confirmada.</p>
 <div id="pending" class="tablewrap"></div></section></div></div></main>
 <div class="tray" id="tray"><span id="trayTxt"></span><a class="btn" id="goCmp" href="comparador.html">Comparar</a><button class="btn sec" id="clr">Vaciar</button></div>
-<script src="assets/images.js?v=1"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=14"></script>
+<script src="assets/images.js?v=2"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=15"></script>
 <script>
 const $ = id => document.getElementById(id), V = EV.getVehicles(), TYPES = ["BEV","PHEV","HEV","REEV"];
 const qs = new URLSearchParams(location.search);
