@@ -40,6 +40,7 @@ window.EVDATA = (function () {
     deepalS7Cat: { name: "Santa Rosa Automotores (Deepal Uruguay) — Catálogo y ficha técnica oficial Deepal S7 (PDF)", url: "https://deepal.uy", date: "2026-10-23", type: "Ficha técnica del importador" },
     geelyFicha: { name: "Grupo Fiancar (Geely Uruguay) — Ficha técnica oficial Geely EX5 (PDF)", url: "https://www.geely.com.uy", date: "2026-10-23", type: "Ficha técnica del importador" },
     geelyEtiqueta: { name: "Geely Uruguay — Etiqueta de eficiencia energética EX5 Pro y Max (UNIT 1130, LSQA / URSEA)", url: "https://www.geely.com.uy", date: "2026-10-23", type: "Etiqueta oficial de eficiencia energética" },
+    omoda5Of: { name: "Omoda Jaecoo Uruguay — Omoda 5 SHS, especificaciones y precios (web oficial)", url: "https://omodajaecoo.com.uy/modelos/omoda-5", date: "2026-10-23", type: "Web oficial de la marca/importador" },
     changanOf: { name: "Changan Uruguay — sitio oficial", url: "https://changan.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     deepalOf: { name: "Deepal Uruguay — sitio oficial", url: "https://deepal.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     zeekrOf: { name: "Zeekr Uruguay — sitio oficial", url: "https://www.zeekrlife.com/es-uy/", date: CHECKED, type: "Web oficial de la marca/importador" },
@@ -400,12 +401,20 @@ window.EVDATA = (function () {
       source: sources.mg, notes: "Híbrido no enchufable; 191 cv combinados, 425 Nm, 4,4 L/100 km homologado."
     }),
     Object.assign({}, base, {
-      id: "omoda-5-shs", type: "HEV", brand: "Omoda", model: "5 SHS", version: "", body: "SUV compacto",
-      importer: "Santa Rosa", dealers: [], status: "disponible",
-      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Precio no informado en la fuente.", verification: "sin dato" },
-      powerCv: 224, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
-      warranty: { vehicle: null, battery: null, note: "No informada." },
-      source: { name: "Autoblog Uruguay — Lanzamiento Omoda 5 SHS y Jaecoo 5 EV", url: "https://www.autoblog.com.uy/2025/10/lanzamiento-omoda-5-shs-y-jaecoo-5-ev.html", date: "2025-10", type: "Prensa especializada" }, notes: "Sistema híbrido SHS (1.5 turbo + motor eléctrico), 224 hp combinados. Reemplaza al C5 MHEV."
+      id: "omoda-5-shs-luxury", type: "HEV", brand: "Omoda", model: "5 SHS", version: "Luxury", body: "SUV compacto",
+      importer: "Omoda Jaecoo Uruguay", dealers: [], status: "disponible",
+      price: { list: 28990, promo: null, currency: "USD", validOn: "2026-10-23", note: "Precio de lista publicado en la web oficial de Omoda Jaecoo Uruguay (ficha del modelo).", verification: "oficial" },
+      powerCv: 224, batteryKwh: 1.83, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: "5 años o 150.000 km", battery: "8 años o 150.000 km (batería de alto voltaje)", note: "Según la web oficial (oct. 2026)." },
+      source: sources.omoda5Of, notes: "Sistema híbrido SHS (1.5 turbo + motor eléctrico), 224 CV combinados, transmisión DHT. Reemplaza al C5 MHEV. Luxury: tablero digital y pantalla de 12,3″, CarPlay y Android Auto, frenado autónomo, punto ciego y mantenimiento de carril, asientos de cuero y tela, climatizador bizona, llantas de 17″, 7 airbags."
+    }),
+    Object.assign({}, base, {
+      id: "omoda-5-shs-premium", type: "HEV", brand: "Omoda", model: "5 SHS", version: "Premium", body: "SUV compacto",
+      importer: "Omoda Jaecoo Uruguay", dealers: [], status: "disponible",
+      price: { list: 30990, promo: null, currency: "USD", validOn: "2026-10-23", note: "Precio de lista publicado en la web oficial de Omoda Jaecoo Uruguay (ficha del modelo).", verification: "oficial" },
+      powerCv: 224, batteryKwh: 1.83, rangeKm: null, rangeCycle: null, chargeNote: null,
+      warranty: { vehicle: "5 años o 150.000 km", battery: "8 años o 150.000 km (batería de alto voltaje)", note: "Según la web oficial (oct. 2026)." },
+      source: sources.omoda5Of, notes: "Sistema híbrido SHS (1.5 turbo + motor eléctrico), 224 CV combinados, transmisión DHT. Reemplaza al C5 MHEV. Premium (suma a Luxury): faros full LED, techo solar, portón eléctrico, asientos eléctricos calefactados y ventilados, cámara 360°, cargador inalámbrico de 50 W, llantas de 18″, barras de techo."
     }),
     Object.assign({}, base, {
       id: "suzuki-fronx-hybrid", type: "HEV", brand: "Suzuki", model: "Fronx Hybrid", version: "", body: "SUV compacto",
@@ -1763,7 +1772,7 @@ window.EVDATA = (function () {
       { pos: 3, model: "Toyota Corolla Cross Hybrid", units: 597, ids: ["toyota-corolla-cross-hybrid"] },
       { pos: 4, model: "Chery Tiggo 4 Hybrid", units: 281, ids: ["chery-tiggo-4-hybrid"] },
       { pos: 5, model: "Omoda C5 MHEV", units: 246, ids: [] },
-      { pos: 6, model: "Omoda 5 SHS", units: 220, ids: ["omoda-5-shs"] },
+      { pos: 6, model: "Omoda 5 SHS", units: 220, ids: ["omoda-5-shs-luxury", "omoda-5-shs-premium"] },
       { pos: 7, model: "Hyundai Kona Hybrid", units: 194, ids: ["hyundai-kona-hibrida"] },
       { pos: 8, model: "Changan Q05 / CS55 Plus iDD", units: 189, ids: ["changan-cs55-plus-luxury", "changan-cs55-plus-elite"] },
       { pos: 9, model: "BMW X3", units: 161, ids: [] },
@@ -1843,7 +1852,8 @@ window.EVDATA = (function () {
     "geely-ex5-urban": {"powerCv": 214, "accel": 6.9, "acKw": 11, "dcKw": 100, "trunkL": 461, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Geely EX5 Urban", "url": "https://www.autoblog.com.uy/2026/09/lanzamiento-geely-ex5-urban.html", "date": "2026-09", "type": "Prensa especializada"}},
     "geely-ex5-pro": {"accel": 6.9, "acKw": 11, "dcKw": 110, "trunkL": 461, "torqueNm": 320, "topSpeedKmh": 175, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Geely EX5", "url": "https://www.autoblog.com.uy/2025/06/lanzamiento-geely-ex5.html", "date": "2025-06", "type": "Prensa especializada"}},
     "geely-ex5-max": {"rangeKm": 430, "rangeCycle": "WLTP", "accel": 7.1, "acKw": 11, "dcKw": 110, "trunkL": 461, "torqueNm": 320, "topSpeedKmh": 175, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Geely EX5", "url": "https://www.autoblog.com.uy/2025/06/lanzamiento-geely-ex5.html", "date": "2025-06", "type": "Prensa especializada"}},
-    "omoda-5-shs": {"batteryKwh": 1.83, "powerCv": 224, "torqueNm": 290, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Omoda 5 SHS y Jaecoo 5 EV", "url": "https://www.autoblog.com.uy/2025/10/lanzamiento-omoda-5-shs-y-jaecoo-5-ev.html", "date": "2025-10", "type": "Prensa especializada"}, "specNote": "Híbrido no enchufable: la batería de 1,83 kWh no se carga desde la red."},
+    "omoda-5-shs-luxury": {"powerCv": 224, "torqueNm": 290, "accel": 7.9, "drive": "Delantera", "trunkL": 372, "lengthMm": 4450, "widthMm": 1830, "heightMm": 1588, "wheelbaseMm": 2600, "consumption": "19,6 km/l combinado (valor de laboratorio, según la web)", "batteryKwh": 1.83, "specSource": sources.omoda5Of, "specNote": "Híbrido no enchufable: no se carga desde la red. La web no informa la batería; los 1,83 kWh vienen de Autoblog (oct. 2025). Consumo de laboratorio: puede variar en uso real."},
+    "omoda-5-shs-premium": {"powerCv": 224, "torqueNm": 290, "accel": 7.9, "drive": "Delantera", "trunkL": 372, "lengthMm": 4450, "widthMm": 1830, "heightMm": 1588, "wheelbaseMm": 2600, "consumption": "19,6 km/l combinado (valor de laboratorio, según la web)", "batteryKwh": 1.83, "specSource": sources.omoda5Of, "specNote": "Híbrido no enchufable: no se carga desde la red. La web no informa la batería; los 1,83 kWh vienen de Autoblog (oct. 2025). Consumo de laboratorio: puede variar en uso real."},
     "jaecoo-5-ev": {"batteryKwh": 58.9, "rangeKm": 461, "rangeCycle": "NEDC", "powerCv": 211, "torqueNm": 288, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Omoda 5 SHS y Jaecoo 5 EV", "url": "https://www.autoblog.com.uy/2025/10/lanzamiento-omoda-5-shs-y-jaecoo-5-ev.html", "date": "2025-10", "type": "Prensa especializada"}, "specNote": "Uso real estimado por el importador: alrededor de 400 km."},
     "zeekr-x-premium": {"accel": 5.6, "acKw": 11, "dcKw": 150, "trunkL": 362, "drive": "Trasera (RWD)", "torqueNm": 343, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Zeekr X", "url": "https://www.autoblog.com.uy/2024/07/lanzamiento-zeekr-x.html", "date": "2024-07", "type": "Prensa especializada"}},
     "zeekr-x-flagship": {"accel": 3.8, "acKw": 22, "dcKw": 150, "trunkL": 362, "drive": "Integral (AWD)", "torqueNm": 543, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Zeekr X", "url": "https://www.autoblog.com.uy/2024/07/lanzamiento-zeekr-x.html", "date": "2024-07", "type": "Prensa especializada"}},
