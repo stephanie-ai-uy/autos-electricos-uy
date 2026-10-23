@@ -64,7 +64,8 @@ table{border-collapse:collapse;width:100%;font-size:.92rem}th,td{padding:11px 14
 tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
 thead th{background:var(--surface2);position:sticky;top:0;color:var(--ink)}tbody th{font-weight:600;color:var(--muted);white-space:nowrap}
 tr.diff td{background:rgba(255,200,87,.08)}
-.filters{position:sticky;top:88px;align-self:start}
+.filters{position:sticky;top:88px;align-self:start;max-height:calc(100vh - 104px);overflow-y:auto;overscroll-behavior:contain}
+@media(max-width:860px){.filters{position:static;max-height:none;overflow:visible}}
 .layout{display:grid;gap:22px;grid-template-columns:270px 1fr}
 @media(max-width:860px){.layout{grid-template-columns:1fr}.filters{position:static}
  .menu{display:block}nav.main{display:none;width:100%;margin-left:0;flex-direction:column;padding-bottom:12px}nav.main.open{display:flex}nav.main a{border-radius:12px}}
