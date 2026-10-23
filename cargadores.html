@@ -3,7 +3,7 @@
 <title>Mapa de cargadores públicos en Uruguay | Autos Eléctricos UY</title>
 <meta name="description" content="Mapa claro de los 214 puntos de carga públicos de UTE en todo Uruguay: filtrá por departamento y conector, y consultá el estado en vivo en el mapa oficial.">
 <meta name="theme-color" content="#07090c">
-<link rel="stylesheet" href="assets/style.css?v=13">
+<link rel="stylesheet" href="assets/style.css?v=15">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css">
 <style>
@@ -36,6 +36,7 @@
 <div><label for="q">Buscar lugar</label><input id="q" type="search" placeholder="Ej.: shopping, ANCAP, Rocha"></div>
 <div><button class="btn sec" id="near" type="button" style="width:100%">Cerca de mí</button></div>
 </div>
+<div class="chips" style="align-items:center"><span class="chip"><img src="assets/conn-tipo2.svg" alt="" width="34" height="34" style="vertical-align:middle;margin-right:6px"><b>Tipo 2</b> · lenta (AC)</span><span class="chip"><img src="assets/conn-ccs2.svg" alt="" width="34" height="34" style="vertical-align:middle;margin-right:6px"><b>CCS2</b> · rápida (DC)</span><span class="chip"><img src="assets/conn-gbt.svg" alt="" width="34" height="34" style="vertical-align:middle;margin-right:6px"><b>GB/T</b> · rápida (DC) · <a href="guia-uso.html#cargadores">cómo reconocerlos</a></span></div>
 <div class="chips" id="chips" aria-live="polite"></div>
 <div class="mapwrap"><div id="map" role="application" aria-label="Mapa de cargadores"></div></div>
 <p class="small muted" style="margin-top:10px"><span class="dot dc"></span>Carga rápida (corriente continua: CCS2 o GB/T) · <span class="dot ac"></span>Carga lenta (corriente alterna: Tipo 2). Ubicaciones copiadas de UTE el <span id="dt"></span>; pueden cambiar. Mapa © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>.</p>
