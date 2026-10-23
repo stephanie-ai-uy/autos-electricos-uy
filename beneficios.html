@@ -2,7 +2,7 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Beneficios e impuestos de coches eléctricos en Uruguay (IMESI) | Autos Eléctricos UY</title>
 <meta name="description" content="Estado del IMESI y otros beneficios para coches eléctricos en Uruguay: vigentes, anunciados o pendientes de confirmar, con fuente y fecha de verificación.">
-<link rel="stylesheet" href="assets/style.css?v=15"></head>
+<link rel="stylesheet" href="assets/style.css?v=16"></head>
 <body data-page="ben"><main id="main"><div class="wrap">
 <h1>Beneficios públicos e <span class="grad">impuestos</span></h1>
 <p class="lead">Cada beneficio muestra su estado, a quién aplica y de dónde sale el dato. Hoy las fuentes son sobre todo prensa: <strong>falta contrastar con la norma oficial</strong>.</p>
@@ -11,17 +11,37 @@
 <h2 id="cee">Certificado de Eficiencia Energética (CEE)</h2>
 <div class="card">
 <h3 style="margin-top:0">En qué consiste</h3>
-<p>Los <strong>Certificados de Eficiencia Energética (CEE)</strong> son un <strong>reconocimiento económico que otorga el MIEM</strong> (Ministerio de Industria, Energía y Minería) <strong>por única vez</strong> a quienes incorporaron una medida de eficiencia energética. Se trata de un trámite ante el MIEM, que se realiza mediante convocatorias periódicas, y el monto depende del ahorro de energía que logra la medida, no de lo que costó.</p>
+<p>El <strong>Certificado de Eficiencia Energética (CEE)</strong> es un <strong>reconocimiento económico del MIEM</strong> (Ministerio de Industria, Energía y Minería) que se otorga <strong>por única vez</strong> a quienes tienen un vehículo eléctrico y así contribuyen al uso eficiente de la energía. El monto depende del uso que le das al auto (kilómetros recorridos), no de lo que costó.</p>
 <h3>A quiénes comprende</h3>
 <ul class="steps">
-<li>A quien <strong>adquirió y usa</strong> la medida: en el caso de los autos, los <strong>vehículos livianos eléctricos puros</strong> (también de dos y tres ruedas), <strong>empadronados</strong>, con batería de litio o de mayor densidad de energía.</li>
-<li>El vehículo debe haber sido <strong>nuevo y sin uso</strong> al comprarlo y tener <strong>al menos un año de funcionamiento</strong> cuando se presenta la solicitud. La convocatoria 2026 incluye vehículos que empezaron a operar desde el 16/12/2023; por eso uno comprado ahora todavía no entra en ella.</li>
-<li>Pueden postularse personas y empresas. Quien postula debe ser quien lo adquirió y tener una cuenta bancaria a su nombre.</li>
+<li>A <strong>personas y empresas titulares de un vehículo liviano eléctrico puro</strong> (autos, camionetas, taxis y remises, vehículos de 3 o 4 ruedas y motos), empadronado y con batería de litio.</li>
+<li>El vehículo debe haber sido <strong>comprado nuevo y sin uso</strong>, y llevar <strong>al menos un año</strong> empadronado. Los híbridos, enchufables y eléctricos con generador a combustible quedan afuera.</li>
+<li>Rige un período de empadronamiento definido por cada convocatoria: puede que un auto muy reciente todavía no entre en la actual.</li>
 </ul>
 <h3>En qué beneficia</h3>
-<p>Es un <strong>ingreso para quien tiene un eléctrico</strong>: en la convocatoria 2026 el MIEM fija un <strong>tope de $ 45.000 por vehículo</strong>. Reduce, en parte, el costo de haber elegido un auto eficiente, y se suma a los otros beneficios (por ejemplo, la patente reducida).</p>
-<div class="notice info"><strong>Para novedades, requisitos actuales y plazos, consultá directamente al MIEM</strong> (<a href="https://www.gub.uy/tramites/certificados-eficiencia-energetica-cee" rel="noopener">trámite CEE en gub.uy</a> · <a href="https://www.gub.uy/ministerio-industria-energia-mineria/comunicacion/convocatorias/certificados-eficiencia-energetica-2026-para-medidas-eficiencia-0" rel="noopener">convocatoria 2026</a> · daee@miem.gub.uy). Las condiciones, los montos y los plazos cambian con cada convocatoria. Este sitio no gestiona el trámite.</div>
-<p class="small muted">Información orientativa, no asesoramiento legal ni tributario. Fuentes: MIEM, consultadas el 23/10/2026.</p>
+<p>Es un <strong>ingreso para quien eligió un eléctrico</strong>: el tope por vehículo en la convocatoria actual es de <strong>$ 45.000</strong>, y se suma a los otros beneficios de tener un eléctrico (por ejemplo, la patente reducida).</p>
+<p><button class="btn" id="cee-open" type="button" aria-expanded="false" aria-controls="cee-box">Consultá aquí si aplicás</button></p>
+
+<div id="cee-box" hidden style="margin-top:8px">
+<form class="card" id="cee-f" novalidate style="background:var(--bg2)">
+<h3 style="margin-top:0">Verificá si tu vehículo cumple</h3>
+<p class="small muted">Respondé con los datos de tu vehículo. No pedimos cédula ni datos personales: el resultado es una orientación según las condiciones de la convocatoria vigente del MIEM, no una confirmación.</p>
+<div class="row">
+<div><label for="c-tipo">Tipo de vehículo</label><select id="c-tipo"><option value="m1">Auto, SUV o camioneta liviana</option><option value="taxi">Taxi, remis o transporte por aplicación</option><option value="cityc">Otro vehículo liviano de 3 o 4 ruedas (por ejemplo, citycar)</option><option value="moto">Moto eléctrica</option></select></div>
+<div><label for="c-motor">¿Cómo se mueve?</label><select id="c-motor"><option value="bev">100 % eléctrico (solo batería)</option><option value="otro">Híbrido, enchufable o eléctrico con generador a combustible</option></select></div>
+<div><label for="c-nuevo">¿Lo compraste nuevo y sin uso?</label><select id="c-nuevo"><option value="si">Sí, 0 km</option><option value="no">No (usado, de exhibición o de prueba)</option></select></div>
+<div><label for="c-emp">Fecha de empadronamiento</label><input id="c-emp" type="date"></div>
+<div><label for="c-km">Kilómetros actuales (odómetro)</label><input id="c-km" type="text" inputmode="numeric" placeholder="Ej.: 14.000"></div>
+<div><label for="c-tit">Quién sería el titular</label><select id="c-tit"><option value="fisica">Persona física (yo)</option><option value="juridica">Empresa o institución</option></select></div>
+<div><label for="c-fact">La factura de compra está a nombre de…</label><select id="c-fact"><option value="yo">Quien postularía (mi cédula o RUT)</option><option value="leasing">Una financiera o arrendadora, y yo soy el beneficiario del contrato</option><option value="otra">Otra persona o empresa</option></select></div>
+<div><label for="c-cta">¿Tenés una cuenta bancaria a tu nombre (o de la empresa)?</label><select id="c-cta"><option value="si">Sí</option><option value="no">No</option></select></div>
+<div id="c-dgi-w" hidden><label for="c-dgi">Si es empresa: ¿tiene certificados vigentes de DGI y BPS?</label><select id="c-dgi"><option value="si">Sí</option><option value="no">No</option><option value="nose">No sé</option></select></div>
+<div><label for="c-ben">¿Se benefició con otro incentivo del Estado (por ejemplo, COMAP)?</label><select id="c-ben"><option value="no">No</option><option value="si">Sí</option><option value="nose">No sé</option></select></div>
+</div>
+<p><button class="btn" type="submit">Ver si aplico</button></p></form>
+<div id="cee-res" aria-live="polite"></div>
+</div>
+<p class="small muted" style="margin-top:12px">Información orientativa, no asesoramiento legal ni tributario. Las condiciones, los montos y los plazos pueden cambiar con cada convocatoria.</p>
 </div>
 
 <h2>Asistente de orientación</h2>
@@ -31,7 +51,7 @@
 <div><label for="when">¿Cuándo se factura?</label><select id="when"><option value="2026">Antes de 2027</option><option value="2027">2027 o después</option></select></div></div>
 <p><button class="btn" type="submit">Ver orientación</button></p><div id="wr"></div></form>
 </div></main>
-<script src="assets/data.js?v=6"></script><script src="assets/app.js?v=13"></script>
+<script src="assets/data.js?v=6"></script><script src="assets/app.js?v=14"></script>
 <script>
 const $=id=>document.getElementById(id), e=EV.esc, B=EV.D.benefits;
 const ST={vigente:["Vigente","ok"],anunciado:["Anunciado (aún no vigente)",""],vencido:["Vencido","bad"],pendiente:["Pendiente de confirmar","warn"]};
@@ -52,4 +72,56 @@ $("w").addEventListener("submit",ev=>{ev.preventDefault();
    return `<div class="card" style="margin:8px 0"><strong>${e(b.name)}</strong> <span class="badge ${ST[b.status][1]}">${ST[b.status][0]}</span><p class="small">Por qué podría aplicar: coincide con ${WHO[who].toLowerCase()} y esta categoría.${e(ok)}<br>Falta comprobar: ${e(b.reqs)}<br>Dónde confirmar: ${b.sources.map(s=>`<a href="${e(s.url)}" rel="noopener">fuente</a>`).join(", ")} y el organismo oficial (${e(b.body)}).</p></div>`}).join("");
   if(cat==="bev-pasajeros"&&when==="2027")h+=`<div class="notice">Si el valor de importación (CIF) supera US$ 19.000, podría aplicar IMESI de 5 % o 9 % desde 2027. El valor de importación no es el precio de venta: pedí al concesionario el dato.</div>`;
   $("wr").innerHTML=h;});
-</script></body></html>
+</script><script>
+/* Verificador orientativo del CEE (convocatoria 2026 de eficiencia energética del MIEM). Los datos no salen del navegador. */
+(function(){
+const $=id=>document.getElementById(id), e=EV.esc, D=s=>new Date(s+"T00:00:00");
+const VEN_INI=D("2023-12-16"), VEN_FIN=D("2025-12-14"), CIERRE=D("2026-12-15"), TOPE=45000;
+const TASA={m1:5173/20, taxi:5173/20, cityc:2072/20, moto:1542/20};
+const fmt=d=>d.toLocaleDateString("es-UY");
+$("cee-open").onclick=()=>{const b=$("cee-box"),o=b.hidden;b.hidden=!o;$("cee-open").setAttribute("aria-expanded",String(o));if(o)b.scrollIntoView({behavior:"smooth",block:"start"})};
+$("c-tit").onchange=()=>{$("c-dgi-w").hidden=$("c-tit").value!=="juridica"};
+$("cee-f").addEventListener("submit",ev=>{ev.preventDefault();
+  const hoy=new Date();hoy.setHours(0,0,0,0);
+  const R=[],add=(s,t)=>R.push([s,t]);
+  if($("c-motor").value!=="bev")add("fail","Solo califican los vehículos <strong>100 % eléctricos</strong>: los híbridos, enchufables y eléctricos con generador a combustible no entran.");
+  else add("ok","Es 100 % eléctrico.");
+  if($("c-nuevo").value!=="si")add("fail","Tiene que haberse comprado <strong>nuevo y sin uso</strong>: no se aceptan usados, de exhibición ni de prueba (test drive).");
+  else add("ok","Comprado nuevo y sin uso.");
+  const ev0=$("c-emp").value; let emp=null;
+  if(!ev0)add("warn","Indicá la <strong>fecha de empadronamiento</strong> para comprobar el período.");
+  else{emp=D(ev0);
+    if(emp<VEN_INI)add("fail",`Se empadronó el ${fmt(emp)}, antes del período de esta convocatoria (desde el ${fmt(VEN_INI)}).`);
+    else if(emp>VEN_FIN)add("fail",`Se empadronó el ${fmt(emp)}, después del período de esta convocatoria (hasta el ${fmt(VEN_FIN)}). Podría entrar en una convocatoria posterior, cuando el MIEM la abra.`);
+    else{const un=new Date(emp);un.setFullYear(un.getFullYear()+1);
+      if(un>CIERRE)add("fail",`Cumple un año de uso el ${fmt(un)}, después del cierre de la convocatoria actual (${fmt(CIERRE)}).`);
+      else if(un>hoy)add("warn",`Está dentro del período, pero cumple un año de uso el <strong>${fmt(un)}</strong>: recién desde esa fecha podría postularse (antes del ${fmt(CIERRE)}).`);
+      else add("ok",`Empadronado el ${fmt(emp)}: está dentro del período y ya tiene más de un año de uso.`);}}
+  if($("c-fact").value==="otra")add("fail","La factura de compra debe estar a nombre de quien postula (o, en un leasing, quien sea el beneficiario del contrato).");
+  else add("ok",$("c-fact").value==="leasing"?"Compra con leasing: se admite si sos el beneficiario del contrato.":"Factura a nombre del titular.");
+  if($("c-cta").value!=="si")add("fail","Hace falta una <strong>cuenta bancaria a nombre de quien postula</strong> (no se aceptan cuentas de terceros).");
+  else add("ok","Cuenta bancaria propia.");
+  if($("c-tit").value==="juridica"){const d=$("c-dgi").value;
+    if(d==="no")add("fail","Las empresas necesitan tener <strong>vigentes los certificados de DGI y BPS</strong>.");
+    else if(d==="nose")add("warn","Si es una empresa, hay que confirmar que tenga <strong>vigentes los certificados de DGI y BPS</strong>.");
+    else add("ok","Certificados de DGI y BPS vigentes.");}
+  const fails=R.filter(x=>x[0]==="fail").length, warns=R.filter(x=>x[0]==="warn").length;
+  let est="",pond=1;
+  if($("c-ben").value==="si")pond=0.6;
+  if(emp&&!fails){const km=EV.num($("c-km").value);
+    if(km!==""&&!Number.isNaN(km)&&km>0){const dias=Math.max(1,Math.round((hoy-emp)/864e5)),kd=km/dias,val=Math.min(TOPE,TASA[$("c-tipo").value]*kd)*pond;
+      est=`<p>Con ${EV.fmtNum(km,0)} km en ${EV.fmtNum(dias,0)} días (${EV.fmtNum(kd,1)} km por día), el reconocimiento sería de <strong>aproximadamente $ ${EV.fmtNum(Math.round(val),0)}</strong> (tope $ ${EV.fmtNum(TOPE,0)})${pond<1?", con la reducción por haberte beneficiado de otro incentivo del Estado":""}. Es una estimación con la tabla ilustrativa de la convocatoria; el monto final lo define el MIEM.</p>`;}
+    else est=`<p class="small muted">Si indicás los kilómetros actuales, te mostramos una estimación del monto.</p>`;}
+  if($("c-ben").value==="nose")est+=`<p class="small muted">Si recibiste otro incentivo del Estado (por ejemplo, COMAP), el monto se reduce; conviene confirmarlo.</p>`;
+  const ic={ok:"✔",warn:"!",fail:"✕"},cl={ok:"ok",warn:"warn",fail:"bad"};
+  const head=fails?`<h3 style="margin-top:0">Por ahora no cumplirías todos los requisitos</h3>`:warns?`<h3 style="margin-top:0">Podrías aplicar: falta confirmar algunos puntos</h3>`:`<h3 style="margin-top:0">Cumplís los requisitos principales</h3>`;
+  const msg=fails?"Consulta sobre el CEE: mi vehículo no cumpliría algún requisito y quiero revisar mi caso.":"Consulta sobre el CEE: el verificador indica que podría aplicar.";
+  const qm="contacto.html?tema=cee&msg="+encodeURIComponent(msg);
+  const qs="contacto.html?tema=cee&msg="+encodeURIComponent("Quiero contratar el servicio de gestión del CEE. "+(fails?"Mi caso tiene algún requisito pendiente.":"El verificador indica que podría aplicar."));
+  $("cee-res").innerHTML=`<div class="result">${head}<ul class="steps" style="list-style:none;padding:0">${R.map(([s,t])=>`<li><span class="badge ${cl[s]}" style="margin-right:8px">${ic[s]}</span>${t}</li>`).join("")}</ul>${est}
+  <p style="margin-top:14px"><a class="btn" href="${qm}">Quiero más información</a> ${fails?"":`<a class="btn sec" href="${qs}">Contratar el servicio</a>`}</p>
+  <p class="small muted">Resultado orientativo según las condiciones de la convocatoria vigente del MIEM. No es una resolución ni una confirmación.</p></div>`;
+  $("cee-res").scrollIntoView({behavior:"smooth",block:"nearest"});});
+})();
+</script>
+</body></html>

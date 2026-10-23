@@ -2,7 +2,7 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Corregir un dato o sugerir una mejora | Autos Eléctricos UY</title>
 <meta name="description" content="¿Viste un precio o una ficha incorrecta, o falta un modelo? Avisanos para corregirlo. Los datos de contacto son opcionales.">
-<link rel="stylesheet" href="assets/style.css?v=15"></head>
+<link rel="stylesheet" href="assets/style.css?v=16"></head>
 <body data-page="con"><main id="main"><div class="wrap" style="max-width:640px">
 <h1>Corregir un dato o <span class="grad">sugerir</span> una mejora</h1>
 <p class="lead">Los precios cambian seguido y un solo ojo no alcanza. Si viste un dato incorrecto, falta un modelo o tenés una idea para la web, contanos. <strong>Dejar tu nombre o contacto es opcional</strong>: solo hace falta si querés que te respondamos.</p>
@@ -19,13 +19,14 @@
 <p><button class="btn" id="go" type="submit">Enviar mensaje</button></p><div id="msgout" aria-live="polite"></div></form>
 </div></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
-<script src="assets/config.js"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=13"></script>
+<script src="assets/config.js"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=14"></script>
 <script>
 const $=id=>document.getElementById(id), C=window.EVCONFIG||{}, CV="2026-10-v2";
 const CT="Acepto que Autos Eléctricos UY guarde este mensaje 180 días para revisar y mejorar el sitio. Si dejé un contacto, solo se usará para responderme. No se compartirá con terceros.";
 $("ctext").textContent=CT;
 EV.getVehicles().forEach(v=>$("vehicle").insertAdjacentHTML("beforeend",`<option value="${EV.esc(v.id)}">${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version)}</option>`));
-const q=new URLSearchParams(location.search).get("v"); if(q)$("vehicle").value=q;
+const P=new URLSearchParams(location.search), q=P.get("v"); if(q)$("vehicle").value=q;
+if(P.get("tema")==="cee"){ $("topic").value="otro"; const m=(P.get("msg")||"").slice(0,300); if(m)$("msg").value=m; $("msg").value+="\n\nDatos de mi vehículo (marca, modelo, fecha de compra): "; $("off").insertAdjacentHTML("beforebegin",'<div class="notice info"><strong>Consulta sobre el Certificado de Eficiencia Energética.</strong> Dejá tu nombre y un email o teléfono para que podamos responderte. No pedimos cédula ni datos bancarios por este medio.</div>'); }
 const sb=(C.SUPABASE_URL&&C.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY):null;
 if(!sb){$("off").hidden=false;$("go").disabled=true;}
 let last=0;
