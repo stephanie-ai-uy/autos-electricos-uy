@@ -24,6 +24,17 @@
 <div><label for="otherYear">Otros gastos anuales</label><input id="otherYear" type="number" min="0"></div>
 <div><label for="charger">Cargador doméstico</label><input id="charger" type="number" min="0" value="0"></div>
 <div><label for="install">Instalación del cargador</label><input id="install" type="number" min="0" value="0"></div></div>
+<details open style="margin:14px 0" id="ppanel"><summary><strong>¿Cómo se calcula la patente anual del eléctrico? Calculadora según el año de compra</strong></summary>
+<p class="small muted">La patente (Sucive) se calcula así: <strong>valor de mercado sin IVA × alícuota</strong>. El valor de mercado lo fija cada año la tabla del Sucive para tu marca, modelo y año (consultalo en tu intendencia o en sucive.org.uy; acá no lo inventamos). La alícuota depende del año en que se empadrona el vehículo. Al apretar el botón, el resultado se copia solo al campo «Patente anual» de arriba.</p>
+<div class="row">
+<div><label for="pvm">Valor de mercado sin IVA (misma moneda)</label><input id="pvm" type="number" min="0"></div>
+<div><label for="ptipo">¿Cuándo lo empadronás?</label><select id="ptipo"><option value="0.03">Este año (2026), 0 km — alícuota 3 % (oficial)</option><option value="0.0225">Usado, ya empadronado al 31/12/2025 — alícuota 2,25 % (oficial)</option><option value="custom">En 2027 o después — alícuota aún no publicada (vos elegís el supuesto)</option></select></div>
+<div id="prbox" hidden><label for="prate">Alícuota supuesta (%)</label><input id="prate" type="number" min="0" step="0.01" value="3"></div>
+<div id="cifbox" hidden><label for="pcif">Valor de importación (CIF) para el IMESI</label><input id="pcif" type="number" min="0"></div></div>
+<p><button type="button" class="btn sec" id="pcalc">Calcular patente y copiarla a «Patente anual»</button></p>
+<div id="pres" class="small" aria-live="polite"></div>
+<p class="small muted">Qué cambia si comprás en 2027: (1) el IMESI anunciado (decreto de junio 2026, previsto desde 1/1/2027, todavía sin norma oficial verificada y con posible postergación): hasta US$ 19.000 de valor de importación sigue exento, de 19.001 a 27.000 paga 5 % y más de 27.000 paga 9 %; el umbral es el valor CIF, no el precio de venta. No sabemos si la tasa se aplica a todo el valor o solo al excedente, por eso mostramos las dos cuentas. (2) La alícuota de patente 2027 no está publicada: si no la conocés, probá con distintos supuestos. (3) Un IMESI más alto sube el precio y, por eso, probablemente también el valor de mercado y la patente. Fuentes y fechas en <a href="beneficios.html">Beneficios</a>.</p>
+</details>
 <label style="margin-top:14px"><input type="checkbox" id="compare" style="width:auto"> Comparar con un vehículo de combustión</label>
 <div id="cbox" class="row" hidden>
 <div><label for="cPrice">Precio de compra</label><input id="cPrice" type="number" min="0"></div>
@@ -32,11 +43,7 @@
 <div><label for="cInsurance">Seguro anual</label><input id="cInsurance" type="number" min="0"></div>
 <div><label for="cPatente">Patente anual</label><input id="cPatente" type="number" min="0"></div>
 <div><label for="cMaint">Mantenimiento anual</label><input id="cMaint" type="number" min="0"></div></div>
-<details style="margin-top:12px"><summary>Estimar la patente de un eléctrico (alícuota oficial Sucive 2026)</summary>
-<p class="small muted">Según el Texto ordenado del Sucive 2026: 3 % del valor de mercado sin IVA para 0 km empadronados en 2026, y 2,25 % para usados empadronados al 31/12/2025. El valor de mercado lo fija la tabla del Sucive; consultalo en la intendencia o en el Sucive. Estimación orientativa.</p>
-<div class="row"><div><label for="pvm">Valor de mercado sin IVA (misma moneda)</label><input id="pvm" type="number" min="0"></div>
-<div><label for="ptipo">Tipo de empadronamiento</label><select id="ptipo"><option value="0.03">0 km empadronado en 2026 (3 %)</option><option value="0.0225">Usado empadronado al 31/12/2025 (2,25 %)</option></select></div></div>
-<p><button type="button" class="btn sec" id="pcalc">Usar como patente anual</button></p></details>
+
 <p><button class="btn" type="submit">Calcular</button></p></form>
 <div id="res" class="result" aria-live="polite">Completá los datos y calculá.</div>
 <h2>Supuestos y límites</h2>
@@ -45,7 +52,13 @@
 <script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=15"></script>
 <script>
 const $=id=>document.getElementById(id), ids="price years kmYear kwh100 homePct priceHome pricePublic insurance patente maint tires otherYear charger install cPrice cLper100 cFuelPrice cInsurance cPatente cMaint".split(" ");
-$("pcalc").onclick=()=>{const v=EV.num($("pvm").value);if(!(v>0)){alert("Ingresá el valor de mercado sin IVA (solo cifras, por ejemplo 30000).");return}$("patente").value=String(Math.round(v*+$("ptipo").value*100)/100).replace(".",",")};
+$("ptipo").onchange=()=>{const c=$("ptipo").value==="custom";$("prbox").hidden=!c;$("cifbox").hidden=!c};
+$("pcalc").onclick=()=>{const v=EV.num($("pvm").value),f2=n=>EV.fmtNum(n,2);if(!(v>0)){$("pres").innerHTML="Ingresá el valor de mercado sin IVA (solo cifras, por ejemplo 30000).";return}
+  const cu=$("ptipo").value==="custom",rate=cu?EV.num($("prate").value)/100:+$("ptipo").value;if(!(rate>=0)){$("pres").innerHTML="Ingresá una alícuota válida.";return}
+  const p=Math.round(v*rate*100)/100;$("patente").value=String(p).replace(".",",");
+  let h=`Patente anual = ${f2(v)} × ${EV.fmtNum(rate*100,2)} % = <strong>${f2(p)}</strong> (ya copiada en «Patente anual»).`+(cu?" <em>La alícuota es un supuesto tuyo: aún no hay valor oficial para 2027.</em>":"");
+  if(cu){const c=EV.num($("pcif").value);if(c>0){const r=c>27000?.09:c>19000?.05:0,ex=c>27000?c-27000:c>19000?c-19000:0;h+=r===0?`<br>IMESI: con un valor de importación de ${f2(c)} (≤ US$ 19.000) seguiría exento.`:`<br>IMESI estimado (${r*100} %, si el valor CIF está en US$): entre <strong>${f2(ex*r)}</strong> (solo sobre el excedente de su tramo) y <strong>${f2(c*r)}</strong> (sobre todo el valor). Sumalo al precio de compra de arriba si el precio de lista aún no lo incluye. Estimación sin norma oficial.`}else h+="<br>Si cargás el valor de importación (CIF) te muestro el IMESI estimado."}
+  $("pres").innerHTML=h};
 $("compare").onchange=()=>{$("cbox").hidden=!$("compare").checked};
 const f2=n=>EV.fmtNum(n,2);
 $("f").addEventListener("submit",ev=>{ev.preventDefault();
