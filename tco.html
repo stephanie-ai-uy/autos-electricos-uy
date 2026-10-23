@@ -7,42 +7,43 @@
 <h1>Coste total de <span class="grad">propiedad</span> (TCO)</h1>
 <p class="lead">Todos los campos los completás vos: no asumimos cifras universales. Usá tarifas reales de UTE, tu cotización de seguro y la ficha del modelo.</p>
 <form class="card" id="f" novalidate>
-<p class="small muted">Todos los importes en la misma moneda (ej. US$). Convertí antes de cargar.</p>
+<p class="small muted"><strong>Monedas:</strong> cada importe tiene su selector de moneda. Lo habitual en Uruguay: el vehículo y el cargador en dólares (US$); tarifas de UTE, patente, combustible, mantenimiento y seguro en pesos ($). Podés cambiar cada uno. La calculadora convierte todo con el tipo de cambio que cargues y muestra el resultado en US$ y su equivalente en pesos. Los valores iniciales de cada selector son una sugerencia, no un dato verificado.</p>
+<div class="row"><div><label for="tc">Tipo de cambio ($ por cada US$ 1)</label><input id="tc" type="number" min="0" step="0.01"><span class="small muted">Poné la cotización que quieras usar (por ejemplo la del día en el BCU o tu banco). No cargamos una por defecto.</span></div></div>
 <h3 style="margin-top:0">Eléctrico</h3>
 <div class="row">
-<div><label for="price">Precio de compra</label><input id="price" type="number" min="0"></div>
+<div><label for="price">Precio de compra</label><input id="price" type="number" min="0"><select id="price_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD" selected>US$ (dólares)</option><option value="UYU">$ (pesos uruguayos)</option></select></div>
 <div><label for="years">Años de propiedad</label><input id="years" type="number" min="1" value="5"></div>
 <div><label for="kmYear">Km por año</label><input id="kmYear" type="number" min="0"></div>
 <div><label for="kwh100">Consumo (kWh/100 km)</label><input id="kwh100" type="number" min="0" step="0.1"></div>
 <div><label for="homePct">% carga en casa</label><input id="homePct" type="number" min="0" max="100" value="80"></div>
-<div><label for="priceHome">Precio kWh en casa</label><input id="priceHome" type="number" min="0" step="0.01"></div>
-<div><label for="pricePublic">Precio kWh carga pública</label><input id="pricePublic" type="number" min="0" step="0.01"></div>
-<div><label for="insurance">Seguro anual</label><input id="insurance" type="number" min="0"></div>
-<div><label for="patente">Patente anual</label><input id="patente" type="number" min="0"></div>
-<div><label for="maint">Mantenimiento anual</label><input id="maint" type="number" min="0"></div>
-<div><label for="tires">Neumáticos (prom. anual)</label><input id="tires" type="number" min="0"></div>
-<div><label for="otherYear">Otros gastos anuales</label><input id="otherYear" type="number" min="0"></div>
-<div><label for="charger">Cargador doméstico</label><input id="charger" type="number" min="0" value="0"></div>
-<div><label for="install">Instalación del cargador</label><input id="install" type="number" min="0" value="0"></div></div>
+<div><label for="priceHome">Precio kWh en casa</label><input id="priceHome" type="number" min="0" step="0.01"><select id="priceHome_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="pricePublic">Precio kWh carga pública</label><input id="pricePublic" type="number" min="0" step="0.01"><select id="pricePublic_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="insurance">Seguro anual</label><input id="insurance" type="number" min="0"><select id="insurance_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="patente">Patente anual</label><input id="patente" type="number" min="0"><select id="patente_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="maint">Mantenimiento anual</label><input id="maint" type="number" min="0"><select id="maint_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="tires">Neumáticos (prom. anual)</label><input id="tires" type="number" min="0"><select id="tires_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="otherYear">Otros gastos anuales</label><input id="otherYear" type="number" min="0"><select id="otherYear_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="charger">Cargador doméstico</label><input id="charger" type="number" min="0" value="0"><select id="charger_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD" selected>US$ (dólares)</option><option value="UYU">$ (pesos uruguayos)</option></select></div>
+<div><label for="install">Instalación del cargador</label><input id="install" type="number" min="0" value="0"><select id="install_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div></div>
 <details open style="margin:14px 0" id="ppanel"><summary><strong>¿Cómo se calcula la patente anual del eléctrico? Calculadora según el año de compra</strong></summary>
 <p class="small muted">La patente (Sucive) se calcula así: <strong>valor de mercado sin IVA × alícuota</strong>. El valor de mercado lo fija cada año una tabla del Sucive por marca, modelo y año, pero esa tabla completa no figura publicada en el texto ordenado ni en un listado público que hayamos encontrado: no la inventamos. Para un auto 0 km, pedile a la concesionaria el valor de mercado (o la patente estimada) con que lo empadronaría; para uno ya empadronado, la patente exacta se consulta por matrícula en <a href="https://www.sucive.gub.uy" rel="noopener">sucive.gub.uy</a> o en tu intendencia. Si no lo tenés, usá como valor de mercado el precio de lista sin IVA como aproximación. La alícuota depende del año en que se empadrona el vehículo. Este panel es opcional: es solo una ayuda para completar el campo «Patente anual» de arriba (si ya sabés tu patente, escribila directo ahí).</p>
 <div class="row">
-<div><label for="pvm">Valor de mercado sin IVA (misma moneda)</label><input id="pvm" type="number" min="0"></div>
+<div><label for="pvm">Valor de mercado sin IVA</label><input id="pvm" type="number" min="0"><select id="pvm_cur" aria-label="Moneda del valor de mercado" style="margin-top:6px"><option value="USD" selected>US$ (dólares)</option><option value="UYU">$ (pesos uruguayos)</option></select></div>
 <div><label for="ptipo">¿Cuándo lo empadronás?</label><select id="ptipo"><option value="0.03">Este año (2026), 0 km — alícuota 3 % (oficial)</option><option value="0.0225">Usado, ya empadronado al 31/12/2025 — alícuota 2,25 % (oficial)</option><option value="custom">En 2027 o después — alícuota aún no publicada (vos elegís el supuesto)</option></select></div>
 <div id="prbox" hidden><label for="prate">Alícuota supuesta (%)</label><input id="prate" type="number" min="0" step="0.01" value="3"></div>
-<div id="cifbox" hidden><label for="pcif">Valor de importación (CIF) para el IMESI</label><input id="pcif" type="number" min="0"></div></div>
+<div id="cifbox" hidden><label for="pcif">Valor de importación (CIF) para el IMESI, en US$</label><input id="pcif" type="number" min="0"></div></div>
 <p><button type="button" class="btn sec" id="pcalc">Calcular y completar «Patente anual»</button></p>
 <div id="pres" class="small" aria-live="polite"></div>
 <p class="small muted">Qué cambia si comprás en 2027: (1) el IMESI anunciado (decreto de junio 2026, previsto desde 1/1/2027, todavía sin norma oficial verificada y con posible postergación): hasta US$ 19.000 de valor de importación sigue exento, de 19.001 a 27.000 paga 5 % y más de 27.000 paga 9 %; el umbral es el valor CIF, no el precio de venta. No sabemos si la tasa se aplica a todo el valor o solo al excedente, por eso mostramos las dos cuentas. (2) La alícuota de patente 2027 no está publicada: si no la conocés, probá con distintos supuestos. (3) Un IMESI más alto sube el precio y, por eso, probablemente también el valor de mercado y la patente. Fuentes y fechas en <a href="beneficios.html">Beneficios</a>.</p>
 </details>
 <label style="margin-top:14px"><input type="checkbox" id="compare" style="width:auto"> Comparar con un vehículo de combustión</label>
 <div id="cbox" class="row" hidden>
-<div><label for="cPrice">Precio de compra</label><input id="cPrice" type="number" min="0"></div>
+<div><label for="cPrice">Precio de compra</label><input id="cPrice" type="number" min="0"><select id="cPrice_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD" selected>US$ (dólares)</option><option value="UYU">$ (pesos uruguayos)</option></select></div>
 <div><label for="cLper100">Consumo (L/100 km)</label><input id="cLper100" type="number" min="0" step="0.1"></div>
-<div><label for="cFuelPrice">Precio del litro</label><input id="cFuelPrice" type="number" min="0" step="0.01"></div>
-<div><label for="cInsurance">Seguro anual</label><input id="cInsurance" type="number" min="0"></div>
-<div><label for="cPatente">Patente anual</label><input id="cPatente" type="number" min="0"></div>
-<div><label for="cMaint">Mantenimiento anual</label><input id="cMaint" type="number" min="0"></div></div>
+<div><label for="cFuelPrice">Precio del litro</label><input id="cFuelPrice" type="number" min="0" step="0.01"><select id="cFuelPrice_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="cInsurance">Seguro anual</label><input id="cInsurance" type="number" min="0"><select id="cInsurance_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="cPatente">Patente anual</label><input id="cPatente" type="number" min="0"><select id="cPatente_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div>
+<div><label for="cMaint">Mantenimiento anual</label><input id="cMaint" type="number" min="0"><select id="cMaint_cur" aria-label="Moneda de este importe" style="margin-top:6px"><option value="USD">US$ (dólares)</option><option value="UYU" selected>$ (pesos uruguayos)</option></select></div></div>
 
 <p><button class="btn" type="submit">Calcular</button></p></form>
 <div id="res" class="result" aria-live="polite">Completá los datos y calculá.</div>
@@ -53,11 +54,12 @@
 <script>
 const $=id=>document.getElementById(id), ids="price years kmYear kwh100 homePct priceHome pricePublic insurance patente maint tires otherYear charger install cPrice cLper100 cFuelPrice cInsurance cPatente cMaint".split(" ");
 $("ptipo").onchange=()=>{const c=$("ptipo").value==="custom";$("prbox").hidden=!c;$("cifbox").hidden=!c};
-$("pcalc").onclick=()=>{const v=EV.num($("pvm").value),f2=n=>EV.fmtNum(n,2);if(!(v>0)){$("pres").innerHTML="Ingresá el valor de mercado sin IVA (solo cifras, por ejemplo 30000).";return}
+$("pcalc").onclick=()=>{const v=EV.num($("pvm").value),tc=EV.num($("tc").value),f2=n=>EV.fmtNum(n,2);if(!(v>0)){$("pres").innerHTML="Ingresá el valor de mercado sin sin IVA (solo cifras, por ejemplo 30000).".replace("sin sin","sin");return}
+  const vu=$("pvm_cur").value==="USD";if(vu&&!(tc>0)){$("pres").innerHTML="El valor está en dólares y la patente se paga en pesos: cargá el tipo de cambio (arriba, en «Monedas»).";return}
   const cu=$("ptipo").value==="custom",rate=cu?EV.num($("prate").value)/100:+$("ptipo").value;if(!(rate>=0)){$("pres").innerHTML="Ingresá una alícuota válida.";return}
-  const p=Math.round(v*rate*100)/100;$("patente").value=String(p).replace(".",",");
-  let h=`Patente anual = ${f2(v)} × ${EV.fmtNum(rate*100,2)} % = <strong>${f2(p)}</strong> (ya cargada en el campo «Patente anual» de arriba).`+(cu?" <em>La alícuota es un supuesto tuyo: aún no hay valor oficial para 2027.</em>":"");
-  if(cu){const c=EV.num($("pcif").value);if(c>0){const r=c>27000?.09:c>19000?.05:0,ex=c>27000?c-27000:c>19000?c-19000:0;h+=r===0?`<br>IMESI: con un valor de importación de ${f2(c)} (≤ US$ 19.000) seguiría exento.`:`<br>IMESI estimado (${r*100} %, si el valor CIF está en US$): entre <strong>${f2(ex*r)}</strong> (solo sobre el excedente de su tramo) y <strong>${f2(c*r)}</strong> (sobre todo el valor). Sumalo al precio de compra de arriba si el precio de lista aún no lo incluye. Estimación sin norma oficial.`}else h+="<br>Si cargás el valor de importación (CIF) te muestro el IMESI estimado."}
+  const p=Math.round((vu?v*tc:v)*rate*100)/100;$("patente").value=String(p).replace(".",",");$("patente_cur").value="UYU";
+  let h=`Patente anual = ${vu?"US$ "+f2(v)+" × $ "+f2(tc)+" (tipo de cambio)":"$ "+f2(v)} × ${EV.fmtNum(rate*100,2)} % = <strong>$ ${f2(p)}</strong>${tc>0?" (≈ US$ "+f2(p/tc)+")":""}. Ya quedó cargada en «Patente anual» de arriba, en pesos.`+(cu?" <em>La alícuota es un supuesto tuyo: aún no hay valor oficial para 2027.</em>":"");
+  if(cu){const c=EV.num($("pcif").value);if(c>0){const r=c>27000?.09:c>19000?.05:0,ex=c>27000?c-27000:c>19000?c-19000:0;h+=r===0?`<br>IMESI: con un valor de importación de US$ ${f2(c)} (≤ US$ 19.000) seguiría exento.`:`<br>IMESI estimado (${r*100} %): entre <strong>US$ ${f2(ex*r)}</strong> (solo sobre el excedente de su tramo) y <strong>US$ ${f2(c*r)}</strong> (sobre todo el valor). Sumalo al precio de compra de arriba si el precio de lista aún no lo incluye. Estimación sin norma oficial.`}else h+="<br>Si cargás el valor de importación (CIF, en US$) te muestro el IMESI estimado."}
   $("pres").innerHTML=h};
 $("compare").onchange=()=>{$("cbox").hidden=!$("compare").checked};
 const f2=n=>EV.fmtNum(n,2);
@@ -67,10 +69,13 @@ $("f").addEventListener("submit",ev=>{ev.preventDefault();
   const miss=["price","kmYear","kwh100","priceHome"].filter(i=>o[i]==="");
   if(o.homePct!==""&&+o.homePct<100&&o.pricePublic==="")miss.push("pricePublic");
   if(miss.length){$("res").innerHTML="<strong>Faltan datos:</strong> "+miss.map(i=>$(i).previousElementSibling.textContent).join(", ")+". No usamos valores por defecto para no mostrar un resultado engañosamente preciso.";return}
-  const r=EVFIN.tco(o);
-  let h=`<div class="muted small">Coste anual de uso (eléctrico)</div><div class="big">${f2(r.yearly)}</div><p class="small">Electricidad: ${f2(r.energyYear)}/año (${EV.fmtNum(r.kwhYear,0)} kWh/año) · Inversión inicial (vehículo+cargador+instalación): ${f2(r.upfront)}</p>
-  <p><strong>Coste total a ${r.years} año(s): ${f2(r.total)}</strong></p>`;
-  if(r.comb)h+=`<p>Combustión a ${r.years} año(s): <strong>${f2(r.comb.total)}</strong> (combustible ${f2(r.comb.fuelYear)}/año). ${r.diff>=0?`El eléctrico resulta <strong>${f2(r.diff)}</strong> más barato con estos datos.`:`El eléctrico resulta <strong>${f2(-r.diff)}</strong> más caro con estos datos.`}</p>`;
-  h+=`<div class="tablewrap"><table><thead><tr><th>Año</th><th>Gasto del año</th><th>Acumulado (incl. inversión inicial)</th></tr></thead><tbody>${r.rows.map(x=>`<tr><td>${x.year}</td><td>${f2(x.annual)}</td><td>${f2(x.cumulative)}</td></tr>`).join("")}</tbody></table></div>`;
+  const mon="price priceHome pricePublic insurance patente maint tires otherYear charger install cPrice cFuelPrice cInsurance cPatente cMaint".split(" "),tc=EV.num($("tc").value);
+  if(mon.some(i=>o[i]!==""&&$(i+"_cur").value==="UYU"&&!(tc>0))){$("res").innerHTML="<strong>Falta el tipo de cambio.</strong> Hay importes en pesos: cargá cuántos pesos vale 1 US$ (campo «Tipo de cambio», arriba) para convertir todo a una misma moneda. No usamos una cotización por defecto.";return}
+  mon.forEach(i=>{if(o[i]!==""&&$(i+"_cur").value==="UYU")o[i]=o[i]/tc;});
+  const r=EVFIN.tco(o),m=n=>"US$ "+f2(n)+(tc>0?" (≈ $ "+EV.fmtNum(n*tc,0)+")":"");
+  let h=`<div class="muted small">Coste anual de uso (eléctrico)</div><div class="big">${m(r.yearly)}</div><p class="small">Electricidad: ${m(r.energyYear)}/año (${EV.fmtNum(r.kwhYear,0)} kWh/año) · Inversión inicial (vehículo+cargador+instalación): ${m(r.upfront)}. Todo convertido a dólares${tc>0?" con tipo de cambio $ "+f2(tc):""}.</p>
+  <p><strong>Coste total a ${r.years} año(s): ${m(r.total)}</strong></p>`;
+  if(r.comb)h+=`<p>Combustión a ${r.years} año(s): <strong>${m(r.comb.total)}</strong> (combustible ${m(r.comb.fuelYear)}/año). ${r.diff>=0?`El eléctrico resulta <strong>${m(r.diff)}</strong> más barato con estos datos.`:`El eléctrico resulta <strong>${m(-r.diff)}</strong> más caro con estos datos.`}</p>`;
+  h+=`<div class="tablewrap"><table><thead><tr><th>Año</th><th>Gasto del año (US$)</th><th>Acumulado (US$, incl. inversión inicial)</th></tr></thead><tbody>${r.rows.map(x=>`<tr><td>${x.year}</td><td>${f2(x.annual)}</td><td>${f2(x.cumulative)}</td></tr>`).join("")}</tbody></table></div>`;
   $("res").innerHTML=h;});
 </script></body></html>
