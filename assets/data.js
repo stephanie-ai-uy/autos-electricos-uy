@@ -181,7 +181,7 @@ window.EVDATA = (function () {
     Object.assign({}, base, {
       id: "byd-yuan-pro-ev", brand: "BYD", model: "Yuan Pro", version: "EV", body: "SUV compacto",
       importer: "Sadar", dealers: [], status: "disponible",
-      price: { list: null, promo: null, currency: "USD", validOn: null, note: "Figura en el sitio oficial de BYD Uruguay pero sin precio visible.", verification: "sin dato" },
+      price: { list: 27990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio «desde» del listado oficial de BYD Uruguay (byd.com.uy/autos).", verification: "oficial" },
       powerCv: null, batteryKwh: 45.12, rangeKm: null, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "No informada." },
       source: sources.rankAutoblog, notes: "Modelo eléctrico más vendido de 2025 (3.362 unidades, versión GS de 45,12 kWh, según ACAU vía Autoblog)."
@@ -376,7 +376,7 @@ window.EVDATA = (function () {
       price: { list: 39990, promo: null, currency: "USD", validOn: CHECKED, note: "Precio del sitio oficial de BYD Uruguay.", verification: "oficial" },
       powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
-      source: sources.bydOficial, notes: "Ver nota de clasificación en Yuan Pro DM-i. Existe también el Song Plus EV (eléctrico) sin precio hallado."
+      source: sources.bydOficial, notes: "Ver nota de clasificación en Yuan Pro DM-i. El Song Plus EV (eléctrico) figura ahora como ficha aparte."
     }),
     Object.assign({}, base, {
       id: "geely-ex5-em-i", type: "PHEV", brand: "Geely", model: "EX5 EM-i", version: "Pro", body: "SUV compacto",
@@ -1043,7 +1043,488 @@ window.EVDATA = (function () {
       powerCv: null, batteryKwh: null, rangeKm: null, rangeCycle: null, chargeNote: null,
       warranty: { vehicle: null, battery: null, note: "No informada en la fuente." },
       source: sources.autoanuarioElexio, notes: ""
-    })
+    }),
+    Object.assign({}, base, {
+      "id": "byd-yuan-plus-gl",
+      "type": "BEV",
+      "brand": "BYD",
+      "model": "Yuan Plus",
+      "version": "GL (EV400)",
+      "body": "SUV compacto",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": null,
+            "promo": null,
+            "currency": "USD",
+            "validOn": null,
+            "note": "El listado oficial no publica un precio específico para esta versión.",
+            "verification": "sin dato"
+      },
+      "powerCv": 204,
+      "batteryKwh": 49.92,
+      "rangeKm": 410,
+      "rangeCycle": "NEDC",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": "5 años o 150.000 km",
+            "battery": "8 años o 150.000 km",
+            "note": "Según el lanzamiento (Autoblog, mar. 2025); confirmar con el importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Yuan Plus (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-yuan-plus/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "La web oficial actual solo muestra la versión Luxury; la GL (49,92 kWh, 410 km NEDC) figura en el lanzamiento de marzo de 2025 con precio de US$ 39.990 de ese momento, sin confirmar si sigue disponible.",
+      "accel": 7.3,
+      "dcKw": 80,
+      "acKw": 7,
+      "trunkL": 440,
+      "drive": "Delantera",
+      "torqueNm": 310,
+      "topSpeedKmh": 160,
+      "specSource": {
+            "name": "Autoblog Uruguay — Lanzamiento: BYD Yuan Plus MY2025",
+            "url": "https://www.autoblog.com.uy/2025/03/lanzamiento-byd-yuan-plus-my2025.html",
+            "date": "2025-03",
+            "type": "Prensa especializada"
+      }
+}),
+    Object.assign({}, base, {
+      "id": "byd-yuan-plus-lux",
+      "type": "BEV",
+      "brand": "BYD",
+      "model": "Yuan Plus",
+      "version": "Luxury (EV480)",
+      "body": "SUV compacto",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 31990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": 204,
+      "batteryKwh": 60.48,
+      "rangeKm": 480,
+      "rangeCycle": "NEDC",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": "5 años o 150.000 km",
+            "battery": "8 años o 150.000 km",
+            "note": "Según el lanzamiento (Autoblog, mar. 2025); confirmar con el importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Yuan Plus (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-yuan-plus/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "Plataforma e-Platform 3.0, tren motriz 8 en 1 con bomba de calor, pantalla giratoria de 12,8\", cámaras 360° y control de crucero adaptativo.",
+      "accel": 7.3,
+      "dcKw": 80,
+      "acKw": 7,
+      "trunkL": 440,
+      "drive": "Delantera",
+      "torqueNm": 310,
+      "topSpeedKmh": 160,
+      "specSource": {
+            "name": "Autoblog Uruguay — Lanzamiento: BYD Yuan Plus MY2025",
+            "url": "https://www.autoblog.com.uy/2025/03/lanzamiento-byd-yuan-plus-my2025.html",
+            "date": "2025-03",
+            "type": "Prensa especializada"
+      },
+      "discrepancy": "La ficha de BYD Uruguay muestra 480 km (NEDC) en el encabezado y 410 km en el texto del motor: la primera corresponde a Luxury y la segunda a GL (Autoblog). El precio de lanzamiento de Luxury fue US$ 42.990 (mar. 2025); hoy la web oficial publica «desde» US$ 31.990."
+}),
+    Object.assign({}, base, {
+      "id": "byd-song-plus-ev",
+      "type": "BEV",
+      "brand": "BYD",
+      "model": "Song Plus EV",
+      "version": "",
+      "body": "SUV",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 41990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": 218,
+      "batteryKwh": 71.8,
+      "rangeKm": 505,
+      "rangeCycle": "NEDC",
+      "chargeNote": "Función VTOL (carga reversible, vehículo a carga).",
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Song Plus EV (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-song-plus-ev/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "Potencia de 160 kW (convertida a cv); batería Blade de 71,8 kWh; techo panorámico y baúl eléctrico.",
+      "torqueNm": 310,
+      "drive": "Delantera"
+}),
+    Object.assign({}, base, {
+      "id": "byd-seagull-surf",
+      "type": "BEV",
+      "brand": "BYD",
+      "model": "Seagull Surf",
+      "version": "Surf",
+      "body": "Hatchback urbano",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 22990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": 88,
+      "batteryKwh": 43.2,
+      "rangeKm": 380,
+      "rangeCycle": "NEDC",
+      "chargeNote": "Puerto CCS Combo 2: carga rápida DC del 30 % al 80 % en unos 30 minutos (sin potencia en kW informada); carga AC con conector Tipo 2.",
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Seagull Surf (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-seagull-surf/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "Motor delantero de 65 kW (convertido a cv) con batería Blade de 43,2 kWh; pantalla giratoria de 10,1\". Es una versión distinta del Seagull ya listado.",
+      "drive": "Delantera"
+}),
+    Object.assign({}, base, {
+      "id": "byd-sealion-7-blue",
+      "type": "BEV",
+      "brand": "BYD",
+      "model": "Sealion 7",
+      "version": "Blue",
+      "body": "SUV",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 35990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": 231,
+      "batteryKwh": null,
+      "rangeKm": 440,
+      "rangeCycle": "WLTC",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Sealion 7 (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-sealion/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "La web aclara: «Precio versión Blue para las primeras 100 unidades»; puede haber cambiado. Motor de 170 kW (convertido a cv), llantas de 19\", pantalla de 15,6\".",
+      "accel": 7.3,
+      "drive": "Trasera (RWD)"
+}),
+    Object.assign({}, base, {
+      "id": "byd-sealion-7-awd",
+      "type": "BEV",
+      "brand": "BYD",
+      "model": "Sealion 7",
+      "version": "AWD",
+      "body": "SUV",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": null,
+            "promo": null,
+            "currency": "USD",
+            "validOn": null,
+            "note": "El listado oficial no publica un precio específico para esta versión.",
+            "verification": "sin dato"
+      },
+      "powerCv": 530,
+      "batteryKwh": null,
+      "rangeKm": 456,
+      "rangeCycle": "WLTC",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Sealion 7 (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-sealion/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "Doble motor, 390 kW combinados (convertidos a cv); llantas de 20\" y sonido Dynaudio de 12 altavoces. El listado oficial publica un solo precio «desde» (versión Blue).",
+      "accel": 4.5,
+      "drive": "Integral (AWD)"
+}),
+    Object.assign({}, base, {
+      "id": "byd-seal",
+      "type": "BEV",
+      "brand": "BYD",
+      "model": "Seal",
+      "version": "RWD / AWD",
+      "body": "Sedán",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 59990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": null,
+      "batteryKwh": null,
+      "rangeKm": 520,
+      "rangeCycle": null,
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Seal (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-seal/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "Versión RWD: un motor de 150 kW (201 cv). Versión AWD: dos motores, 390 kW (523 cv). La aceleración de 3,8 s y los 520 km corresponden a la AWD según la web; esta no indica el ciclo de homologación de los 520 km. Batería Cell to Body, V2L, conector Tipo 2.",
+      "accel": 3.8,
+      "drive": "Trasera (RWD) o integral (AWD)"
+}),
+    Object.assign({}, base, {
+      "id": "byd-han",
+      "type": "BEV",
+      "brand": "BYD",
+      "model": "Han",
+      "version": "EV700 / EV600",
+      "body": "Sedán",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 69990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": null,
+      "batteryKwh": null,
+      "rangeKm": 602,
+      "rangeCycle": "NEDC",
+      "chargeNote": "Carga rápida del 30 % al 80 % en 34 minutos (según la web).",
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Han (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-han/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "EV700: motor delantero de 180 kW (241 cv). EV600: suma un motor trasero de 200 kW (268 cv), tracción AWD. La web no aclara a qué versión corresponden los 602 km ni los 3,9 s. Audio Dynaudio.",
+      "accel": 3.9
+}),
+    Object.assign({}, base, {
+      "id": "byd-tang",
+      "type": "BEV",
+      "brand": "BYD",
+      "model": "Tang",
+      "version": "",
+      "body": "SUV de 7 plazas",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 80990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": 517,
+      "batteryKwh": null,
+      "rangeKm": 530,
+      "rangeCycle": "WLTC",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Tang (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-new-tang/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "Dos motores (180 kW delantero y 200 kW trasero, 380 kW combinados, convertidos a cv); suspensión DiSus-C, función VTOL, 7 airbags.",
+      "accel": 4.9,
+      "seats": 7,
+      "drive": "Integral (AWD)"
+}),
+    Object.assign({}, base, {
+      "id": "byd-ti7",
+      "type": "PHEV",
+      "brand": "BYD",
+      "model": "Ti7",
+      "version": "",
+      "body": "SUV",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 57990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": 354,
+      "batteryKwh": null,
+      "rangeKm": 115,
+      "rangeCycle": "NEDC",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Ti7 (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-ti7/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "Híbrido enchufable DM-p con doble motor eléctrico, 260 kW combinados (convertidos a cv), 630 Nm y autonomía combinada de hasta 1.015 km (NEDC). Autonomía eléctrica 115 km (NEDC). Pantalla de 15,6\".",
+      "accel": 5.3,
+      "drive": "Integral (AWD)",
+      "consumption": "5,9 L/100 km (según la web)"
+}),
+    Object.assign({}, base, {
+      "id": "byd-atto-8",
+      "type": "PHEV",
+      "brand": "BYD",
+      "model": "Atto 8",
+      "version": "GL / GS",
+      "body": "SUV de 7 plazas",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 67990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": null,
+      "batteryKwh": null,
+      "rangeKm": 92,
+      "rangeCycle": "NEDC",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Atto 8 (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-atto-8/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "Híbrido enchufable DM-p de 7 plazas. GL: motor de 200 kW, 92 km de autonomía eléctrica (NEDC). GS: dos motores de 200 kW, 160 km eléctricos (NEDC). Autonomía combinada de hasta 1.020 km (NEDC). Baúl de 270 L (960 L y 1.960 L con asientos abatidos). Llantas de 21\".",
+      "seats": 7,
+      "trunkL": 270,
+      "drive": "Integral (4WD)"
+}),
+    Object.assign({}, base, {
+      "id": "byd-shark",
+      "type": "PHEV",
+      "brand": "BYD",
+      "model": "Shark",
+      "version": "GL / GS",
+      "body": "Pick-up",
+      "importer": "Sadar",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 69490,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio «desde» del listado oficial de BYD Uruguay, sujeto a disponibilidad y modificaciones sin previo aviso.",
+            "verification": "oficial"
+      },
+      "powerCv": null,
+      "batteryKwh": 29.58,
+      "rangeKm": 100,
+      "rangeCycle": "NEDC",
+      "chargeNote": "Carga DC de 40 kW: 30 %–80 % en 20 minutos (según la web).",
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la web oficial de BYD Uruguay; consultar al importador."
+      },
+      "source": {
+            "name": "BYD Uruguay — Shark (importador Sadar)",
+            "url": "https://byd.com.uy/autos/byd-shark/",
+            "date": CHECKED,
+            "type": "Web oficial del importador"
+      },
+      "notes": "Pick-up híbrida enchufable. Motor delantero de 170 kW y trasero de 150 kW. Autonomía combinada de 840 km (NEDC). Carga útil 835 kg y capacidad de arrastre 2.500 kg; 5.457 × 1.971 × 1.925 mm.",
+      "dcKw": 40,
+      "drive": "Integral (AWD)",
+      "consumption": "7,5 L/100 km (según la web)"
+})
   ];
 
   /* Marcas detectadas en prensa, sin datos de ficha todavía. No son equivalentes a una ficha. */
@@ -1152,7 +1633,7 @@ window.EVDATA = (function () {
       { pos: 5, model: "Chevrolet Spark EUV", units: 737, ids: ["chevrolet-spark-euv-activ"] },
       { pos: 6, model: "JMC JMEV EV3 / 3", units: 589, ids: ["jmc-jmev-3"] },
       { pos: 7, model: "Geely EX5", units: 515, ids: ["geely-ex5-urban", "geely-ex5-pro", "geely-ex5-max"] },
-      { pos: 8, model: "BYD Yuan Plus", units: 475, ids: [] },
+      { pos: 8, model: "BYD Yuan Plus", units: 475, ids: ["byd-yuan-plus-gl", "byd-yuan-plus-lux"] },
       { pos: 9, model: "Omoda E5", units: 469, ids: ["omoda-e5"] },
       { pos: 10, model: "JAC Ytterby / E-S3 Ytterby", units: 394, ids: [] }
     ],

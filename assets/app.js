@@ -1,7 +1,7 @@
 /* Utilidades compartidas: layout, formato, estados */
 window.EV = (function () {
   const D = window.EVDATA;
-  const NAV = [["index.html", "Inicio", "home"], ["catalogo.html", "Catálogo", "cat"], ["comparador.html", "Comparador", "cmp"], ["ranking.html", "Más vendidos", "rank"], ["financiacion.html", "Financiación", "fin"], ["beneficios.html", "Beneficios", "ben"], ["tco.html", "Coste total", "tco"], ["primer-electrico.html", "Mi primer eléctrico", "first"], ["guias.html", "Guías y garantías", "gui"], ["seguros.html", "Seguros", "seg"], ["metodologia.html", "Fuentes", "met"], ["contacto.html", "Sugerencias", "con"]];
+  const NAV = [["index.html", "Inicio", "home"], ["catalogo.html", "Catálogo", "cat"], ["comparador.html", "Comparador", "cmp"], ["ranking.html", "Más vendidos", "rank"], ["cargadores.html", "Cargadores", "map"], ["financiacion.html", "Financiación", "fin"], ["beneficios.html", "Beneficios", "ben"], ["tco.html", "Coste total", "tco"], ["primer-electrico.html", "Mi primer eléctrico", "first"], ["guias.html", "Guías y garantías", "gui"], ["seguros.html", "Seguros", "seg"], ["metodologia.html", "Fuentes", "met"], ["contacto.html", "Sugerencias", "con"]];
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const NI = "No informado";
   const fmtNum = (n, d = 0) => n == null ? NI : Number(n).toLocaleString("es-UY", { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -27,6 +27,7 @@ window.EV = (function () {
     const f = `<footer class="site"><div class="wrap">
 <p><strong>Autos Eléctricos UY</strong> — Comparativa independiente de autos eléctricos en Uruguay. Un proyecto de <strong>Stephanie AI</strong>. Última revisión de datos: ${esc(D.checked)}.</p>
 <p class="small muted" id="trNote" hidden>Traducción automática de Google Translate: puede tener errores. Los datos de referencia (precios, fichas y fuentes) están en español y en dólares o pesos uruguayos; ante cualquier duda vale el original en español.</p>
+<p class="small">© 2026 Stephanie AI. Todos los derechos reservados: el diseño, los textos, las comparativas y la organización de los datos de este sitio no pueden copiarse ni reproducirse sin autorización. Los datos de terceros pertenecen a sus fuentes.</p>
 <p><a href="metodologia.html">Fuentes y metodología</a> · <a href="legal.html">Privacidad, cookies y condiciones</a> · No hay publicidad ni patrocinios activos en este sitio.</p></div></footer>`;
     document.body.insertAdjacentHTML("afterbegin", h);
     const mb=document.getElementById("menuBtn"),mn=document.getElementById("mainNav");mb.onclick=()=>{const o=mn.classList.toggle("open");mb.setAttribute("aria-expanded",o)};
@@ -104,5 +105,11 @@ window.EV = (function () {
   function byId(id) { return D.vehicles.find(v => v.id === id); }
   document.addEventListener("DOMContentLoaded", layout);
   if (["fin", "tco"].includes(document.body && document.body.dataset.page)) document.addEventListener("DOMContentLoaded", plainNumbers);
-  return { D, CAR, typeLabel, typeBadge, originOf, originBadge, esc, NI, num, fmtNum, fmtMoney, statusBadge, priceHtml, priceStale, getVehicles, byId, daysSince };
+  /* Miniatura del vehículo si hay imagen con licencia libre; si no, el dibujo genérico. */
+  function thumb(v, big) {
+    const m = (window.EVIMAGES || {})[v.id];
+    if (!m) return CAR;
+    return `<figure class="thumb" style="margin:0 0 8px"><img src="${m.src}" alt="${esc(v.brand + " " + v.model)}" loading="lazy" decoding="async" style="width:100%;${big ? "max-width:560px;" : "aspect-ratio:16/10;object-fit:cover;"}border-radius:10px;background:#1a1f27"><figcaption class="small muted">${esc(m.note)} Foto: <a href="${esc(m.page)}" rel="noopener">${esc(m.author)}</a>, <a href="${esc(m.licenseUrl)}" rel="noopener">${esc(m.license)}</a> (Wikimedia Commons)</figcaption></figure>`;
+  }
+  return { D, CAR, thumb, typeLabel, typeBadge, originOf, originBadge, esc, NI, num, fmtNum, fmtMoney, statusBadge, priceHtml, priceStale, getVehicles, byId, daysSince };
 })();
