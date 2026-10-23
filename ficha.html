@@ -4,7 +4,8 @@
 <meta name="description" content="Ficha detallada de un coche eléctrico en Uruguay con precio, especificaciones, garantía, fuente y fecha de consulta.">
 <link rel="stylesheet" href="assets/style.css"></head>
 <body data-page="cat"><main id="main"><div class="wrap" id="out"></div></main>
-<script src="assets/data.js?v=3"></script><script src="assets/app.js?v=3"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
+<script src="assets/config.js"></script><script src="assets/images.js?v=1"></script><script src="assets/data.js?v=5"></script><script src="assets/app.js?v=4"></script>
 <script>
 const id = new URLSearchParams(location.search).get("id"), v = EV.byId(id), e = EV.esc, ni = EV.NI;
 const out = document.getElementById("out");
@@ -16,6 +17,7 @@ else {
   const cyc = v.rangeKm != null ? `${v.rangeKm} km · ciclo: ${v.rangeCycle || "no informado"}` : null;
   out.innerHTML = `<p><a href="catalogo.html">← Catálogo</a></p>
 <h1>${e(v.brand)} ${e(v.model)} <small class="muted">${e(v.version)}</small></h1>
+${(window.EVIMAGES||{})[v.id] ? EV.thumb(v, true) : ""}
 <div>${EV.statusBadge(v.status)} ${EV.typeBadge(v.type)} ${EV.originBadge(v.brand)}</div>
 <div class="card" style="margin:16px 0">${EV.priceHtml(v)}<p class="small muted">${e(v.price.note)}</p>
 <p class="small"><strong>No incluye (por confirmar con el vendedor):</strong> matriculación, gastos administrativos, entrega, cargador y su instalación. No hay precio promocional verificado.</p></div>
@@ -36,4 +38,65 @@ ${v.specSource ? `<p><strong>Ficha técnica:</strong> <a href="${e(v.specSource.
 <p class="small muted">Dato sin ficha oficial del importador: tratar como orientativo. Los vacíos se muestran como «No informado»; no se rellenan con estimaciones.</p>
 <p><a class="btn" href="comparador.html?ids=${e(v.id)}">Comparar este modelo</a> <a class="btn sec" href="guias.html">Qué revisar antes de comprar</a> <a class="btn sec" href="contacto.html?v=${e(v.id)}">¿Ves un dato incorrecto? Avisanos</a></p>`;
 }
-</script></body></html>
+</script>
+<script>
+/* Opiniones de personas sobre este modelo. Se publican solo después de revisarlas. */
+(function(){
+const vid=new URLSearchParams(location.search).get("id"), v=EV.byId(vid), C=window.EVCONFIG||{};
+if(!v)return;
+const sb=(C.SUPABASE_URL&&C.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY):null;
+const e=EV.esc, box=document.createElement("section"); box.id="opiniones";
+const q=encodeURIComponent(v.brand+" "+v.model+" real range highway test");
+box.innerHTML=`<h2>Autonomía real en ruta</h2>
+<div class="card"><p class="small" style="margin-top:0">La autonomía homologada (${v.rangeKm!=null?v.rangeKm+" km, ciclo "+e(v.rangeCycle||"no informado"):"no informada"}) se mide en laboratorio. <strong>En ruta suele ser menor</strong>, sobre todo a alta velocidad, con calor o frío fuerte, con carga y con pendientes. Todavía no tenemos mediciones propias en Uruguay de este modelo.</p>
+<p class="small"><strong>Lo que informan dueños de este modelo:</strong> <span id="rrng">calculando…</span></p>
+<p class="small"><a href="https://www.google.com/search?q=${q}" rel="noopener">Buscar pruebas de autonomía real en ruta de este modelo</a> · ¿Lo tenés? Contá cuántos km lográs en ruta en el formulario de abajo.</p></div>
+<h2>Opiniones de dueños y usuarios</h2>
+<p class="small muted">Experiencias de personas con este modelo. No las verificamos: son opiniones de quien las escribe. Se publican después de una revisión y no mostramos datos personales.</p>
+<div id="rlist" aria-live="polite">Cargando opiniones…</div>
+<details class="card" style="margin-top:14px"><summary><strong>Contá tu experiencia con este modelo</strong></summary>
+<form id="rf" novalidate>
+<div class="row">
+<div><label for="ra">Tu nombre o apodo (público)</label><input id="ra" maxlength="40" autocomplete="off"></div>
+<div><label for="rr">Tu puntuación (1 a 5)</label><select id="rr"><option value="">Elegí</option><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></div>
+<div><label for="rm">Meses que lo tenés (opcional)</label><input id="rm" type="text" inputmode="numeric"></div>
+<div><label for="rk">Kilómetros recorridos (opcional)</label><input id="rk" type="text" inputmode="numeric"></div>
+<div><label for="rg">Autonomía real que lográs en ruta, en km (opcional)</label><input id="rg" type="text" inputmode="numeric"></div></div>
+<label for="rp">Lo que más te gusta (opcional)</label><textarea id="rp" maxlength="600" rows="2"></textarea>
+<label for="rc2">Lo que menos te gusta (opcional)</label><textarea id="rc2" maxlength="600" rows="2"></textarea>
+<label for="rx">Tu experiencia (mínimo 20 caracteres): garantía, repuestos, software, servicio técnico, consumo real…</label><textarea id="rx" maxlength="1500" rows="5"></textarea>
+<input id="rh" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+<label><input type="checkbox" id="rcon" style="width:auto"> Acepto que se publique mi opinión con el nombre o apodo indicado. No incluyas teléfonos, correos ni datos de otras personas. Puede editarse o no publicarse si contiene insultos, acusaciones sin sustento o datos personales.</label>
+<p><button class="btn" type="submit">Enviar opinión</button></p><div id="rmsg" aria-live="polite"></div></form></details>`;
+document.getElementById("main").querySelector(".wrap").appendChild(box);
+const $=i=>document.getElementById(i);
+const star=n=>"★".repeat(n)+"☆".repeat(5-n);
+async function load(){
+  if(!sb){$("rlist").textContent="Las opiniones no están disponibles por ahora.";$("rrng").textContent="sin datos.";return}
+  const {data,error}=await sb.from("vehicle_reviews").select("author,rating,months_owned,km_owned,real_range_km,pros,cons,comment,created_at").eq("vehicle_id",v.id).order("created_at",{ascending:false}).limit(50);
+  if(error){$("rlist").textContent="No se pudieron cargar las opiniones.";$("rrng").textContent="sin datos.";return}
+  const rg=data.filter(r=>r.real_range_km!=null).map(r=>r.real_range_km);
+  $("rrng").textContent=rg.length?`${rg.length} dueño(s) informan entre ${Math.min(...rg)} y ${Math.max(...rg)} km en ruta (promedio ${EV.fmtNum(rg.reduce((a,b)=>a+b,0)/rg.length,0)} km). Son datos declarados, no verificados.`:"todavía no hay datos de dueños.";
+  if(!data.length){$("rlist").textContent="Todavía no hay opiniones publicadas de este modelo. ¡Sé la primera persona en contar su experiencia!";return}
+  const avg=data.reduce((a,r)=>a+r.rating,0)/data.length;
+  $("rlist").innerHTML=`<p><strong>${EV.fmtNum(avg,1)} / 5</strong> <span aria-hidden="true">${star(Math.round(avg))}</span> · ${data.length} opinión(es)</p>`+data.map(r=>`<article class="card" style="margin:8px 0"><div><strong>${e(r.author)}</strong> · <span aria-label="${r.rating} de 5">${star(r.rating)}</span> <span class="small muted">${new Date(r.created_at).toLocaleDateString("es-UY")}</span></div>
+<p style="margin:.4em 0">${e(r.comment)}</p>${r.pros?`<p class="small"><strong>Le gusta:</strong> ${e(r.pros)}</p>`:""}${r.cons?`<p class="small"><strong>No le gusta:</strong> ${e(r.cons)}</p>`:""}
+<p class="small muted">${[r.months_owned!=null?r.months_owned+" meses de uso":null,r.km_owned!=null?EV.fmtNum(r.km_owned,0)+" km":null,r.real_range_km!=null?"autonomía real en ruta: "+r.real_range_km+" km":null].filter(Boolean).join(" · ")}</p></article>`).join("");
+}
+load();
+$("rf").addEventListener("submit",async ev=>{ev.preventDefault();
+  const m=$("rmsg"),n=x=>{const t=EV.num($(x).value);return t===""?null:t};
+  if($("rh").value){return}
+  const a=$("ra").value.trim(),r=+$("rr").value,c=$("rx").value.trim(),mo=n("rm"),km=n("rk"),rg=n("rg");
+  if([mo,km,rg].some(x=>Number.isNaN(x))){m.textContent="Escribí solo cifras en meses, kilómetros y autonomía.";return}
+  if(a.length<2||!r||c.length<20){m.textContent="Falta tu nombre o apodo, la puntuación o una experiencia de al menos 20 caracteres.";return}
+  if(!$("rcon").checked){m.textContent="Tenés que aceptar que se publique tu opinión.";return}
+  if(!sb){m.textContent="No se puede enviar por ahora.";return}
+  try{if(localStorage.getItem("rv:"+v.id)&&Date.now()-(+localStorage.getItem("rv:"+v.id))<60000){m.textContent="Esperá un minuto para enviar otra.";return}}catch(x){}
+  const {error}=await sb.from("vehicle_reviews").insert({vehicle_id:v.id,author:a,rating:r,months_owned:mo,km_owned:km,real_range_km:rg,pros:$("rp").value.trim()||null,cons:$("rc2").value.trim()||null,comment:c,consent_publish:true});
+  if(error){m.textContent="No se pudo enviar. Revisá los datos e intentá de nuevo.";return}
+  try{localStorage.setItem("rv:"+v.id,String(Date.now()))}catch(x){}
+  $("rf").reset();m.innerHTML="<strong>¡Gracias!</strong> Tu opinión quedó pendiente de revisión y se publicará si cumple las reglas.";});
+})();
+</script>
+</body></html>

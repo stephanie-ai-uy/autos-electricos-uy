@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapa de cargadores públicos en Uruguay con estado en vivo | Autos Eléctricos UY</title>
+<meta name="description" content="Mapa de los cargadores públicos de UTE en todo Uruguay con el estado de cada punto (disponible, cargando, fuera de servicio), precios y apps para cargar.">
+<meta name="theme-color" content="#07090c">
+<link rel="stylesheet" href="assets/style.css">
+<style>.mapbox{width:100%;height:70vh;min-height:420px;border:1px solid var(--line,#2a3340);border-radius:12px;background:#fff}</style></head>
+<body data-page="map"><main id="main"><div class="wrap">
+<h1>Mapa de cargadores públicos</h1>
+<p class="lead">Ubicación y <strong>estado en vivo</strong> de los puntos de carga de la red pública de UTE en todo el país. El mapa es el oficial de UTE, incrustado acá: los datos son de UTE y se actualizan solos.</p>
+<div class="notice info">Este mapa muestra la red de <strong>UTE</strong>. Los cargadores de otras empresas o privados pueden no aparecer; para esos usá las apps de abajo. El estado lo informa cada cargador a UTE y puede demorar unos minutos.</div>
+
+<iframe class="mapbox" id="m" src="https://movilidad.ute.com.uy/mapa.html" title="Mapa de estaciones de carga de UTE" loading="lazy" referrerpolicy="no-referrer"></iframe>
+<p class="small muted">Si el mapa no carga, abrilo directamente en <a href="https://movilidad.ute.com.uy/mapa.html" rel="noopener">movilidad.ute.com.uy/mapa.html</a>. Fuente: <a href="https://portal.ute.com.uy/movilidad-electrica-carga-de-vehiculos" rel="noopener">UTE, Movilidad eléctrica</a>.</p>
+
+<h2>Cómo cargar</h2>
+<ul class="steps">
+<li>Los puntos de UTE se activan con la <strong>tarjeta de carga</strong> o la app <strong>UTE Mueve</strong> (<a href="https://play.google.com/store/apps/details?id=movilidad.ute.com.ute_movilidad_app&amp;hl=es_UY" rel="noopener">Android</a> · <a href="https://apps.apple.com/uy/app/ute-mueve/id1463591379" rel="noopener">iPhone</a>), que muestra si el cargador está disponible, cargando o fuera de servicio.</li>
+<li>Conector: revisá que tu auto sea compatible con el tipo del cargador (en el mapa figura CCS2, GB/T u otros) y con su potencia.</li>
+<li>Precios: mirá la tabla de <a href="primer-electrico.html">¿cuándo conviene cargar?</a> (carga rápida, carga lenta y casa).</li>
+<li>Antes de un viaje largo, planificá las paradas y tené un plan B: un cargador puede estar ocupado o fuera de servicio.</li>
+</ul>
+
+<h2>Otras apps y mapas</h2>
+<ul class="steps">
+<li><strong>EVE-APP:</strong> muestra ubicación, precios y estado de los puntos que gestiona EVE-MOVE y datos básicos de otros cargadores.</li>
+<li><strong>Cargadores UY:</strong> app independiente de la comunidad (<a href="https://play.google.com/store/apps/details?id=uy.cargadores.app" rel="noopener">Google Play</a>) con estados estimados; no es oficial.</li>
+<li><strong>Waze:</strong> la comunidad marca cargadores y avisa cuando falta información.</li>
+</ul>
+<p class="small muted">Este sitio no opera cargadores ni tiene acuerdos con las apps mencionadas. Dato de referencia: según el Ministerio de Industria, Energía y Minería, la red pública de UTE supera los 300 puntos (<a href="https://www.gub.uy/ministerio-industria-energia-mineria/politicas-y-gestion/precios-red-carga" rel="noopener">MIEM</a>); el número cambia seguido. ¿Falta un cargador o viste uno que no funciona? <a href="contacto.html">Avisanos</a>.</p>
+</div></main>
+<script src="assets/data.js?v=5"></script><script src="assets/app.js?v=4"></script></body></html>

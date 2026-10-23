@@ -102,6 +102,17 @@
 <li>Calculá el <a href="tco.html">coste total</a> a los años que pensás quedártelo.</li>
 </ol>
 
+<h2>Elegí según tu familia</h2>
+<p class="small muted">Recomendaciones generales: la carrocería y el espacio importan tanto como la batería. Mirá en cada <a href="catalogo.html">ficha</a> la carrocería y el baúl, y confirmá plazas y espacio en una prueba de manejo.</p>
+<div class="grid g2">
+<div class="card"><h3 style="margin-top:0">Una persona o pareja, uso urbano</h3><p class="small">Un hatchback o un auto chico alcanza y suele ser lo más económico, fácil de estacionar y de cargar. Fijate en que la autonomía cubra tus recorridos de la semana sin cargar todos los días, y en el baúl si hacés viajes de fin de semana.</p></div>
+<div class="card"><h3 style="margin-top:0">Pareja con un hijo pequeño</h3><p class="small">Priorizá baúl para el cochecito, puertas traseras que abran bien y puntos de anclaje ISOFIX para la silla. Un hatchback grande o un SUV compacto suelen ser un buen equilibrio.</p></div>
+<div class="card"><h3 style="margin-top:0">Familia de 4 (dos hijos)</h3><p class="small">Un SUV mediano o un sedán amplio da espacio en las plazas traseras y para el equipaje. Probá sentar las sillas o los asientos elevadores atrás y comprobá que entran sin apretar. Mirá la autonomía en ruta si viajan al interior.</p></div>
+<div class="card"><h3 style="margin-top:0">Familia grande (5 o más)</h3><p class="small">Necesitás tres filas o un monovolumen/minibús, y hay pocos eléctricos con esa configuración. Confirmá cuántas plazas tiene realmente cada versión y cómo queda el baúl con todas ocupadas. Si no encontrás uno, un híbrido de tres filas puede ser la alternativa.</p></div>
+<div class="card"><h3 style="margin-top:0">Viajan seguido al interior</h3><p class="small">Mirá la autonomía en ruta real (no solo la del ciclo oficial), la potencia de carga rápida y los cargadores del trayecto en el <a href="cargadores.html">mapa de cargadores</a>. Con niños, planificá las paradas para que coincidan con las de descanso.</p></div>
+<div class="card"><h3 style="margin-top:0">Adultos mayores o movilidad reducida</h3><p class="small">Probá la altura de acceso y la comodidad de los asientos; los SUV compactos suelen facilitar subir y bajar. Preguntá por asistencias a la conducción y por la facilidad de uso de la pantalla.</p></div></div>
+<p class="small muted">Una regla útil: elegí el auto para tu uso <em>de todos los días</em> y resolvé el viaje largo ocasional con planificación de carga, no al revés.</p>
+
 <h2>¿Te conviene?</h2>
 <div class="grid g3">
 <div class="card"><h3 style="margin-top:0">Probablemente sí</h3><p class="small">Cargás en casa, hacés recorridos diarios previsibles, viajes largos esporádicos y pensás quedarte con el auto varios años.</p></div>
@@ -109,7 +120,7 @@
 <div class="card"><h3 style="margin-top:0">Si dudás</h3><p class="small">Alquilá o probá uno unos días, y comparalo en el <a href="comparador.html">comparador</a> con un híbrido y con uno de combustión.</p></div></div>
 <p class="small muted">Este sitio no vende autos ni recibe comisiones por esta guía.</p>
 </div></main>
-<script src="assets/finance.js?v=3"></script><script src="assets/data.js?v=3"></script><script src="assets/app.js?v=3"></script>
+<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=5"></script><script src="assets/app.js?v=4"></script>
 <script>
 const $=id=>document.getElementById(id), V=EV.getVehicles().filter(v=>v.type==="BEV"&&v.batteryKwh&&v.rangeKm);
 V.sort((a,b)=>(a.brand+a.model).localeCompare(b.brand+b.model)).forEach(v=>$("veh").insertAdjacentHTML("beforeend",`<option value="${EV.esc(v.id)}">${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version||"")}</option>`));

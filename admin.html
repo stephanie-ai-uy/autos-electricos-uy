@@ -16,11 +16,11 @@
 <div id="body"></div>
 </div></div></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
-<script src="assets/config.js"></script><script src="assets/data.js?v=3"></script><script src="assets/app.js?v=3"></script>
+<script src="assets/config.js"></script><script src="assets/data.js?v=5"></script><script src="assets/app.js?v=4"></script>
 <script>
 const $=id=>document.getElementById(id), e=EV.esc, C=window.EVCONFIG||{};
 const sb=(C.SUPABASE_URL&&C.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY):null;
-const TABS={vehicles:"Vehículos",benefits:"Beneficios",financing_products:"Financiación",site_settings:"Ajustes",lead_requests:"Contactos",audit_logs:"Historial",export:"Exportar al sitio"};
+const TABS={vehicles:"Vehículos",benefits:"Beneficios",financing_products:"Financiación",site_settings:"Ajustes",lead_requests:"Contactos",vehicle_reviews:"Opiniones",audit_logs:"Historial",export:"Exportar al sitio"};
 let tab="vehicles";
 if(!sb)$("off").hidden=false;else init();
 async function init(){const {data:{session}}=await sb.auth.getSession();session?await enter(session):($("login").hidden=false);}
@@ -48,6 +48,15 @@ function validate(table,id,d){
 async function show(){
   const b=$("body");
   if(tab==="export")return exportView(b);
+  if(tab==="vehicle_reviews"){
+    const {data,error}=await sb.from("vehicle_reviews").select("*").order("created_at",{ascending:false}).limit(200);
+    if(error){b.innerHTML=`<div class="notice bad">${e(error.message)}</div>`;return}
+    b.innerHTML=`<h2>Opiniones (moderación)</h2><p class="small muted">Aprobá solo lo que cumpla las reglas: sin insultos, sin datos personales y sin acusaciones sin sustento. Lo «pending» no se muestra en el sitio.</p>`+(data||[]).map(r=>`<div class="card" style="margin:8px 0"><div><strong>${e(r.vehicle_id)}</strong> · ${e(r.author)} · ${r.rating}/5 · <span class="badge">${e(r.status)}</span> <span class="small muted">${new Date(r.created_at).toLocaleString("es-UY")}</span></div><p>${e(r.comment)}</p>${r.pros?`<p class="small">+ ${e(r.pros)}</p>`:""}${r.cons?`<p class="small">− ${e(r.cons)}</p>`:""}<p class="small muted">${[r.months_owned,r.km_owned,r.real_range_km].map((x,i)=>x==null?"":["meses ","km ","autonomía real km "][i]+x).filter(Boolean).join(" · ")}</p><p><button class="btn" data-rv="approved" data-id="${r.id}">Aprobar</button> <button class="btn sec" data-rv="rejected" data-id="${r.id}">Rechazar</button> <button class="btn sec" data-rv="del" data-id="${r.id}">Borrar</button></p></div>`).join("")||"<p>Sin opiniones.</p>";
+    b.onclick=async ev=>{const t=ev.target;if(!t.dataset.rv)return;
+      if(t.dataset.rv==="del"){if(!confirm("¿Borrar esta opinión definitivamente?"))return;await sb.from("vehicle_reviews").delete().eq("id",t.dataset.id)}
+      else await sb.from("vehicle_reviews").update({status:t.dataset.rv}).eq("id",t.dataset.id);
+      show();};
+    return;}
   if(["lead_requests","audit_logs"].includes(tab)){
     const {data,error}=await sb.from(tab).select("*").order(tab==="audit_logs"?"at":"created_at",{ascending:false}).limit(200);
     b.innerHTML=error?`<div class="notice bad">${e(error.message)}</div>`:`<h2>${TABS[tab]}</h2><div class="tablewrap"><table><tbody>${(data||[]).map(r=>`<tr><td class="small"><pre style="margin:0;white-space:pre-wrap">${e(JSON.stringify(r,null,1))}</pre></td></tr>`).join("")||"<tr><td>Sin registros.</td></tr>"}</tbody></table></div>`;return}
