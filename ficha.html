@@ -2,7 +2,7 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ficha de vehículo eléctrico | Autos Eléctricos UY</title>
 <meta name="description" content="Ficha detallada de un coche eléctrico en Uruguay con precio, especificaciones, garantía, fuente y fecha de consulta.">
-<link rel="stylesheet" href="assets/style.css"></head>
+<link rel="stylesheet" href="assets/style.css?v=2"></head>
 <body data-page="cat"><main id="main"><div class="wrap" id="out"></div></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
 <script src="assets/config.js"></script><script src="assets/images.js?v=1"></script><script src="assets/data.js?v=5"></script><script src="assets/app.js?v=4"></script>
@@ -16,7 +16,7 @@ else {
   const eff = (v.type === "BEV" && v.batteryKwh && v.rangeKm) ? (v.batteryKwh / v.rangeKm * 100).toFixed(1).replace(".", ",") + " kWh/100 km — batería ÷ autonomía homologada (" + (v.rangeCycle || "ciclo no informado") + "); orientativo, no es un dato declarado" : null;
   const cyc = v.rangeKm != null ? `${v.rangeKm} km · ciclo: ${v.rangeCycle || "no informado"}` : null;
   out.innerHTML = `<p><a href="catalogo.html">← Catálogo</a></p>
-<h1>${e(v.brand)} ${e(v.model)} <small class="muted">${e(v.version)}</small></h1>
+<h1>${e(v.brand)} <span class="grad">${e(v.model)}</span> <small class="muted">${e(v.version)}</small></h1>
 ${(window.EVIMAGES||{})[v.id] ? EV.thumb(v, true) : ""}
 <div>${EV.statusBadge(v.status)} ${EV.typeBadge(v.type)} ${EV.originBadge(v.brand)}</div>
 <div class="card" style="margin:16px 0">${EV.priceHtml(v)}<p class="small muted">${e(v.price.note)}</p>

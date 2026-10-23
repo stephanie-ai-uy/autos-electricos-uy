@@ -1,32 +1,89 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mapa de cargadores públicos en Uruguay con estado en vivo | Autos Eléctricos UY</title>
-<meta name="description" content="Mapa de los cargadores públicos de UTE en todo Uruguay con el estado de cada punto (disponible, cargando, fuera de servicio), precios y apps para cargar.">
+<title>Mapa de cargadores públicos en Uruguay | Autos Eléctricos UY</title>
+<meta name="description" content="Mapa claro de los 214 puntos de carga públicos de UTE en todo Uruguay: filtrá por departamento y conector, y consultá el estado en vivo en el mapa oficial.">
 <meta name="theme-color" content="#07090c">
-<link rel="stylesheet" href="assets/style.css">
-<style>.mapbox{width:100%;height:70vh;min-height:420px;border:1px solid var(--line,#2a3340);border-radius:12px;background:#fff}</style></head>
+<link rel="stylesheet" href="assets/style.css?v=2">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css">
+<style>
+.mapwrap{position:relative;border:1px solid var(--line2);border-radius:20px;overflow:hidden;box-shadow:0 30px 60px -40px #000}
+#map{height:68vh;min-height:440px;background:#0c1015}
+.bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;align-items:end;margin:18px 0 12px}
+.bar label{margin:0 0 4px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.chip{padding:8px 14px;border:1px solid var(--line2);border-radius:999px;background:rgba(17,22,29,.8);font-size:.85rem;color:var(--muted)}.chip b{color:var(--ink);font-family:var(--head)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:baseline}
+.dot.dc{background:var(--brand);box-shadow:0 0 10px var(--brand)}.dot.ac{background:var(--blue);box-shadow:0 0 10px var(--blue)}
+.pin{width:18px;height:18px;border-radius:50%;border:3px solid #07090c;box-shadow:0 0 0 2px currentColor,0 0 16px currentColor}
+.pin.dc{background:#20e3b2;color:#20e3b2}.pin.ac{background:#4d8dff;color:#4d8dff}
+.marker-cluster{background:rgba(32,227,178,.18)!important;border-radius:50%}.marker-cluster div{background:rgba(7,9,12,.92)!important;color:#f2f5f9;font:700 13px Sora,Inter,sans-serif;border:2px solid #20e3b2;box-shadow:0 0 18px rgba(32,227,178,.45);width:32px!important;height:32px!important;margin:4px!important;line-height:28px!important;border-radius:50%!important}.marker-cluster div span{line-height:28px}
+.leaflet-container{font:inherit;background:#0c1015}.leaflet-tile-pane{filter:invert(1) hue-rotate(185deg) brightness(.82) contrast(.92) saturate(.55)}.leaflet-bar a{background:#11161d;color:#f2f5f9;border-color:#2e3947}.leaflet-bar a:hover{background:#171e27}
+.leaflet-control-attribution{background:rgba(7,9,12,.75)!important;color:#9aa7b8!important}.leaflet-control-attribution a{color:#20e3b2!important}
+.leaflet-popup-content-wrapper{background:#11161d;color:#f2f5f9;border:1px solid #2e3947;border-radius:14px;box-shadow:0 18px 40px -10px #000}.leaflet-popup-tip{background:#11161d}
+.leaflet-popup-content{margin:14px 16px;font-size:.88rem;line-height:1.45}.leaflet-popup-content h4{margin:0 0 2px;font-family:var(--head);font-size:1rem}
+.leaflet-container a.leaflet-popup-close-button{color:#9aa7b8}
+.pp small{color:#9aa7b8}.pp ul{margin:8px 0;padding:0;list-style:none}.pp li{padding:3px 0;border-top:1px solid #222b37}.pp .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.pp .acts a{font-size:.8rem;padding:6px 12px;border-radius:999px;background:#171e27;border:1px solid #2e3947;text-decoration:none;color:#f2f5f9}.pp .acts a:hover{border-color:#20e3b2;color:#20e3b2}
+.live{margin-top:10px}.live iframe{width:100%;height:68vh;min-height:440px;border:1px solid var(--line2);border-radius:20px;background:#fff}
+</style></head>
 <body data-page="map"><main id="main"><div class="wrap">
-<h1>Mapa de cargadores públicos</h1>
-<p class="lead">Ubicación y <strong>estado en vivo</strong> de los puntos de carga de la red pública de UTE en todo el país. El mapa es el oficial de UTE, incrustado acá: los datos son de UTE y se actualizan solos.</p>
-<div class="notice info">Este mapa muestra la red de <strong>UTE</strong>. Los cargadores de otras empresas o privados pueden no aparecer; para esos usá las apps de abajo. El estado lo informa cada cargador a UTE y puede demorar unos minutos.</div>
+<h1>Mapa de cargadores <span class="grad">públicos</span></h1>
+<p class="lead">Los puntos de carga de la red pública de UTE en todo el país, en un mapa claro. Filtrá por departamento o tipo de conector y tocá un punto para ver sus datos.</p>
 
-<iframe class="mapbox" id="m" src="https://movilidad.ute.com.uy/mapa.html" title="Mapa de estaciones de carga de UTE" loading="lazy" referrerpolicy="no-referrer"></iframe>
-<p class="small muted">Si el mapa no carga, abrilo directamente en <a href="https://movilidad.ute.com.uy/mapa.html" rel="noopener">movilidad.ute.com.uy/mapa.html</a>. Fuente: <a href="https://portal.ute.com.uy/movilidad-electrica-carga-de-vehiculos" rel="noopener">UTE, Movilidad eléctrica</a>.</p>
+<div class="bar">
+<div><label for="dep">Departamento</label><select id="dep"><option value="">Todo el país</option></select></div>
+<div><label for="con">Conector</label><select id="con"><option value="">Todos</option><option value="CCS2">CCS2 (carga rápida)</option><option value="GB/T">GB/T (carga rápida)</option><option value="Tipo 2">Tipo 2 (carga lenta)</option></select></div>
+<div><label for="q">Buscar lugar</label><input id="q" type="search" placeholder="Ej.: shopping, ANCAP, Rocha"></div>
+<div><button class="btn sec" id="near" type="button" style="width:100%">Cerca de mí</button></div>
+</div>
+<div class="chips" id="chips" aria-live="polite"></div>
+<div class="mapwrap"><div id="map" role="application" aria-label="Mapa de cargadores"></div></div>
+<p class="small muted" style="margin-top:10px"><span class="dot dc"></span>Carga rápida (corriente continua: CCS2 o GB/T) · <span class="dot ac"></span>Carga lenta (corriente alterna: Tipo 2). Ubicaciones copiadas de UTE el <span id="dt"></span>; pueden cambiar. Mapa © <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>.</p>
+
+<h2>Estado en vivo</h2>
+<p>Este mapa muestra dónde están los cargadores. Para saber <strong>ahora</strong> si uno está disponible, cargando o fuera de servicio, usá el mapa oficial de UTE (se actualiza solo) o la app <strong>UTE Mueve</strong> (<a href="https://play.google.com/store/apps/details?id=movilidad.ute.com.ute_movilidad_app&amp;hl=es_UY" rel="noopener">Android</a> · <a href="https://apps.apple.com/uy/app/ute-mueve/id1463591379" rel="noopener">iPhone</a>).</p>
+<p><button class="btn" id="showlive" type="button">Ver el mapa de UTE en vivo</button> <a class="btn sec" href="https://movilidad.ute.com.uy/mapa.html" rel="noopener">Abrir en otra pestaña</a></p>
+<div class="live" id="live" hidden></div>
 
 <h2>Cómo cargar</h2>
 <ul class="steps">
-<li>Los puntos de UTE se activan con la <strong>tarjeta de carga</strong> o la app <strong>UTE Mueve</strong> (<a href="https://play.google.com/store/apps/details?id=movilidad.ute.com.ute_movilidad_app&amp;hl=es_UY" rel="noopener">Android</a> · <a href="https://apps.apple.com/uy/app/ute-mueve/id1463591379" rel="noopener">iPhone</a>), que muestra si el cargador está disponible, cargando o fuera de servicio.</li>
-<li>Conector: revisá que tu auto sea compatible con el tipo del cargador (en el mapa figura CCS2, GB/T u otros) y con su potencia.</li>
-<li>Precios: mirá la tabla de <a href="primer-electrico.html">¿cuándo conviene cargar?</a> (carga rápida, carga lenta y casa).</li>
+<li>Los puntos de UTE se activan con la <strong>tarjeta de carga</strong> o la app UTE Mueve.</li>
+<li>Revisá que tu auto sea compatible con el conector (CCS2, GB/T o Tipo 2) y con la potencia del punto.</li>
+<li>Precios y cuándo conviene cargar: ver <a href="primer-electrico.html">¿cuándo conviene cargar?</a>.</li>
 <li>Antes de un viaje largo, planificá las paradas y tené un plan B: un cargador puede estar ocupado o fuera de servicio.</li>
 </ul>
-
-<h2>Otras apps y mapas</h2>
-<ul class="steps">
-<li><strong>EVE-APP:</strong> muestra ubicación, precios y estado de los puntos que gestiona EVE-MOVE y datos básicos de otros cargadores.</li>
-<li><strong>Cargadores UY:</strong> app independiente de la comunidad (<a href="https://play.google.com/store/apps/details?id=uy.cargadores.app" rel="noopener">Google Play</a>) con estados estimados; no es oficial.</li>
-<li><strong>Waze:</strong> la comunidad marca cargadores y avisa cuando falta información.</li>
-</ul>
-<p class="small muted">Este sitio no opera cargadores ni tiene acuerdos con las apps mencionadas. Dato de referencia: según el Ministerio de Industria, Energía y Minería, la red pública de UTE supera los 300 puntos (<a href="https://www.gub.uy/ministerio-industria-energia-mineria/politicas-y-gestion/precios-red-carga" rel="noopener">MIEM</a>); el número cambia seguido. ¿Falta un cargador o viste uno que no funciona? <a href="contacto.html">Avisanos</a>.</p>
+<h2>Otras apps</h2>
+<p><strong>EVE-APP</strong> (ubicación, precios y estado de los puntos que gestiona EVE-MOVE y datos básicos de otros cargadores), <strong>Cargadores UY</strong> (app de la comunidad, estados estimados; <a href="https://play.google.com/store/apps/details?id=uy.cargadores.app" rel="noopener">Google Play</a>) y <strong>Waze</strong>. No encontramos un mapa público de cargadores privados que podamos mostrar acá. ¿Conocés uno o falta un punto? <a href="contacto.html">Avisanos</a>.</p>
+<p class="small muted">Este sitio no opera cargadores ni tiene acuerdos con las apps mencionadas. Fuente de las ubicaciones: <a href="https://portal.ute.com.uy/movilidad-electrica-carga-de-vehiculos" rel="noopener">UTE, Movilidad eléctrica</a>.</p>
 </div></main>
-<script src="assets/data.js?v=5"></script><script src="assets/app.js?v=4"></script></body></html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js"></script>
+<script src="assets/chargers.js?v=1"></script><script src="assets/data.js?v=5"></script><script src="assets/app.js?v=4"></script>
+<script>
+const $=id=>document.getElementById(id), e=EV.esc, D=window.EVCHARGERS;
+$("dt").textContent=D.date.split("-").reverse().join("/");
+const S=D.rows.map(r=>{const cons=r[6].split(" | ").map(c=>{const m=c.match(/^(CCS2|GB\/T|Tipo 2) ([\d.]+)(?: ×(\d+))?$/);return m?{t:m[1],kw:+m[2],n:+(m[3]||1)}:{t:c,kw:0,n:1}});
+  return {name:r[0].trim(),addr:r[1].trim(),dep:r[2].trim(),city:r[3].trim(),lat:r[4],lng:r[5],cons,dc:cons.some(c=>c.t!=="Tipo 2")}});
+[...new Set(S.map(s=>s.dep))].sort((a,b)=>a.localeCompare(b,"es")).forEach(d=>$("dep").insertAdjacentHTML("beforeend",`<option>${e(d)}</option>`));
+const map=L.map("map",{zoomControl:true,attributionControl:true}).setView([-32.8,-56],7);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"© OpenStreetMap",maxZoom:19}).addTo(map);
+const cl=L.markerClusterGroup({showCoverageOnHover:false,maxClusterRadius:46}); map.addLayer(cl);
+const icon=dc=>L.divIcon({className:"",html:`<div class="pin ${dc?"dc":"ac"}"></div>`,iconSize:[18,18],iconAnchor:[9,9],popupAnchor:[0,-10]});
+const pop=s=>`<div class="pp"><h4>${e(s.name)}</h4><small>${e(s.addr)} · ${e(s.city)}, ${e(s.dep)}</small><ul>${s.cons.map(c=>`<li><strong>${e(c.t)}</strong> · ${c.kw?EV.fmtNum(c.kw,c.kw%1?1:0)+" kW":"potencia no informada"}${c.n>1?" · "+c.n+" conectores":""}</li>`).join("")}</ul><small>Estado en vivo: en el mapa de UTE o la app UTE Mueve.</small><div class="acts"><a href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}" rel="noopener">Cómo llegar</a><a href="https://movilidad.ute.com.uy/mapa.html" rel="noopener">Estado en vivo</a></div></div>`;
+let cur=[];
+function render(fit){
+  const d=$("dep").value,c=$("con").value,q=$("q").value.trim().toLowerCase();
+  cur=S.filter(s=>(!d||s.dep===d)&&(!c||s.cons.some(x=>x.t===c))&&(!q||(s.name+" "+s.addr+" "+s.city).toLowerCase().includes(q)));
+  cl.clearLayers(); const ms=cur.map(s=>L.marker([s.lat,s.lng],{icon:icon(s.dc),title:s.name}).bindPopup(pop(s),{maxWidth:300})); cl.addLayers(ms);
+  const dc=cur.filter(s=>s.dc).length;
+  $("chips").innerHTML=`<span class="chip"><b>${cur.length}</b> puntos</span><span class="chip"><span class="dot dc"></span><b>${dc}</b> con carga rápida</span><span class="chip"><span class="dot ac"></span><b>${cur.length-dc}</b> solo carga lenta</span>`+(cur.length?"":`<span class="chip">Ningún punto coincide con esos filtros.</span>`);
+  if(fit&&cur.length)map.fitBounds(L.latLngBounds(cur.map(s=>[s.lat,s.lng])).pad(.12),{maxZoom:13});
+}
+["dep","con"].forEach(i=>$(i).addEventListener("change",()=>render(true)));$("q").addEventListener("input",()=>render(false));
+render(false);
+$("near").onclick=()=>{if(!navigator.geolocation){alert("Tu navegador no permite ubicarte.");return}
+  navigator.geolocation.getCurrentPosition(p=>{const a=[p.coords.latitude,p.coords.longitude];let best=null,bd=1e9;S.forEach(s=>{const d=map.distance(a,[s.lat,s.lng]);if(d<bd){bd=d;best=s}});
+    map.setView(a,12);L.circleMarker(a,{radius:8,color:"#fff",fillColor:"#9b7bff",fillOpacity:1}).addTo(map).bindPopup("Estás acá").openPopup();
+    $("chips").insertAdjacentHTML("beforeend",`<span class="chip">Más cercano: <b>${e(best.name)}</b> a ${EV.fmtNum(bd/1000,1)} km</span>`);},()=>alert("No pudimos obtener tu ubicación. Revisá el permiso del navegador."),{timeout:10000});};
+$("showlive").onclick=()=>{const l=$("live");if(l.hidden){l.innerHTML='<iframe src="https://movilidad.ute.com.uy/mapa.html" title="Mapa de estaciones de carga de UTE (en vivo)" loading="lazy" referrerpolicy="no-referrer"></iframe>';l.hidden=false;$("showlive").textContent="Ocultar el mapa en vivo"}else{l.innerHTML="";l.hidden=true;$("showlive").textContent="Ver el mapa de UTE en vivo"}};
+</script></body></html>
