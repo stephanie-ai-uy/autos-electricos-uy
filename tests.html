@@ -2,7 +2,7 @@
 <html lang="es"><head><meta charset="utf-8"><title>Pruebas</title><meta name="robots" content="noindex">
 <style>body{font:15px system-ui;margin:20px}.ok{color:#146c3a}.ko{color:#b00020;font-weight:700}</style></head>
 <body><h1>Pruebas automáticas (abrir en el navegador)</h1><div id="o"></div><p id="sum"></p>
-<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=15"></script>
+<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=7"></script><script src="assets/app.js?v=15"></script>
 <script>
 let pass=0,fail=0;const o=document.getElementById("o");
 function t(name,fn){try{const r=fn();if(r===true||r===undefined){pass++;o.innerHTML+=`<div class=ok>✔ ${name}</div>`}else throw new Error(r)}catch(e){fail++;o.innerHTML+=`<div class=ko>✘ ${name}: ${e.message}</div>`}}
