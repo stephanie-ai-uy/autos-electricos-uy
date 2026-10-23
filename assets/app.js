@@ -34,6 +34,7 @@ window.EV = (function () {
     document.body.insertAdjacentHTML("beforeend", f);
     initLang();
     keepState();
+    { const hs = document.createElement("script"); hs.src = "assets/hero.js?v=1"; document.head.appendChild(hs); }
   }
   /* Conserva lo que la persona cargó en los campos al cambiar de pestaña del sitio y volver (sessionStorage, solo en este navegador y esta sesión).
      Si recarga la página (F5), se borra. No se guarda en contacto ni en admin. */
