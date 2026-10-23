@@ -36,6 +36,10 @@ window.EVDATA = (function () {
     jacS1: { name: "Autoblog Uruguay — Lanzamiento: JAC e-S1", url: "https://www.autoblog.com.uy/2022/02/lanzamiento-jac-e-s1.html", date: "2022-02", type: "Prensa especializada" },
     gwmOf: { name: "GWM Uruguay — sitio oficial", url: "https://gwm.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     leapOf: { name: "Leapmotor Uruguay — sitio oficial", url: "https://www.leapmotor.com.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
+    deepalFicha: { name: "Santa Rosa Automotores (Deepal Uruguay) — Ficha técnica oficial Deepal S05 (PDF)", url: "https://deepal.uy", date: "2026-10-23", type: "Ficha técnica del importador" },
+    deepalS7Cat: { name: "Santa Rosa Automotores (Deepal Uruguay) — Catálogo y ficha técnica oficial Deepal S7 (PDF)", url: "https://deepal.uy", date: "2026-10-23", type: "Ficha técnica del importador" },
+    geelyFicha: { name: "Grupo Fiancar (Geely Uruguay) — Ficha técnica oficial Geely EX5 (PDF)", url: "https://www.geely.com.uy", date: "2026-10-23", type: "Ficha técnica del importador" },
+    geelyEtiqueta: { name: "Geely Uruguay — Etiqueta de eficiencia energética EX5 Pro y Max (UNIT 1130, LSQA / URSEA)", url: "https://www.geely.com.uy", date: "2026-10-23", type: "Etiqueta oficial de eficiencia energética" },
     changanOf: { name: "Changan Uruguay — sitio oficial", url: "https://changan.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     deepalOf: { name: "Deepal Uruguay — sitio oficial", url: "https://deepal.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     zeekrOf: { name: "Zeekr Uruguay — sitio oficial", url: "https://www.zeekrlife.com/es-uy/", date: CHECKED, type: "Web oficial de la marca/importador" },
@@ -1946,6 +1950,41 @@ window.EVDATA = (function () {
     "byd-shark": {"lengthMm": 5457, "widthMm": 1971, "heightMm": 1925, "wheelbaseMm": 3260},
     "byd-atto-8": {"trunkMaxL": 1960, "trunkNote": "270 L con las tres filas, 960 L con la tercera fila abatida y 1.960 L con las dos filas abatidas (según la web de BYD Uruguay)."}
   };
+  /* Fichas técnicas oficiales de los importadores (PDF recibidos el 2026-10-23). Tienen prioridad sobre prensa; donde chocan con otra fuente se deja la discrepancia a la vista. */
+  const specs2 = {
+    "deepal-s05-ev": {"powerCv": 238, "torqueNm": 320, "drive": "Trasera", "seats": 5, "lengthMm": 4620, "widthMm": 1900, "heightMm": 1600, "wheelbaseMm": 2880, "acKw": 7, "chargeNote": "30 %–80 % en 15 min (carga rápida, ficha del importador); carga lenta 7 kW en ≤ 8 h; conector Tipo 2",
+      "consumption": null, "specSource": sources.deepalFicha, "specNote": "Ficha oficial del importador: 175 kW, 320 Nm, batería 56,12 kWh, 458 km NEDC (la ficha rotula «WLTC» pero indica NEDC), peso en vacío 1.770 kg, neumáticos 245/45 R20, pantalla central 15,4″, HUD, 14 parlantes, función de central eléctrica móvil (V2L), menús en español e inglés. La ficha no informa baúl ni garantía."},
+    "deepal-s05-reev": {"powerCv": 218, "torqueNm": 320, "drive": "Trasera", "seats": 5, "lengthMm": 4620, "widthMm": 1900, "heightMm": 1600, "wheelbaseMm": 2880, "acKw": 7, "chargeNote": "30 %–80 % en 20 min (carga rápida, ficha del importador); carga lenta 7 kW en ≤ 6 h; conector Tipo 2",
+      "specSource": sources.deepalFicha, "specNote": "Ficha oficial del importador: motor trasero 160 kW / 320 Nm, batería 27,28 kWh, 158 km eléctricos NEDC, peso en vacío 1.835 kg, 8 parlantes. La ficha indica además «72 kW / 125 Nm» como potencia y par del motor (probablemente el generador del extensor de autonomía, sin aclararlo). No informa baúl ni garantía."},
+    "deepal-s7-ev": {"powerCv": 255, "torqueNm": 320, "drive": "Trasera", "lengthMm": 4750, "widthMm": 1930, "heightMm": 1625, "wheelbaseMm": 2900, "chargeNote": "Conector Tipo 2 (estándar europeo)",
+      "warranty": {"vehicle": "5 años o 150.000 km", "battery": "8 años o 150.000 km", "note": "Según el catálogo oficial del importador (oct. 2026)."},
+      "specSource": sources.deepalS7Cat, "specNote": "Catálogo oficial: 620 km CLTC (ciclo distinto al NEDC de la web, no comparables), 255 HP, 320 Nm, pantalla central 15,6″, audio de 14 parlantes, cámara 360°, 6 airbags, ADAS completo, techo solar, peso en vacío 1.990 kg.",
+      "specDisc": "Potencia: la ficha del importador indica 255 HP (antes 214 cv según prensa). Batería: la ficha indica 67 kWh y la web 79,97 kWh; se conserva el valor de la web hasta confirmarlo con el importador."},
+    "deepal-s7-reev": {"powerCv": 235, "torqueNm": 236, "drive": "Trasera", "lengthMm": 4750, "widthMm": 1930, "heightMm": 1625, "wheelbaseMm": 2900, "chargeNote": "Conector Tipo 2 (estándar europeo)",
+      "warranty": {"vehicle": "5 años o 150.000 km", "battery": "8 años o 150.000 km", "note": "Según el catálogo oficial del importador (oct. 2026)."},
+      "specSource": sources.deepalS7Cat, "specNote": "Catálogo oficial: 1.120 km combinados CLTC, 235 HP, 236 Nm, pantalla central 15,6″, 14 parlantes, cámara 360°, 6 airbags, ADAS completo, techo solar.",
+      "specDisc": "Batería y autonomía eléctrica: el mismo catálogo dice 37,7 kWh en la ficha y 21,7 kWh con 200 km eléctricos en el texto; la web indica 31,7 kWh y 175 km NEDC. Se conserva el valor de la web hasta confirmarlo con el importador. Potencia: 235 HP en la ficha (antes 254 cv según prensa)."},
+    "geely-ex5-urban": {"powerCv": 218, "torqueNm": 320, "topSpeedKmh": 175, "accel": 6.9, "seats": 5, "lengthMm": 4615, "widthMm": 1901, "heightMm": 1670, "wheelbaseMm": 2750, "trunkL": 461, "trunkMaxL": 1877, "drive": "Delantera", "consumption": "13,9 kWh/100 km (NEDC, ficha)",
+      "chargeNote": "10 %–80 % en 34 min (DC); conector CCS2",
+      "warranty": {"vehicle": "5 años o 150.000 km", "battery": "8 años o 150.000 km", "note": "Según la ficha oficial del importador (oct. 2026)."},
+      "specSource": sources.geelyFicha, "specNote": "Ficha oficial: 160 kW (218 HP), 320 Nm, batería LFP de 49,52 kWh (140 Wh/kg), 410 km NEDC (345 km WLTP), peso en vacío 1.715 kg, tracción delantera, neumáticos R18, pantalla de 15,4″."},
+    "geely-ex5-pro": {"powerCv": 218, "torqueNm": 320, "topSpeedKmh": 175, "accel": 6.9, "seats": 5, "lengthMm": 4615, "widthMm": 1901, "heightMm": 1670, "wheelbaseMm": 2750, "trunkL": 461, "trunkMaxL": 1877, "drive": "Delantera", "consumption": "14 kWh/100 km (NEDC, ficha); la etiqueta oficial indica 7 km/kWh",
+      "chargeNote": "10 %–80 % en 28 min (DC); conector CCS2",
+      "warranty": {"vehicle": "5 años o 150.000 km", "battery": "8 años o 150.000 km", "note": "Según la ficha oficial del importador (oct. 2026)."},
+      "specSource": sources.geelyFicha, "specNote": "Ficha oficial: 160 kW (218 HP), 320 Nm, batería LFP de 60,22 kWh, 495 km NEDC (425 km WLTP), peso en vacío 1.765 kg, neumáticos R18. Etiqueta oficial de eficiencia energética (UNIT 1130, registro PR3214/01): 495 km y 7 km/kWh."},
+    "geely-ex5-max": {"powerCv": 218, "torqueNm": 320, "topSpeedKmh": 175, "accel": 6.9, "rangeKm": 425, "rangeCycle": "WLTP", "seats": 5, "lengthMm": 4615, "widthMm": 1901, "heightMm": 1670, "wheelbaseMm": 2750, "trunkL": 461, "trunkMaxL": 1877, "drive": "Delantera", "consumption": "14 kWh/100 km (NEDC, ficha); la etiqueta oficial indica 7 km/kWh",
+      "chargeNote": "10 %–80 % en 28 min (DC); conector CCS2",
+      "warranty": {"vehicle": "5 años o 150.000 km", "battery": "8 años o 150.000 km", "note": "Según la ficha oficial del importador (oct. 2026)."},
+      "specSource": sources.geelyFicha, "specNote": "Ficha oficial: 160 kW (218 HP), 320 Nm, batería LFP de 60,22 kWh, 495 km NEDC (425 km WLTP), peso en vacío 1.765 kg, neumáticos R19, techo panorámico, 16 parlantes, masaje en asientos delanteros. Etiqueta oficial de eficiencia energética (UNIT 1130, registro PR3215/01): 470 km y 7 km/kWh.",
+      "specDisc": "Autonomía: la ficha indica 495 km NEDC para Pro y Max, pero la etiqueta oficial de eficiencia del Max indica 470 km."}
+  };
+  Object.keys(specs2).forEach(function (id) {
+    const a = specs[id] || {}, b = specs2[id];
+    specs[id] = Object.assign({}, a, b);
+    if (a.specDisc && b.specDisc) specs[id].specDisc = a.specDisc + " " + b.specDisc;
+    else if (a.specDisc) specs[id].specDisc = a.specDisc;
+  });
+
   vehicles.forEach(function (v) {
     const p = specs[v.id]; if (!p) return;
     Object.keys(p).forEach(function (k) {
