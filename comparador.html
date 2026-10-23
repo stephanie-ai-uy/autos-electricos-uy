@@ -18,7 +18,7 @@ let ids = (new URLSearchParams(location.search).get("ids")||"").split(",").filte
 if (!ids.length) { try { ids = JSON.parse(localStorage.getItem("cmp")||"[]").filter(x=>EV.byId(x)); } catch(_){} }
 ids = ids.slice(0,4);
 function render(){
-  $("add").innerHTML = `<option value="">— elegir —</option>` + V.filter(v=>!ids.includes(v.id)).map(v=>`<option value="${v.id}">${e(v.brand)} ${e(v.model)} ${e(v.version)}</option>`).join("");
+  $("add").innerHTML = `<option value="">— elegir —</option>` + V.filter(v=>!ids.includes(v.id)).slice().sort((a,b)=>(a.brand+' '+a.model+' '+a.version).localeCompare(b.brand+' '+b.model+' '+b.version,'es',{numeric:true,sensitivity:'base'})).map(v=>`<option value="${v.id}">${e(v.brand)} ${e(v.model)} ${e(v.version)}</option>`).join("");
   $("add").disabled = ids.length>=4;
   history.replaceState(null,"","?ids="+ids.join(","));
   if (ids.length<2) { $("out").innerHTML = `<div class="empty card">Elegí al menos 2 vehículos para compararlos.</div>`; $("warn").innerHTML=""; }

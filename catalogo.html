@@ -20,7 +20,7 @@
 <label for="status">Disponibilidad</label><select id="status"><option value="">Cualquiera</option><option value="disponible">Comercializado</option><option value="verificar">Pendiente de verificación</option></select>
 <label><input type="checkbox" id="onlyPrice" style="width:auto"> Solo con precio informado</label>
 <label><input type="checkbox" id="group" style="width:auto" checked> Agrupar por origen</label>
-<label for="sort">Ordenar por</label><select id="sort"><option value="price">Precio (menor a mayor)</option><option value="range">Autonomía (mayor)</option><option value="batt">Batería (mayor)</option><option value="power">Potencia (mayor)</option></select>
+<label for="sort">Ordenar por</label><select id="sort"><option value="alpha">Alfabético (marca y modelo)</option><option value="price">Precio (menor a mayor)</option><option value="range">Autonomía (mayor)</option><option value="batt">Batería (mayor)</option><option value="power">Potencia (mayor)</option></select>
 <p><button type="button" class="btn sec" id="reset">Limpiar filtros</button></p></form></aside>
 <section><p id="count" class="muted" aria-live="polite"></p><div id="list"></div><p class="small muted">Las siluetas son ilustraciones genéricas según la carrocería (no representan el modelo exacto). Las fotos indicadas como generadas con IA son ilustrativas.</p>
 <h2>Marcas y modelos detectados, pendientes de relevar</h2>
@@ -81,8 +81,9 @@ function render() {
     if (tab === "BEV" && bmin != null && (v.batteryKwh == null || v.batteryKwh < bmin)) return false;
     if (tab === "BEV" && rmin != null && (v.rangeKm == null || v.rangeKm < rmin)) return false;
     return true; });
+  const name = v => (v.brand + " " + v.model + " " + (v.version || "")).trim(), alpha = (a, b) => name(a).localeCompare(name(b), "es", { numeric: true, sensitivity: "base" });
   const key = { price: v => v.price.list, range: v => v.rangeKm, batt: v => v.batteryKwh, power: v => v.powerCv }[$("sort").value], asc = $("sort").value === "price";
-  r.sort((a, b) => { const x = key(a), y = key(b); if (x == null && y == null) return 0; if (x == null) return 1; if (y == null) return -1; return asc ? x - y : y - x; });
+  r.sort((a, b) => { if (!key) return alpha(a, b); const x = key(a), y = key(b); if (x == null && y == null) return alpha(a, b); if (x == null) return 1; if (y == null) return -1; return x === y ? alpha(a, b) : asc ? x - y : y - x; });
   $("count").textContent = `${r.length} de ${V.filter(v => v.type === tab).length} versiones · ${EV.typeLabel(tab)}`;
   if (!r.length) { $("list").innerHTML = `<div class="empty card">Ningún vehículo cumple esos filtros. Los filtros numéricos excluyen vehículos con ese dato aún no informado. <br><button class="btn sec" onclick="document.getElementById('reset').click()">Limpiar filtros</button></div>`; tray(); return; }
   const mk = list => `<div class="grid g2">${list.map(card).join("")}</div>`;
