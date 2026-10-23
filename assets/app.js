@@ -1,7 +1,7 @@
 /* Utilidades compartidas: layout, formato, estados */
 window.EV = (function () {
   const D = window.EVDATA;
-  const NAV = [["index.html", "Inicio", "home"], ["catalogo.html", "Catálogo", "cat"], ["comparador.html", "Comparador", "cmp"], ["ranking.html", "Más vendidos", "rank"], ["cargadores.html", "Cargadores", "map"], ["financiacion.html", "Financiación", "fin"], ["beneficios.html", "Beneficios", "ben"], ["tco.html", "Coste total", "tco"], ["primer-electrico.html", "Mi primer eléctrico", "first"], ["guias.html", "Guías y garantías", "gui"], ["seguros.html", "Seguros", "seg"], ["metodologia.html", "Fuentes", "met"], ["contacto.html", "Sugerencias", "con"]];
+  const NAV = [["index.html", "Inicio", "home"], ["catalogo.html", "Catálogo", "cat"], ["comparador.html", "Comparador", "cmp"], ["ranking.html", "Más vendidos", "rank"], ["cargadores.html", "Cargadores", "map"], ["financiacion.html", "Financiación", "fin"], ["beneficios.html", "Beneficios", "ben"], ["tco.html", "Coste total", "tco"], ["primer-electrico.html", "Mi primer eléctrico", "first"], ["guia-uso.html", "Guía de uso", "uso"], ["lanzamientos.html", "Lanzamientos", "lan"], ["guias.html", "Guías y garantías", "gui"], ["seguros.html", "Seguros", "seg"], ["metodologia.html", "Fuentes", "met"], ["contacto.html", "Sugerencias", "con"]];
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const NI = "No informado";
   const fmtNum = (n, d = 0) => n == null ? NI : Number(n).toLocaleString("es-UY", { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -34,7 +34,7 @@ window.EV = (function () {
     document.body.insertAdjacentHTML("beforeend", f);
     initLang();
     keepState();
-    { const hs = document.createElement("script"); hs.src = "assets/hero.js?v=1"; document.head.appendChild(hs); }
+    { const hs = document.createElement("script"); hs.src = "assets/hero.js?v=2"; document.head.appendChild(hs); }
   }
   /* Conserva lo que la persona cargó en los campos al cambiar de pestaña del sitio y volver (sessionStorage, solo en este navegador y esta sesión).
      Si recarga la página (F5), se borra. No se guarda en contacto ni en admin. */

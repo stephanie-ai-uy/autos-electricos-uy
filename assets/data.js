@@ -84,6 +84,7 @@ window.EVDATA = (function () {
     "Zeekr": { country: "China", note: "Grupo Geely" }, "JAC": { country: "China" },
     "MG": { country: "China", note: "Marca de origen británico, hoy propiedad del grupo chino SAIC" },
     "Tesla": { country: "EE.UU." },
+    "smart": { country: "China", note: "Empresa conjunta de Mercedes-Benz y Geely; el #5 llega desde China según Autoblog" },
     "Chevrolet": { country: "EE.UU.", note: "Marca de General Motors. Verificar el país de fabricación de cada modelo." },
     "Volvo": { country: "Suecia", note: "Propiedad del grupo chino Geely" },
     "Toyota": { country: "Japón" }, "Nissan": { country: "Japón" }, "Renault": { country: "Francia" }, "Peugeot": { country: "Francia" }, "Mercedes-Benz": { country: "Alemania" }, "Hyundai": { country: "Corea del Sur" },
@@ -1524,6 +1525,121 @@ window.EVDATA = (function () {
       "dcKw": 40,
       "drive": "Integral (AWD)",
       "consumption": "7,5 L/100 km (según la web)"
+}),
+    Object.assign({}, base, {
+      "id": "mercedes-cla-250-eq",
+      "type": "BEV",
+      "brand": "Mercedes-Benz",
+      "model": "CLA 250+ EQ",
+      "version": "",
+      "body": "Sedán",
+      "importer": "Autolider S.A.",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 84990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio de preventa informado por Autoblog (7/10/2026); sin fecha de entrega.",
+            "verification": "parcial"
+      },
+      "powerCv": 272,
+      "batteryKwh": 85,
+      "rangeKm": 790,
+      "rangeCycle": "WLTP",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": "2 años sin límite de kilometraje",
+            "battery": "8 años o 160.000 km",
+            "note": "Motor y batería: 8 años o 160.000 km (Autoblog)."
+      },
+      "source": {
+            "name": "Autoblog Uruguay — Lanzamiento: Mercedes-Benz CLA con tecnología EQ",
+            "url": "https://www.autoblog.com.uy/2026/10/lanzamiento-mercedes-benz-cla-con.html",
+            "date": "2026-10-07",
+            "type": "Prensa especializada"
+      },
+      "notes": "En preventa. Batería NMC de 85 kWh útiles. El artículo menciona otras versiones (CLA 200 y 350+ 4MATIC) sin confirmar que se vendan en Uruguay.",
+      "torqueNm": 335,
+      "dcKw": 320,
+      "acKw": 22,
+      "drive": "Trasera"
+}),
+    Object.assign({}, base, {
+      "id": "smart-5-pro-plus",
+      "type": "BEV",
+      "brand": "smart",
+      "model": "smart #5",
+      "version": "Pro+",
+      "body": "SUV",
+      "importer": "Autolider Inchcape",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 59990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio de lista Pro+ (el de lanzamiento fue US$ 54.990), según Autoblog (14/10/2026).",
+            "verification": "parcial"
+      },
+      "powerCv": 358,
+      "batteryKwh": 100,
+      "rangeKm": 590,
+      "rangeCycle": "WLTP",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la fuente."
+      },
+      "source": {
+            "name": "Autoblog Uruguay — Es oficial: llegaron los primeros smart #5 a Uruguay",
+            "url": "https://www.autoblog.com.uy/2026/10/es-oficial-llegaron-los-primeros-smart.html",
+            "date": "2026-10-14",
+            "type": "Prensa especializada"
+      },
+      "notes": "Batería NMC de 100 kWh brutos (94 kWh útiles) de CATL. Preventa desde septiembre de 2026; ya llegaron las primeras unidades. El artículo da dos cifras de torque para el motor trasero (373 y 343 Nm); no se informa.",
+      "drive": "Trasera (RWD)"
+}),
+    Object.assign({}, base, {
+      "id": "smart-5-brabus",
+      "type": "BEV",
+      "brand": "smart",
+      "model": "smart #5",
+      "version": "Brabus",
+      "body": "SUV",
+      "importer": "Autolider Inchcape",
+      "dealers": [],
+      "status": "disponible",
+      "price": {
+            "list": 69990,
+            "promo": null,
+            "currency": "USD",
+            "validOn": CHECKED,
+            "note": "Precio de lista según Autoblog (14/10/2026).",
+            "verification": "parcial"
+      },
+      "powerCv": 637,
+      "batteryKwh": 100,
+      "rangeKm": 540,
+      "rangeCycle": "WLTP",
+      "chargeNote": null,
+      "warranty": {
+            "vehicle": null,
+            "battery": null,
+            "note": "No informada en la fuente."
+      },
+      "source": {
+            "name": "Autoblog Uruguay — Es oficial: llegaron los primeros smart #5 a Uruguay",
+            "url": "https://www.autoblog.com.uy/2026/10/es-oficial-llegaron-los-primeros-smart.html",
+            "date": "2026-10-14",
+            "type": "Prensa especializada"
+      },
+      "notes": "Dos motores, 475 kW. Batería NMC de 100 kWh brutos (94 kWh útiles).",
+      "torqueNm": 710,
+      "drive": "Integral (AWD)"
 })
   ];
 
@@ -1753,7 +1869,7 @@ window.EVDATA = (function () {
     "renault-kangoo-etech": {"acKw": 22, "dcKw": 80, "drive": "Delantera", "torqueNm": 250, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Renault Kangoo E-Tech", "url": "https://www.autoblog.com.uy/2025/12/lanzamiento-renault-kangoo-e-tech.html", "date": "2025-12", "type": "Prensa especializada"}, "specNote": "Furgón: volumen de carga 4,3 m³ y carga útil 800 kg."},
     "xpeng-g6": {"batteryKwh": 91.4, "rangeKm": 500, "powerCv": 469, "accel": 4.1, "drive": "Integral (AWD)", "torqueNm": 660, "specSource": {"name": "Autoblog Uruguay — Es oficial: Xpeng desembarca en Uruguay importado por Santa Rosa", "url": "https://www.autoblog.com.uy/2025/04/es-oficial-xpeng-desembarca-en-uruguay.html", "date": "2025-04", "type": "Prensa especializada"}, "specNote": "Datos de prensa de abril de 2025 (anuncio de llegada); el ciclo de homologación de la autonomía no se informa."},
     "xpeng-g9": {"batteryKwh": 98, "rangeKm": 520, "rangeCycle": "WLTP", "powerCv": 551, "accel": 3.9, "drive": "Integral (AWD)", "torqueNm": 717, "specSource": {"name": "Autoblog Uruguay — Es oficial: Xpeng desembarca en Uruguay importado por Santa Rosa", "url": "https://www.autoblog.com.uy/2025/04/es-oficial-xpeng-desembarca-en-uruguay.html", "date": "2025-04", "type": "Prensa especializada"}, "specNote": "Datos de prensa de abril de 2025: batería de 98 kWh (93,1 kWh utilizables); tres filas de asientos."},
-    "mercedes-glb-eq": {"batteryKwh": 85, "rangeKm": 631, "rangeCycle": "WLTP", "powerCv": 272, "accel": 7.4, "drive": "Trasera", "torqueNm": 335, "topSpeedKmh": 210, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Mercedes-Benz GLB con tecnología EQ", "url": "https://www.autoblog.com.uy/2026/10/lanzamiento-mercedes-benz-glb-con.html", "date": "2026-10", "type": "Prensa especializada"}, "specNote": "Versión 250+; llega desde Hungría. Una nota previa de Autoblog (dic. 2025) daba 270 cv."},
+    "mercedes-glb-eq": {"importer": "Autolider S.A.", "trunkL": 540, "warranty": {"vehicle": "2 años sin límite de kilometraje", "battery": "8 años o 160.000 km", "note": "Motor y batería: 8 años o 160.000 km (Autoblog, 8/10/2026). Preventa; sin fecha de entrega."}, "batteryKwh": 85, "rangeKm": 631, "rangeCycle": "WLTP", "powerCv": 272, "accel": 7.4, "drive": "Trasera", "torqueNm": 335, "topSpeedKmh": 210, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Mercedes-Benz GLB con tecnología EQ", "url": "https://www.autoblog.com.uy/2026/10/lanzamiento-mercedes-benz-glb-con.html", "date": "2026-10", "type": "Prensa especializada"}, "specNote": "Versión 250+; llega desde Hungría. Una nota previa de Autoblog (dic. 2025) daba 270 cv."},
     "mini-cooper-electrico": {"batteryKwh": 40.7, "powerCv": 184, "torqueNm": 290, "rangeKm": 293, "rangeCycle": "WLTP", "specSource": {"name": "Autoblog Uruguay — Lanzamiento: MINI Cooper E y SE", "url": "https://www.autoblog.com.uy/2024/10/lanzamiento-mini-cooper-e-y-se.html", "date": "2024-10", "type": "Prensa especializada"}, "specNote": "Datos del Cooper E (versión de acceso), 293–305 km WLTP; el Cooper SE tiene 54,2 kWh, 218 cv y 387–402 km. Se asigna el E por ser el de precio «desde»; confirmar."},
     "mini-aceman": {"powerCv": 184, "torqueNm": 290, "rangeKm": 310, "rangeCycle": "WLTP", "specSource": {"name": "Autoblog Uruguay — Es oficial: el MINI Aceman llegará a Uruguay", "url": "https://www.autoblog.com.uy/2024/04/es-oficial-el-mini-aceman-llegara-en-el.html", "date": "2024-04", "type": "Prensa especializada"}, "specNote": "Datos del Aceman E (versión de acceso); el Aceman SE llega a 407 km WLTP. Se asigna el E por ser el de precio «desde»; confirmar."},
     "peugeot-e-3008-gt": {"batteryKwh": 73, "rangeKm": 497, "rangeCycle": "WLTP", "powerCv": 325, "torqueNm": 509, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Peugeot E-3008", "url": "https://www.autoblog.com.uy/2026/05/lanzamiento-peugeot-e-3008_01257935696.html", "date": "2026-05", "type": "Prensa especializada"}, "specDisc": "La web del importador informa 495 km WLTP; Autoblog, 497 km."},
@@ -1824,7 +1940,11 @@ window.EVDATA = (function () {
     "deepal-s05-reev": {"powerCv": 218, "accel": 7.9, "drive": "Trasera", "price": {"list": 34990, "promo": null, "currency": "USD", "validOn": "2026-10-22", "note": "Precio de anuncios 0 km de concesionarias en MercadoLibre Uruguay (varios coinciden); no es lista oficial y puede cambiar.", "verification": "parcial"}, "specSource": {"name": "Electrive — Deepal lanza las ventas del SUV compacto S05 (ficha internacional)", "url": "https://www.electrive.com/es/2024/10/21/deepal-lanza-las-ventas-del-suv-compacto-s05/", "date": "2024-10", "type": "Ficha del fabricante o prensa internacional"}, "specNote": "Ficha internacional (no hay nota uruguaya hallada): motor eléctrico de 218 cv, 0-100 en 7,9 s. Batería y autonomía vienen de la web del importador."},
     "tesla-m3-perf": {"batteryKwh": 85, "rangeKm": 528, "rangeCycle": "WLTP", "powerCv": 627, "accel": 3.1, "dcKw": 250, "trunkL": 594, "drive": "Integral (AWD)", "specSource": {"name": "Autoblog Uruguay — Tesla ya homologó los Model 3 y Model Y", "url": "https://www.autoblog.com.uy/2026/06/tesla-ya-homologo-los-model-3-y-model-y.html", "date": "2026-06", "type": "Prensa especializada"}},
     "hyundai-elexio-limited": {"batteryKwh": 62, "rangeKm": 450, "rangeCycle": "WLTP", "powerCv": 217, "accel": 8.9, "acKw": 11, "dcKw": 141, "trunkL": 506, "drive": "Delantera", "torqueNm": 310, "warranty": {"vehicle": "5 años, sin límite de km", "battery": "8 años o 160.000 km", "note": "Según Autoanuario (lanzamiento local); coincide con los anuncios de MercadoLibre."}, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Hyundai Elexio", "url": "https://www.autoblog.com.uy/5027/06/lanzamiento-hyundai-elexio.html", "date": "2026-10", "type": "Prensa especializada"}, "specNote": "Precio de la versión según Autoanuario (lanzamiento local); los anuncios de concesionarias en MercadoLibre coinciden."},
-    "hyundai-elexio-ultimate": {"batteryKwh": 88, "rangeKm": 540, "rangeCycle": "WLTP", "powerCv": 313, "accel": 6.2, "acKw": 11, "dcKw": 141, "trunkL": 506, "drive": "Integral (AWD)", "torqueNm": 480, "warranty": {"vehicle": "5 años, sin límite de km", "battery": "8 años o 160.000 km", "note": "Según Autoanuario (lanzamiento local); coincide con los anuncios de MercadoLibre."}, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Hyundai Elexio", "url": "https://www.autoblog.com.uy/5027/06/lanzamiento-hyundai-elexio.html", "date": "2026-10", "type": "Prensa especializada"}, "specNote": "Precio de la versión según Autoanuario (lanzamiento local); los anuncios de concesionarias en MercadoLibre coinciden."}
+    "hyundai-elexio-ultimate": {"batteryKwh": 88, "rangeKm": 540, "rangeCycle": "WLTP", "powerCv": 313, "accel": 6.2, "acKw": 11, "dcKw": 141, "trunkL": 506, "drive": "Integral (AWD)", "torqueNm": 480, "warranty": {"vehicle": "5 años, sin límite de km", "battery": "8 años o 160.000 km", "note": "Según Autoanuario (lanzamiento local); coincide con los anuncios de MercadoLibre."}, "specSource": {"name": "Autoblog Uruguay — Lanzamiento: Hyundai Elexio", "url": "https://www.autoblog.com.uy/5027/06/lanzamiento-hyundai-elexio.html", "date": "2026-10", "type": "Prensa especializada"}, "specNote": "Precio de la versión según Autoanuario (lanzamiento local); los anuncios de concesionarias en MercadoLibre coinciden."},
+    "byd-yuan-plus-gl": {"lengthMm": 4455, "widthMm": 1875, "heightMm": 1615, "wheelbaseMm": 2720, "trunkMaxL": 1330},
+    "byd-yuan-plus-lux": {"lengthMm": 4455, "widthMm": 1875, "heightMm": 1615, "wheelbaseMm": 2720, "trunkMaxL": 1330},
+    "byd-shark": {"lengthMm": 5457, "widthMm": 1971, "heightMm": 1925, "wheelbaseMm": 3260},
+    "byd-atto-8": {"trunkMaxL": 1960, "trunkNote": "270 L con las tres filas, 960 L con la tercera fila abatida y 1.960 L con las dos filas abatidas (según la web de BYD Uruguay)."}
   };
   vehicles.forEach(function (v) {
     const p = specs[v.id]; if (!p) return;
