@@ -117,9 +117,8 @@ $("cee-f").addEventListener("submit",ev=>{ev.preventDefault();
   const head=fails?`<h3 style="margin-top:0">Por ahora no cumplirías todos los requisitos</h3>`:warns?`<h3 style="margin-top:0">Podrías aplicar: falta confirmar algunos puntos</h3>`:`<h3 style="margin-top:0">Cumplís los requisitos principales</h3>`;
   const msg=fails?"Consulta sobre el CEE: mi vehículo no cumpliría algún requisito y quiero revisar mi caso.":"Consulta sobre el CEE: el verificador indica que podría aplicar.";
   const qm="contacto.html?tema=cee&msg="+encodeURIComponent(msg);
-  const qs="contacto.html?tema=cee&msg="+encodeURIComponent("Quiero contratar el servicio de gestión del CEE. "+(fails?"Mi caso tiene algún requisito pendiente.":"El verificador indica que podría aplicar."));
   $("cee-res").innerHTML=`<div class="result">${head}<ul class="steps" style="list-style:none;padding:0">${R.map(([s,t])=>`<li><span class="badge ${cl[s]}" style="margin-right:8px">${ic[s]}</span>${t}</li>`).join("")}</ul>${est}
-  <p style="margin-top:14px"><a class="btn" href="${qm}">Quiero más información</a> ${fails?"":`<a class="btn sec" href="${qs}">Contratar el servicio</a>`}</p>
+  <p style="margin-top:14px"><a class="btn" href="${qm}">Quiero más información</a></p>
   <p class="small muted">Resultado orientativo según las condiciones de la convocatoria vigente del MIEM. No es una resolución ni una confirmación.</p></div>`;
   $("cee-res").scrollIntoView({behavior:"smooth",block:"nearest"});});
 })();
