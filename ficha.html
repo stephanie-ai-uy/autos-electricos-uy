@@ -2,10 +2,10 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ficha de vehículo eléctrico | Autos Eléctricos UY</title>
 <meta name="description" content="Ficha detallada de un coche eléctrico en Uruguay con precio, especificaciones, garantía, fuente y fecha de consulta.">
-<link rel="stylesheet" href="assets/style.css?v=6"></head>
+<link rel="stylesheet" href="assets/style.css?v=9"></head>
 <body data-page="cat"><main id="main"><div class="wrap" id="out"></div></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
-<script src="assets/config.js"></script><script src="assets/images.js?v=1"></script><script src="assets/data.js?v=5"></script><script src="assets/app.js?v=6"></script>
+<script src="assets/config.js"></script><script src="assets/images.js?v=1"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=8"></script>
 <script>
 const id = new URLSearchParams(location.search).get("id"), v = EV.byId(id), e = EV.esc, ni = EV.NI;
 const out = document.getElementById("out");
@@ -29,7 +29,7 @@ ${row("Batería", v.batteryKwh != null ? v.batteryKwh + " kWh" : null)}${row("Au
 ${row("Consumo declarado", v.consumption)}${row("Consumo estimado (calculado)", eff)}
 ${row("Carga rápida (DC)", [v.dcKw ? "hasta " + v.dcKw + " kW" : null, v.chargeNote].filter(Boolean).join(" · ") || null)}${row("Carga AC", v.acKw ? "hasta " + v.acKw + " kW" : null)}
 ${row("Aceleración 0-100 km/h", v.accel != null ? String(v.accel).replace(".", ",") + " s" : null)}${row("Velocidad máxima", v.topSpeedKmh ? v.topSpeedKmh + " km/h" : null)}${row("Torque", v.torqueNm ? v.torqueNm + " Nm" : null)}
-${row("Baúl", v.trunkL ? v.trunkL + " L (mínimo)" : null)}${row("Plazas", v.seats)}
+${row("Baúl", v.trunkL ? v.trunkL + " L (mínimo)" : null)}${row("Plazas", v.seats)}${row("Baúl con asientos abatidos", v.trunkMaxL ? v.trunkMaxL + " L" : null)}${row("Largo × ancho × alto", v.lengthMm ? v.lengthMm + " × " + v.widthMm + " × " + v.heightMm + " mm" : null)}${row("Distancia entre ejes", v.wheelbaseMm ? v.wheelbaseMm + " mm" : null)}
 ${row("Garantía del vehículo", v.warranty.vehicle)}${row("Garantía de batería", v.warranty.battery)}${row("Condiciones de garantía", v.warranty.note)}
 ${row("Observaciones", v.notes)}
 </tbody></table></div>

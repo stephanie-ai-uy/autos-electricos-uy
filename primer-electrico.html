@@ -3,9 +3,9 @@
 <title>Mi primer coche eléctrico en Uruguay: guía para decidir si te conviene | Autos Eléctricos UY</title>
 <meta name="description" content="Guía para quien compra su primer coche eléctrico en Uruguay: pros, contras, cuántos km por día, dónde cargar, qué preguntar y una calculadora simple para saber si te conviene.">
 <meta name="theme-color" content="#07090c">
-<link rel="stylesheet" href="assets/style.css?v=6"></head>
+<link rel="stylesheet" href="assets/style.css?v=9"></head>
 <body data-page="first"><main id="main"><div class="wrap">
-Mi primer coche <span class="grad">eléctrico</span>: ¿me conviene?
+<h1>Mi primer coche <span class="grad">eléctrico</span>: ¿me conviene?</h1>
 <p class="lead">Guía orientativa para decidir con calma. No te decimos que compres ni que no: te ayudamos a hacerte las preguntas correctas antes de pasarte a un eléctrico.</p>
 <div class="notice info">Es una guía general, no asesoramiento financiero. Las cifras de cada modelo están en el <a href="catalogo.html">catálogo</a>, con fuente y fecha; acá no inventamos números: los que ves en la calculadora los cargás vos.</div>
 
@@ -120,7 +120,7 @@ Mi primer coche <span class="grad">eléctrico</span>: ¿me conviene?
 <div class="card"><h3 style="margin-top:0">Si dudás</h3><p class="small">Alquilá o probá uno unos días, y comparalo en el <a href="comparador.html">comparador</a> con un híbrido y con uno de combustión.</p></div></div>
 <p class="small muted">Este sitio no vende autos ni recibe comisiones por esta guía.</p>
 </div></main>
-<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=5"></script><script src="assets/app.js?v=6"></script>
+<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=6"></script><script src="assets/app.js?v=8"></script>
 <script>
 const $=id=>document.getElementById(id), V=EV.getVehicles().filter(v=>v.type==="BEV"&&v.batteryKwh&&v.rangeKm);
 V.sort((a,b)=>(a.brand+a.model).localeCompare(b.brand+b.model)).forEach(v=>$("veh").insertAdjacentHTML("beforeend",`<option value="${EV.esc(v.id)}">${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version||"")}</option>`));

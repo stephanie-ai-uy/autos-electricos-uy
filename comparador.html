@@ -2,16 +2,16 @@
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Comparador de coches eléctricos en Uruguay | Autos Eléctricos UY</title>
 <meta name="description" content="Compará hasta 4 coches eléctricos disponibles en Uruguay lado a lado: precio, batería, autonomía y garantía, con avisos de comparabilidad.">
-<link rel="stylesheet" href="assets/style.css?v=6"></head>
+<link rel="stylesheet" href="assets/style.css?v=9"></head>
 <body data-page="cmp"><main id="main"><div class="wrap">
-<span class="grad">Comparador</span>
+<h1><span class="grad">Comparador</span></h1>
 <div class="card noprint"><label for="add">Agregar vehículo (máx. 4)</label><select id="add"></select></div>
 <div id="warn"></div><div id="out"></div>
 <p class="noprint"><button class="btn" id="print">Imprimir / guardar como PDF</button> <a class="btn sec" href="catalogo.html">Elegir en el catálogo</a></p>
 <p class="small muted">Las celdas resaltadas indican diferencias entre los vehículos. «No informado» significa que no se encontró dato con fuente.</p>
 <div class="card" style="margin-top:18px"><h3 style="margin-top:0">Lo que esta comparación todavía no cubre: repuestos y software</h3><p class="small">No tenemos datos verificados sobre disponibilidad de repuestos, idioma y actualizaciones del software ni alcance del servicio técnico de cada marca: dependen del importador y del concesionario. Antes de elegir entre dos modelos, pedí esas respuestas por escrito. <a href="guias.html">Ver qué preguntar</a>.</p></div>
 </div></main>
-<script src="assets/data.js?v=5"></script><script src="assets/app.js?v=6"></script>
+<script src="assets/data.js?v=6"></script><script src="assets/app.js?v=8"></script>
 <script>
 const $=id=>document.getElementById(id), e=EV.esc, ni=EV.NI, V=EV.getVehicles();
 let ids = (new URLSearchParams(location.search).get("ids")||"").split(",").filter(x=>EV.byId(x));
@@ -37,7 +37,11 @@ function render(){
   ["Consumo estimado (calc.)",v=>(v.type==="BEV"&&v.batteryKwh&&v.rangeKm)?(v.batteryKwh/v.rangeKm*100).toFixed(1).replace(".",",")+" kWh/100 km":ni],
   ["Potencia",v=>v.powerCv!=null?v.powerCv+" cv":ni],["Torque",v=>v.torqueNm?v.torqueNm+" Nm":ni],["0-100 km/h",v=>v.accel!=null?String(v.accel).replace(".",",")+" s":ni],
   ["Tracción",v=>v.drive||ni],["Carga rápida (DC)",v=>[v.dcKw?"hasta "+v.dcKw+" kW":null,v.chargeNote].filter(Boolean).join(" · ")||ni],["Carga AC",v=>v.acKw?"hasta "+v.acKw+" kW":ni],
-  ["Baúl",v=>v.trunkL?v.trunkL+" L":ni],
+  ["Plazas",v=>v.seats?String(v.seats):ni],
+  ["Largo × ancho × alto",v=>v.lengthMm?`${EV.fmtNum(v.lengthMm,0)} × ${EV.fmtNum(v.widthMm,0)} × ${EV.fmtNum(v.heightMm,0)} mm`:ni],
+  ["Distancia entre ejes (espacio interior)",v=>v.wheelbaseMm?EV.fmtNum(v.wheelbaseMm,0)+" mm":ni],
+  ["Baúl (capacidad mínima)",v=>v.trunkL?v.trunkL+" L":ni],
+  ["Baúl con asientos abatidos",v=>v.trunkMaxL?EV.fmtNum(v.trunkMaxL,0)+" L":ni],
   ["Garantía vehículo",v=>v.warranty.vehicle||ni],["Garantía batería",v=>v.warranty.battery||ni],
   ["Importador",v=>v.importer||ni],["Fuente",v=>`<a href="${e(v.source.url)}" rel="noopener">${e(v.source.date)}</a>`]];
   $("out").innerHTML = `<div class="tablewrap"><table><thead><tr><th></th>${vs.map(v=>`<th>${e(v.brand)} ${e(v.model)}<br><span class="small muted">${e(v.version)}</span><br><button class="btn sec noprint" data-rm="${v.id}" style="padding:2px 8px;font-size:.8rem">Quitar</button></th>`).join("")}</tr></thead><tbody>`+
