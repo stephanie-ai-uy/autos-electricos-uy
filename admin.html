@@ -31,7 +31,7 @@ async function enter(session){
   // Autorización real = RLS en el servidor. Aquí solo comprobamos para mostrar/ocultar la UI.
   const {data}=await sb.from("admin_users").select("role").eq("user_id",session.user.id).maybeSingle();
   if(!data){$("login").hidden=false;$("lerr").textContent="Esta cuenta no tiene permisos de administración.";await sb.auth.signOut();return}
-  $("login").hidden=true;$("panel").hidden=false;$("who").textContent=session.user.email+" ("+data.role+")";
+  window.__uid=session.user.id;$("login").hidden=true;$("panel").hidden=false;$("who").textContent=session.user.email+" ("+data.role+")";
   $("tabs").innerHTML=Object.entries(TABS).map(([k,v])=>`<button class="btn sec" data-t="${k}">${v}</button>`).join("");
   $("tabs").onclick=ev=>{if(ev.target.dataset.t){tab=ev.target.dataset.t;show()}};show();}
 const slug=s=>String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60);
@@ -109,6 +109,32 @@ async function leadsView(b){
     leadsView(b);};
 }
 
+
+/* ===== Historial de cambios (audit_logs) en formato legible ===== */
+const TBL={vehicles:"Vehículos",benefits:"Beneficios",financing_products:"Financiación",site_settings:"Ajustes",lead_requests:"Contactos",vehicle_reviews:"Opiniones",sales:"Ventas",admin_users:"Administradoras"};
+const ACT={INSERT:"Creó",UPDATE:"Modificó",DELETE:"Borró"};
+let histFilter="todas";
+function brief(d){if(!d)return"";const x=d.data||d;const t=x.name||((x.brand||x.entity||"")+" "+(x.model||"")+" "+(x.version||"")).trim()||x.buyer_name||x.author||x.title||"";return String(t).slice(0,80)}
+function short(v){if(v==null)return"—";const s=typeof v==="object"?JSON.stringify(v):String(v);return s.length>70?s.slice(0,70)+"…":s}
+function diffs(o,n){if(!o||!n)return[];const out=[];const flat=(p,x,m)=>{if(x&&typeof x==="object"&&!Array.isArray(x))Object.keys(x).forEach(k=>flat(p?p+"."+k:k,x[k],m));else m[p]=x};const A={},B={};flat("",o,A);flat("",n,B);
+  new Set([...Object.keys(A),...Object.keys(B)]).forEach(k=>{if(JSON.stringify(A[k])!==JSON.stringify(B[k])&&!/^(updated_at|created_at)$/.test(k))out.push([k,A[k],B[k]])});return out}
+async function historyView(b){
+  b.innerHTML='<p class="muted">Cargando…</p>';
+  const {data,error}=await sb.from("audit_logs").select("*").order("at",{ascending:false}).limit(200);
+  if(error){b.innerHTML=`<div class="notice bad">${e(error.message)}</div>`;return}
+  const rows=(data||[]).filter(r=>histFilter==="todas"||r.table_name===histFilter);
+  const tables=[...new Set((data||[]).map(r=>r.table_name))];
+  const fmt=d=>new Date(d).toLocaleString("es-UY",{dateStyle:"medium",timeStyle:"short"});
+  b.innerHTML=`<h2>Historial de cambios</h2><p class="small muted">Registro automático de quién creó, modificó o borró información. Se muestran los últimos 200 movimientos.</p>
+  <p><label for="hf" class="small">Mostrar:</label> <select id="hf" style="max-width:260px"><option value="todas">Todas las secciones</option>${tables.map(t=>`<option value="${e(t)}"${t===histFilter?" selected":""}>${e(TBL[t]||t)}</option>`).join("")}</select></p>
+  <div class="tablewrap"><table><thead><tr><th>Cuándo</th><th>Qué pasó</th><th>Detalle</th></tr></thead><tbody>
+  ${rows.map(r=>{const d=r.action==="UPDATE"?diffs(r.old_data,r.new_data):[];const who=r.user_id&&r.user_id===window.__uid?"vos":(r.user_id?"otra administradora":"sistema");
+    const det=r.action==="UPDATE"?(d.length?d.slice(0,6).map(([k,o,n])=>`<div class="small"><strong>${e(k)}</strong>: ${e(short(o))} → <strong>${e(short(n))}</strong></div>`).join("")+(d.length>6?`<div class="small muted">y ${d.length-6} cambios más</div>`:""):'<span class="small muted">Sin cambios visibles</span>'):`<span class="small">${e(brief(r.action==="DELETE"?r.old_data:r.new_data))}</span>`;
+    return `<tr><td class="small" style="white-space:nowrap">${fmt(r.at)}<br><span class="muted">${e(who)}</span></td><td><strong>${e(ACT[r.action]||r.action)}</strong><br><span class="small muted">${e(TBL[r.table_name]||r.table_name)}${r.row_id?" · "+e(String(r.row_id).slice(0,40)):""}</span></td><td>${det}</td></tr>`}).join("")||'<tr><td colspan="3" class="muted">Todavía no hay movimientos.</td></tr>'}
+  </tbody></table></div>`;
+  $("hf").onchange=()=>{histFilter=$("hf").value;historyView(b)};
+}
+
 /* ===== Estadísticas (tabla site_events, anónima) ===== */
 let statDays=30;
 async function statsView(b){
@@ -160,7 +186,8 @@ async function show(){
       show();};
     return;}
   if(tab==="lead_requests")return leadsView(b);
-  if(["audit_logs"].includes(tab)){
+  if(tab==="audit_logs")return historyView(b);
+  if(false){
     const {data,error}=await sb.from(tab).select("*").order(tab==="audit_logs"?"at":"created_at",{ascending:false}).limit(200);
     b.innerHTML=error?`<div class="notice bad">${e(error.message)}</div>`:`<h2>${TABS[tab]}</h2><div class="tablewrap"><table><tbody>${(data||[]).map(r=>`<tr><td class="small"><pre style="margin:0;white-space:pre-wrap">${e(JSON.stringify(r,null,1))}</pre></td></tr>`).join("")||"<tr><td>Sin registros.</td></tr>"}</tbody></table></div>`;return}
   const {data,error}=await sb.from(tab).select("*").order("id");
