@@ -9,16 +9,23 @@
 <span class="eyebrow"><i></i> Datos con fuente y fecha · Sin publicidad ni patrocinios</span>
 <h1>Cuánto cuesta <span class="grad">realmente</span> pasarte a un auto eléctrico en Uruguay</h1>
 <p class="lead">Compará modelos, simulá la financiación y conocé las condiciones antes de firmar. Independiente: no vendemos autos.</p>
+<p style="margin:0 0 14px"><a class="eyebrow" href="beneficios.html?verificar=1#cee" data-ev="home_cee_pill" style="text-decoration:none;color:var(--ink);border-color:var(--brand)"><i></i> ¿Tenés un eléctrico? Probá gratis si podés cobrar el certificado del MIEM (hasta $ 45.000) →</a></p>
 <form class="search" action="catalogo.html" method="get" role="search"><label for="q" style="position:absolute;left:-999px">Buscar vehículo</label>
 <input id="q" name="q" type="search" placeholder="Buscá marca o modelo: MG4, Tesla, BYD…"><button class="btn" type="submit">Buscar</button></form>
 <div class="cta"><a class="btn big" href="catalogo.html">Ver catálogo</a><a class="btn big sec" href="ranking.html">Más vendidos</a> <a class="btn big sec" href="comparador.html">Comparar modelos</a><a class="btn big sec" href="financiacion.html">Simular financiación</a></div>
 <div class="stats" id="stats"></div>
 </section>
 
+<div class="card" style="border-color:var(--brand);margin:18px 0;display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:space-between">
+<div style="flex:1;min-width:260px"><span class="eyebrow"><i></i> Gratis · 2 minutos</span><h2 style="margin:.4em 0 .2em">¿Ya tenés un auto eléctrico? Probá si podés cobrar el certificado del MIEM</h2>
+<p class="muted" style="margin:0">El Certificado de Eficiencia Energética reconoce con hasta <strong>$ 45.000</strong> a quienes tienen un eléctrico puro. Respondé unas preguntas y fijate si aplicás y cuánto podrías cobrar (orientativo).</p></div>
+<a class="btn big" href="beneficios.html?verificar=1#cee" data-ev="home_cee_click">Probar gratis si aplico</a></div>
+
 <div class="notice info"><strong>Cambio de impuestos a la vista:</strong> el decreto de junio de 2026 prevé IMESI de 5 % y 9 % para eléctricos desde el 1/1/2027; el MEF analiza postergarlo (sin anuncio oficial). <a href="beneficios.html">Ver detalle y fuentes</a>.</div>
 
 <h2>Herramientas</h2>
 <div class="grid g3">
+<a class="card" href="beneficios.html?verificar=1#cee" data-ev="home_cee_card" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Certificado de eficiencia energética</h3><p class="muted">Probá gratis si podés cobrar hasta $ 45.000 por tener un eléctrico, según la convocatoria vigente del MIEM.</p></a>
 <a class="card" href="primer-electrico.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Mi primer eléctrico</h3><p class="muted">Guía para principiantes: pros, contras, cuántos km por día y una calculadora para saber si te conviene.</p></a>
 <a class="card" href="ranking.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Más vendidos</h3><p class="muted">Qué se vende más en Uruguay y qué modelo rinde más por dólar: autonomía, consumo y patente, para SUV y hatchback/sedán.</p></a>
 <a class="card" href="cargadores.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Mapa de cargadores</h3><p class="muted">Los 214 puntos de carga públicos de UTE en todo el país, con filtros por departamento y conector, y enlace al estado en vivo.</p></a>
@@ -39,7 +46,7 @@
 
 <h2>Estado de los datos</h2>
 <div class="card"><p class="small muted" style="margin:0">Primera versión parcial: solo lo verificable en fuentes públicas al <span id="chk"></span>. Marcas detectadas sin ficha aún figuran como «pendientes de relevar». No hay stock confirmado por concesionarios. <a href="metodologia.html">Cómo verificamos</a>.</p></div>
-</div></main>
+</div></main><script>document.addEventListener("click",ev=>{const a=ev.target.closest("[data-ev]");if(a&&window.EVTRACK)EVTRACK(a.dataset.ev)});</script>
 <script src="assets/data.js?v=8"></script><script src="assets/app.js?v=16"></script>
 <script>
 const vs = EV.getVehicles(), bev = vs.filter(v=>v.type==="BEV");

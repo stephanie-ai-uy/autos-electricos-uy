@@ -81,6 +81,7 @@ const VEN_INI=D("2023-12-16"), VEN_FIN=D("2025-12-14"), CIERRE=D("2026-12-15"), 
 const TASA={m1:5173/20, taxi:5173/20, cityc:2072/20, moto:1542/20};
 const fmt=d=>d.toLocaleDateString("es-UY");
 $("cee-open").onclick=()=>{const b=$("cee-box"),o=b.hidden;b.hidden=!o;$("cee-open").setAttribute("aria-expanded",String(o));if(o){window.EVTRACK&&EVTRACK("cee_open");b.scrollIntoView({behavior:"smooth",block:"start"})}};
+if(new URLSearchParams(location.search).get("verificar")==="1")setTimeout(()=>{if($("cee-box").hidden)$("cee-open").click()},300);
 $("c-tit").onchange=()=>{$("c-dgi-w").hidden=$("c-tit").value!=="juridica"};
 $("cee-f").addEventListener("submit",ev=>{ev.preventDefault();
   const hoy=new Date();hoy.setHours(0,0,0,0);
