@@ -67,6 +67,14 @@ window.EVDATA = (function () {
     autoblogStaria: { name: "Autoblog Uruguay — Lanzamiento: Hyundai Staria HEV", url: "https://www.autoblog.com.uy/5027/06/lanzamiento-hyundai-staria-hev.html", date: "2026-08-13", type: "Prensa especializada" },
     autoblogS08: { name: "Autoblog Uruguay — Lanzamiento: Soueast S08 DM", url: "https://www.autoblog.com.uy/2026/05/lanzamiento-soueast-s08.html", date: "2026-05-21", type: "Prensa especializada" },
     autoblogEu5: { name: "Autoblog Uruguay — Lanzamiento: BAIC EU5 MY2026", url: "https://www.autoblog.com.uy/2026/03/lanzamiento-baic-eu5-my2026.html", date: "2026-03-17", type: "Prensa especializada" },
+    duxFin: { name: "Dux Motors — sitio oficial (financiación)", url: "https://duxmotors.uy/", date: "2026-10-29", type: "Sitio comercial" },
+    unoFin: { name: "UnoMotors — Financiación", url: "https://unomotors.uy/pages/financiacion.html", date: "2026-10-29", type: "Sitio comercial" },
+    cuotacarFin: { name: "Cuotacar — sitio oficial", url: "https://cuotacar.uy/", date: "2026-10-29", type: "Sitio comercial" },
+    caroneFin: { name: "Car One — Financiar", url: "https://carone.com.uy/financiar-autos-con-car-one", date: "2026-10-29", type: "Sitio comercial" },
+    shoppingcarFin: { name: "Shopping Car — sitio oficial", url: "https://shoppingcar.com.uy/", date: "2026-10-29", type: "Sitio comercial" },
+    curiFin: { name: "Joaquim Curi (Rivera) — sitio oficial", url: "https://joaquimcuri.com/", date: "2026-10-29", type: "Sitio comercial" },
+    aecFin: { name: "AutoEnCuotas — BYD en Uruguay 2026", url: "https://autoencuotas.com/byd-en-uruguay-2026-modelos-precios-y-como-comprarlo-en-cuotas/", date: "2026-10-29", type: "Sitio comercial" },
+    olivera: { name: "Olivera Automotores — Financiamiento de vehículos en Uruguay", url: "https://oliveraautomotores.com/blogs/noticias/financiamiento-de-vehiculos-en-uruguay", date: "s/f", type: "Sitio comercial" },
     changanOf: { name: "Changan Uruguay — sitio oficial", url: "https://changan.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     deepalOf: { name: "Deepal Uruguay — sitio oficial", url: "https://deepal.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     zeekrOf: { name: "Zeekr Uruguay — sitio oficial", url: "https://www.zeekrlife.com/es-uy/", date: CHECKED, type: "Web oficial de la marca/importador" },
@@ -3027,6 +3035,16 @@ window.EVDATA = (function () {
   ];
 
 
+  /* Financiación propia o directa de automotoras y financieras (oct. 2026). «own» dice si la fuente afirma que es propia; si no lo dice, se marca «No confirmado». */
+  const dealerFinancing = [
+    { entity: "Dux Motors", kind: "Automotora", place: "Montevideo (Escuder Núñez 2126)", own: "Sí: la página informa «financiación propia en dólares».", terms: "Hasta 36 cuotas con 60 % de entrega, en dólares. También ofrece financiación bancaria en UI hasta 60 cuotas financiando el 100 %. La página no aclara si el límite de 60 cuotas alcanza a la financiación propia.", ev: "No informado: la página no detalla qué modelos eléctricos o híbridos incluye.", source: sources.duxFin, checked: "2026-10-29", note: "La fuente no muestra fecha; solo «© 2026»." },
+    { entity: "UnoMotors", kind: "Automotora", place: "No informada en la página", own: "Sí: la página dice «financiación propia de la casa».", terms: "Entrega inicial y saldo en cuotas, con planes adaptados a cada cliente. No publica porcentaje de entrega, cantidad de cuotas, moneda, tasa ni requisitos; se consulta con un asesor por WhatsApp.", ev: "No informado.", source: sources.unoFin, checked: "2026-10-29", note: "Sin fecha en la página." },
+    { entity: "Cuotacar", kind: "Financiera (opera con automotoras)", place: "Montevideo (Tiburcio Gómez 1305)", own: "Es una financiera, no una automotora; dice que las automotoras pueden ofrecer financiación «a través nuestro». No aclara si presta con fondos propios o de terceros.", terms: "Financia hasta el 50 % del valor, en dólares o UI, con tasa fija en USD (no publica el porcentaje). Plazos: la página da cifras distintas (hasta 36, hasta 48 y hasta 60 cuotas). Pide recibo de sueldo o factura a nombre, segunda firma y segunda forma de garantía. Aclara que el Clearing «no es requisito excluyente» y se analiza caso por caso.", ev: "No informado.", source: sources.cuotacarFin, checked: "2026-10-29", note: "Página con © 2025; testimonios de nov. 2024 a ene. 2025: puede estar desactualizada." },
+    { entity: "Car One", kind: "Automotora", place: "Montevideo (varias sucursales)", own: "No confirmado: la página habla de financiación pero no dice si es propia o a través de bancos.", terms: "Planes hasta 60 cuotas en dólares, UI o pesos y hasta el 100 % del valor, nuevos y usados; modalidades Compra Inteligente, Amortización Convencional, Cuota Bimestral y Cuota Aguinaldo. No publica tasas concretas. En sus avisos aparecen ejemplos de entrega en dólares y 60 cuotas en pesos.", ev: "Vende marcas con modelos eléctricos e híbridos (por ejemplo Jaecoo); la página de financiación no distingue por tipo de auto.", source: sources.caroneFin, checked: "2026-10-29", note: "La página no muestra fecha. No pude abrirla desde el navegador; los datos vienen del buscador." },
+    { entity: "Shopping Car", kind: "Concesionario oficial", place: "No informada", own: "No confirmado: dice «financiamos hasta el 100 %» y no aclara quién presta.", terms: "Sin tasas, plazos ni requisitos publicados: pide consultar. Se presenta como concesionario oficial de Peugeot, BYD, Jetour, DFM, Dongfeng y Karry.", ev: "Sí vende marcas con eléctricos e híbridos (BYD, Dongfeng, Jetour); la financiación no está detallada por modelo.", source: sources.shoppingcarFin, checked: "2026-10-29", note: "Sin fecha en la página." },
+    { entity: "Joaquim Curi", kind: "Automotora", place: "Rivera", own: "No confirmado: dice «financiación ágil» y no detalla si es propia.", terms: "Vende 0 km, eléctricos, híbridos y usados seleccionados. Sin condiciones de financiación publicadas; indica aceptar dólares y pesos.", ev: "Sí: anuncia eléctricos e híbridos.", source: sources.curiFin, checked: "2026-10-29", note: "Sin fecha en la página." }
+  ];
+
   /* Ventas 2025 por modelo (ACAU, vía Autoblog Uruguay). Incluye ventas al público, concesionarios, licitaciones e importaciones; no son patentamientos.
      No se halló un ranking por modelo de 2026. «ids» enlaza con las fichas del catálogo cuando existen. */
   const sales = {
@@ -3313,5 +3331,5 @@ window.EVDATA = (function () {
     });
   });
 
-  return { checked: CHECKED, typeLabels, origins, sources, vehicles, pendingBrands, benefits, financing, market, sales, tradeIn, priceMoves, marketTimeline };
+  return { checked: CHECKED, typeLabels, origins, sources, vehicles, pendingBrands, benefits, financing, dealerFinancing, market, sales, tradeIn, priceMoves, marketTimeline };
 })();
