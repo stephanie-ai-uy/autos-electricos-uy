@@ -26,6 +26,7 @@
 <h2>Herramientas</h2>
 <div class="grid g3">
 <a class="card" href="beneficios.html?verificar=1#cee" data-ev="home_cee_card" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Certificado de eficiencia energética</h3><p class="muted">Probá gratis si podés cobrar hasta $ 45.000 por tener un eléctrico, según la convocatoria vigente del MIEM.</p></a>
+<a class="card" href="mercado.html" data-ev="home_mercado_card" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Mercado y bajas de precio</h3><p class="muted">Qué eléctricos bajaron desde la llegada de Tesla, cómo compiten por precio y batería y quién informa más garantías.</p></a>
 <a class="card" href="primer-electrico.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Mi primer eléctrico</h3><p class="muted">Guía para principiantes: pros, contras, cuántos km por día y una calculadora para saber si te conviene.</p></a>
 <a class="card" href="ranking.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Más vendidos</h3><p class="muted">Qué se vende más en Uruguay y qué modelo rinde más por dólar: autonomía, consumo y patente, para SUV y hatchback/sedán.</p></a>
 <a class="card" href="cargadores.html" style="text-decoration:none;color:inherit"><h3 style="margin-top:0">Mapa de cargadores</h3><p class="muted">Los 214 puntos de carga públicos de UTE en todo el país, con filtros por departamento y conector, y enlace al estado en vivo.</p></a>
@@ -47,7 +48,7 @@
 <h2>Estado de los datos</h2>
 <div class="card"><p class="small muted" style="margin:0">Primera versión parcial: solo lo verificable en fuentes públicas al <span id="chk"></span>. Marcas detectadas sin ficha aún figuran como «pendientes de relevar». No hay stock confirmado por concesionarios. <a href="metodologia.html">Cómo verificamos</a>.</p></div>
 </div></main><script>document.addEventListener("click",ev=>{const a=ev.target.closest("[data-ev]");if(a&&window.EVTRACK)EVTRACK(a.dataset.ev)});</script>
-<script src="assets/data.js?v=8"></script><script src="assets/app.js?v=16"></script>
+<script src="assets/data.js?v=9"></script><script src="assets/app.js?v=17"></script>
 <script>
 const vs = EV.getVehicles(), bev = vs.filter(v=>v.type==="BEV");
 document.getElementById("chk").textContent = EV.D.checked;

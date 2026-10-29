@@ -120,7 +120,7 @@
 <div class="card"><h3 style="margin-top:0">Si dudás</h3><p class="small">Alquilá o probá uno unos días, y comparalo en el <a href="comparador.html">comparador</a> con un híbrido y con uno de combustión.</p></div></div>
 <p class="small muted">Este sitio no vende autos ni recibe comisiones por esta guía.</p>
 </div></main>
-<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=8"></script><script src="assets/app.js?v=16"></script>
+<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=9"></script><script src="assets/app.js?v=17"></script>
 <script>
 const $=id=>document.getElementById(id), V=EV.getVehicles().filter(v=>v.type==="BEV"&&v.batteryKwh&&v.rangeKm);
 V.sort((a,b)=>(a.brand+a.model).localeCompare(b.brand+b.model)).forEach(v=>$("veh").insertAdjacentHTML("beforeend",`<option value="${EV.esc(v.id)}">${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version||"")}</option>`));

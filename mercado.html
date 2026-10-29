@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mercado de eléctricos en Uruguay: bajas de precio, competencia y garantías | Autos Eléctricos UY</title>
+<meta name="description" content="Qué autos eléctricos bajaron de precio en Uruguay desde la llegada de Tesla, cómo se reparte la competencia por precio y batería, y qué marcas informan más garantías. Solo cambios con fuente y fecha.">
+<meta property="og:type" content="website"><meta property="og:locale" content="es_UY"><meta property="og:site_name" content="Autos Eléctricos UY"><meta property="og:title" content="Mercado de eléctricos en Uruguay: bajas de precio y competencia"><meta property="og:description" content="Qué eléctricos bajaron de precio desde la llegada de Tesla, con fuente y fecha de cada cambio."><meta property="og:url" content="https://stephanie-ai-uy.github.io/autos-electricos-uy/mercado.html"><meta property="og:image" content="https://stephanie-ai-uy.github.io/autos-electricos-uy/assets/og.jpg"><meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/style.css?v=18">
+<style>
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin:14px 0}
+.kpi .big{font-family:var(--head);font-size:1.9rem;font-weight:800;line-height:1.1}
+.tl{border-left:2px solid var(--line2);margin:14px 0 0 8px;padding-left:18px}
+.tl .it{position:relative;margin:0 0 18px}.tl .it:before{content:"";position:absolute;left:-26px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);box-shadow:0 0 10px var(--brand)}
+.tl .it.tesla:before{background:var(--violet);box-shadow:0 0 10px var(--violet)}
+.neg{color:var(--ok);font-weight:700}.pos{color:var(--bad);font-weight:700}
+.chips button{margin:0 6px 6px 0}
+svg.sc{width:100%;height:auto;background:var(--bg2);border:1px solid var(--line);border-radius:14px}
+svg.sc text{fill:var(--muted);font:11px var(--font)}
+.legend span{display:inline-flex;align-items:center;gap:6px;margin-right:14px;font-size:.85rem;color:var(--muted)}
+.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+</style></head>
+<body data-page="mkt"><main id="main"><div class="wrap">
+<h1>Mercado: <span class="grad">bajas de precio</span> y competencia</h1>
+<p class="lead">Desde la llegada de Tesla (17/7/2026) el mercado de eléctricos en Uruguay se movió. Acá ves <strong>qué bajó, cuánto y cuándo</strong>, cómo compiten los modelos por precio y batería, y quién informa más garantías.</p>
+<div class="notice info"><strong>Cómo leer esta página.</strong> Solo entran cambios de precio con valor anterior y posterior <strong>informados por prensa y con fecha</strong>; cada fila muestra sus fuentes y cuántas coinciden. Si no encontramos el dato, no lo estimamos. Puede haber otras bajas que todavía no relevamos: <a href="contacto.html">avisanos</a>. Precios de lista en dólares, sin promociones ni gastos de gestoría.</div>
+
+<div class="kpis" id="kpis"></div>
+
+<h2>Qué bajó de precio</h2>
+<p class="chips" id="flt"><button class="btn" data-p="todos">Todos</button><button class="btn sec" data-p="post-tesla">Desde Tesla (jul. 2026)</button><button class="btn sec" data-p="2025">Ronda de 2025</button><button class="btn sec" data-p="otro">Otros</button></p>
+<div class="tablewrap"><table id="tm"><thead><tr><th>Modelo</th><th>Antes</th><th>Después</th><th>Cambio</th><th>Fecha</th><th>Fuentes</th></tr></thead><tbody></tbody></table></div>
+<p class="small muted" id="tmNote"></p>
+<div id="tmcmp"></div>
+
+<h2>Línea de tiempo</h2>
+<div class="tl" id="tl"></div>
+<p class="small muted">Sobre la reacción de otras marcas: a la fecha de las notas, Grupo Santa Rosa (representante de GWM, Leapmotor, Omoda, JMC y Zeekr) declaró que no preveía una reacción inmediata. Los recortes confirmados con cifras se concentran en BYD; no inferimos que otras marcas vayan a bajar.</p>
+
+<h2>El mapa competitivo: precio vs. batería</h2>
+<p class="muted">Cada punto es un eléctrico puro con precio de lista y batería informados. Cuanto más abajo y a la derecha, más batería por dólar. La batería (kWh) sí es comparable entre marcas; la autonomía no siempre, porque se mide con ciclos distintos.</p>
+<div class="legend" id="lg"></div>
+<div id="scat"></div>
+<h3>¿Qué hay cerca del precio de un Tesla?</h3>
+<p class="muted">Eléctricos con precio dentro de ±15 % del de cada Tesla de entrada:</p>
+<div class="grid g2" id="near"></div>
+
+<h2>Por tramo de precio</h2>
+<div class="tablewrap"><table id="bands"><thead><tr><th>Tramo (US$)</th><th>Modelos</th><th>Marcas</th><th>El más barato</th><th>Más batería (kWh)</th></tr></thead><tbody></tbody></table></div>
+
+<h2>Garantías: quién informa más</h2>
+<p class="muted">Ordenado por garantía de batería y luego de vehículo, solo entre eléctricos puros con el dato informado. <span id="wcount"></span> En el resto, «No informado» no significa que no tenga garantía: significa que no la encontramos publicada.</p>
+<div class="tablewrap"><table id="warr"><thead><tr><th>Modelo</th><th>Garantía del vehículo</th><th>Garantía de batería</th><th>Precio de lista</th></tr></thead><tbody></tbody></table></div>
+
+<h2>Beneficios que aplican a todos los eléctricos puros</h2>
+<ul class="steps">
+<li><strong>IMESI:</strong> hoy los eléctricos de pasajeros no pagan. Desde 1/1/2027 se prevé 0 % hasta US$ 19.000 de valor de importación, 5 % de 19.001 a 27.000 y 9 % por encima (sin norma oficial verificada; se analiza postergarlo). El umbral es el valor de importación, no el precio de venta.</li>
+<li><strong>Patente:</strong> alícuota reducida del Sucive 2026 (3 % del valor de mercado sin IVA para 0 km empadronados en 2026).</li>
+<li><strong>Certificado de eficiencia energética del MIEM:</strong> hasta $ 45.000 si tu eléctrico cumple los requisitos. <a href="beneficios.html?verificar=1#cee" data-ev="mkt_cee_click">Probá gratis si aplicás</a>.</li>
+</ul>
+<p>Detalle, fuentes y fechas en <a href="beneficios.html">Beneficios</a>. Los beneficios son por categoría de vehículo, no por marca; lo que cambia entre marcas son las garantías y el precio.</p>
+<p class="small muted">Esta página es informativa: no recomienda comprar ni dejar de comprar un modelo. Antes de decidir, confirmá precio, versión y condiciones con el vendedor.</p>
+</div></main>
+<script src="assets/data.js?v=9"></script><script src="assets/app.js?v=17"></script>
+<script>
+const D=EVDATA,e=EV.esc,V=D.vehicles,M=D.priceMoves,S=D.sources,fm=n=>"US$ "+EV.fmtNum(n,0);
+const fd=d=>d?new Date(d+(d.length===7?"-01":"")+"T12:00:00").toLocaleDateString("es-UY",d.length===7?{month:"long",year:"numeric"}:{day:"numeric",month:"short",year:"numeric"}):"s/f";
+const pct=m=>(m.to-m.from)/m.from*100, cl=n=>`<span class="${n<0?"neg":"pos"}">${n<0?"−":"+"}${EV.fmtNum(Math.abs(n),1)} %</span>`;
+const srcLinks=m=>m.srcs.map(k=>S[k]?`<a href="${e(S[k].url)}" rel="noopener" target="_blank" title="${e(S[k].name)}">${e(S[k].name.split(" — ")[0])}</a>`:"").join(", ");
+/* --- KPIs (solo cambios con ≥ 2 fuentes que coinciden, para no inflar) --- */
+const firm=M.filter(m=>/^[23]/.test(m.conf)), post=firm.filter(m=>m.period==="post-tesla");
+const avgPost=post.length?post.reduce((a,m)=>a+pct(m),0)/post.length:null, big=post.slice().sort((a,b)=>pct(a)-pct(b))[0];
+const $k=document.getElementById("kpis");
+$k.innerHTML=`<div class="card kpi"><div class="muted small">Bajas confirmadas desde Tesla</div><div class="big">${post.length}</div><div class="small muted">versiones con 2 o más fuentes coincidentes (${[...new Set(post.map(x=>x.name.split(" ")[0]))].join(", ")})</div></div>
+<div class="card kpi"><div class="muted small">Baja promedio de esas versiones</div><div class="big">${avgPost==null?"—":cl(avgPost)}</div><div class="small muted">sobre el precio de lista anterior</div></div>
+<div class="card kpi"><div class="muted small">Mayor baja</div><div class="big">${big?cl(pct(big)):"—"}</div><div class="small muted">${big?e(big.name)+" · "+fm(big.from-big.to)+" menos":""}</div></div>
+<div class="card kpi"><div class="muted small">Entrada de Tesla (17/7/2026)</div><div class="big">US$ 32.990</div><div class="small muted">Model 3 de entrada; Model Y desde US$ 36.490</div></div>`;
+/* --- tabla de bajas --- */
+let per="todos";
+function tm(){
+  const rows=M.filter(m=>per==="todos"||m.period===per).sort((a,b)=>(b.date||"").localeCompare(a.date||"")||pct(a)-pct(b));
+  document.querySelector("#tm tbody").innerHTML=rows.map(m=>{const v=m.id?EV.byId(m.id):null,cur=v&&v.price&&v.price.list!=null?v.price.list:null,diff=cur!=null&&cur!==m.to?` <span class="small muted">(catálogo hoy: ${fm(cur)})</span>`:"";
+    return `<tr><td><strong>${e(m.name)}</strong>${m.id?` <a class="small" href="ficha.html?id=${encodeURIComponent(m.id)}">ver ficha</a>`:""}<div class="small muted">${e(m.note||"")}</div></td><td>${fm(m.from)}</td><td>${fm(m.to)}${diff}</td><td>${cl(pct(m))}<div class="small muted">${fm(m.from-m.to)} menos</div></td><td>${fd(m.date)}${m.dateNote?`<div class="small muted">${e(m.dateNote)}</div>`:""}</td><td class="small">${srcLinks(m)}<div class="muted">${e(m.conf)}</div></td></tr>`}).join("")||'<tr><td colspan="6" class="muted">No hay cambios en este grupo.</td></tr>';
+  document.querySelectorAll("#flt button").forEach(b=>b.classList.toggle("sec",b.dataset.p!==per));
+}
+document.getElementById("flt").onclick=ev=>{if(ev.target.dataset.p){per=ev.target.dataset.p;tm()}};tm();
+document.getElementById("tmNote").textContent=`Se muestran ${M.length} movimientos con precio anterior y posterior informados. Las filas con «1 fuente» no pudieron confirmarse con una segunda y deben leerse con cautela.`;
+/* acumulado BYD Seagull */
+{const a=M.find(m=>m.id==="byd-seagull"&&m.period==="2025"),b=M.find(m=>m.id==="byd-seagull"&&m.period==="post-tesla");
+ if(a&&b)document.getElementById("tmcmp").innerHTML=`<div class="card" style="margin:14px 0"><strong>Acumulado del BYD Seagull (versión de entrada):</strong> de ${fm(a.from)} a ${fm(b.to)} entre mediados de 2025 y julio de 2026, es decir <strong>${fm(a.from-b.to)}</strong> menos (${cl(pct({from:a.from,to:b.to}))}). <span class="small muted">Se calcula con dos movimientos confirmados; las versiones de entrada pueden no ser idénticas entre 2025 y 2026.</span></div>`}
+/* --- línea de tiempo --- */
+document.getElementById("tl").innerHTML=D.marketTimeline.map(t=>`<div class="it ${/Tesla llega/.test(t.title)?"tesla":""}"><div class="small muted">${fd(t.date)}</div><strong>${e(t.title)}</strong><div>${e(t.text)}</div><div class="small">${t.srcs.map(k=>S[k]?`<a href="${e(S[k].url)}" rel="noopener" target="_blank">${e(S[k].name.split(" — ")[0])}</a>`:"").join(" · ")}</div></div>`).join("");
+/* --- mapa competitivo --- */
+const bev=V.filter(v=>v.type==="BEV"&&v.price&&v.price.list!=null&&v.batteryKwh!=null&&v.price.list<100000);
+const col=v=>v.brand==="Tesla"?"#9b7bff":v.brand==="BYD"?"#20e3b2":"#4d8dff";
+document.getElementById("lg").innerHTML=`<span><i style="background:#9b7bff"></i>Tesla</span><span><i style="background:#20e3b2"></i>BYD</span><span><i style="background:#4d8dff"></i>Otras marcas</span><span>${bev.length} versiones con precio y batería</span>`;
+{const W=720,H=400,L=58,R=14,T=14,B=44,xm=Math.ceil(Math.max(...bev.map(v=>v.batteryKwh))/20)*20,ym=Math.ceil(Math.max(...bev.map(v=>v.price.list))/10000)*10000,X=k=>L+k/xm*(W-L-R),Y=p=>H-B-p/ym*(H-B-T);
+ let g="";for(let p=0;p<=ym;p+=ym/5)g+=`<line x1="${L}" x2="${W-R}" y1="${Y(p)}" y2="${Y(p)}" stroke="#222b37"/><text x="${L-8}" y="${Y(p)+4}" text-anchor="end">${EV.fmtNum(p/1000,0)}k</text>`;
+ for(let k=0;k<=xm;k+=20)g+=`<line y1="${T}" y2="${H-B}" x1="${X(k)}" x2="${X(k)}" stroke="#222b37"/><text x="${X(k)}" y="${H-B+16}" text-anchor="middle">${k}</text>`;
+ g+=`<text x="${(W+L)/2}" y="${H-6}" text-anchor="middle">Batería (kWh)</text><text transform="translate(12 ${(H-B)/2}) rotate(-90)" text-anchor="middle">Precio de lista (US$)</text>`;
+ const pts=bev.slice().sort((a,b)=>(a.brand==="Tesla")-(b.brand==="Tesla")).map(v=>`<circle cx="${X(v.batteryKwh)}" cy="${Y(v.price.list)}" r="${v.brand==="Tesla"?7:5}" fill="${col(v)}" fill-opacity=".85" stroke="#07090c"><title>${e(v.brand+" "+v.model+" "+(v.version||""))} · ${fm(v.price.list)} · ${v.batteryKwh} kWh · ${fm(v.price.list/v.batteryKwh)}/kWh</title></circle>`).join("");
+ document.getElementById("scat").innerHTML=`<svg class="sc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Precio contra batería de los eléctricos con dato">${g}${pts}</svg><p class="small muted">Pasá el mouse o tocá un punto para ver el modelo. Se excluyen los de más de US$ 100.000.</p>`}
+/* --- cerca de Tesla --- */
+document.getElementById("near").innerHTML=["tesla-m3-sr","tesla-my-prwd"].map(id=>{const t=EV.byId(id),p=t.price.list,list=bev.filter(v=>v.id!==id&&v.brand!=="Tesla"&&Math.abs(v.price.list-p)/p<=.15).sort((a,b)=>b.batteryKwh-a.batteryKwh);
+ return `<div class="card"><strong>${e(t.brand+" "+t.model+" "+t.version)}</strong><div class="muted small">${fm(p)} · ${t.batteryKwh} kWh · ${fm(p/t.batteryKwh)}/kWh</div><ul class="small" style="margin:8px 0 0 18px;padding:0">${list.slice(0,8).map(v=>`<li><a href="ficha.html?id=${encodeURIComponent(v.id)}">${e(v.brand+" "+v.model+" "+(v.version||""))}</a> — ${fm(v.price.list)} · ${v.batteryKwh} kWh · ${fm(v.price.list/v.batteryKwh)}/kWh</li>`).join("")||"<li>Sin datos comparables.</li>"}</ul>${list.length>8?`<div class="small muted">y ${list.length-8} más</div>`:""}</div>`}).join("");
+/* --- tramos --- */
+const bands=[[0,20000],[20000,30000],[30000,40000],[40000,60000],[60000,1e9]];
+document.querySelector("#bands tbody").innerHTML=bands.map(([a,b])=>{const l=bev.filter(v=>v.price.list>a&&v.price.list<=b||(a===0&&v.price.list<=b));const ls=l.slice().sort((x,y)=>x.price.list-y.price.list),mb=l.slice().sort((x,y)=>y.batteryKwh-x.batteryKwh)[0];
+ const lab=b>=1e9?"más de "+EV.fmtNum(a,0):(a===0?"hasta ":EV.fmtNum(a,0)+" a ")+EV.fmtNum(b,0);
+ return `<tr><td>${lab}</td><td>${l.length}</td><td class="small">${[...new Set(l.map(v=>v.brand))].sort().join(", ")||"—"}</td><td class="small">${ls[0]?e(ls[0].brand+" "+ls[0].model+" "+(ls[0].version||""))+" · "+fm(ls[0].price.list):"—"}</td><td class="small">${mb?e(mb.brand+" "+mb.model+" "+(mb.version||""))+" · "+mb.batteryKwh+" kWh":"—"}</td></tr>`}).join("");
+/* --- garantías --- */
+const yrs=t=>{const m=String(t||"").match(/(\d+)\s*(?:años|año)/i);return m?+m[1]:null}, kms=t=>{const m=String(t||"").match(/([\d.]+)\s*km/i);return m?+m[1].replace(/\./g,""):0};
+const allB=V.filter(v=>v.type==="BEV"),wl=allB.filter(v=>yrs((v.warranty||{}).vehicle)!=null||yrs((v.warranty||{}).battery)!=null).sort((a,b)=>(yrs(b.warranty.battery)||0)-(yrs(a.warranty.battery)||0)||(yrs(b.warranty.vehicle)||0)-(yrs(a.warranty.vehicle)||0)||(kms(b.warranty.battery)-kms(a.warranty.battery)));
+document.getElementById("wcount").textContent=`Hay garantía informada para ${wl.length} de ${allB.length} versiones eléctricas del catálogo.`;
+document.querySelector("#warr tbody").innerHTML=wl.map(v=>`<tr><td><a href="ficha.html?id=${encodeURIComponent(v.id)}">${e(v.brand+" "+v.model+" "+(v.version||""))}</a></td><td>${e(v.warranty.vehicle||"No informado")}</td><td>${e(v.warranty.battery||"No informado")}</td><td>${v.price&&v.price.list!=null?fm(v.price.list):"Consultar"}</td></tr>`).join("");
+</script>
+</body></html>
