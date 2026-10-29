@@ -41,6 +41,11 @@ window.EVDATA = (function () {
     geelyFicha: { name: "Grupo Fiancar (Geely Uruguay) — Ficha técnica oficial Geely EX5 (PDF)", url: "https://www.geely.com.uy", date: "2026-10-23", type: "Ficha técnica del importador" },
     geelyEtiqueta: { name: "Geely Uruguay — Etiqueta de eficiencia energética EX5 Pro y Max (UNIT 1130, LSQA / URSEA)", url: "https://www.geely.com.uy", date: "2026-10-23", type: "Etiqueta oficial de eficiencia energética" },
     omoda5Of: { name: "Omoda Jaecoo Uruguay — Omoda 5 SHS, especificaciones y precios (web oficial)", url: "https://omodajaecoo.com.uy/modelos/omoda-5", date: "2026-10-23", type: "Web oficial de la marca/importador" },
+    ambitoByd: { name: "Ámbito Uruguay — Efecto Tesla: BYD rebaja hasta u$s 5.000 los precios de sus autos eléctricos", url: "https://www.ambito.com/uruguay/efecto-tesla-byd-rebaja-us-5000-los-precios-sus-autos-electricos-n6302812", date: "2026-07-23", type: "Prensa" },
+    mvdByd: { name: "Montevideo Portal (Airbag) — ¿Efecto Tesla? BYD anunció rebaja de precios durante el lanzamiento de su nuevo modelo", url: "https://www.montevideo.com.uy/Airbag/-Efecto-Tesla-BYD-anuncio-rebaja-de-precios-durante-el-lanzamiento-de-su-nuevo-modelo-uc969315", date: "2026-07-23", type: "Prensa" },
+    forbes2025: { name: "Forbes Uruguay — Autos eléctricos: los motivos de una guerra de precios sin precedentes", url: "https://www.forbesuruguay.com/daily-cover/autos-electricos-motivos-una-guerra-precios-precedentes-esperan-representantes-lo-queda-2025-n76130", date: "2025-07-31", type: "Prensa" },
+    electricosUyLista: { name: "Eléctricos Uruguay — Precios de los autos eléctricos en Uruguay: la lista completa a septiembre de 2026", url: "https://electricosuruguay.com/noticia/precios-de-los-autos-electricos-en-uruguay-la-lista-completa-a-septiembre-de-2026", date: "2026-09-01", type: "Medio especializado (agregador de precios)" },
+    autoblogE5Resty: { name: "Autoblog Uruguay — Lanzamiento Omoda E5 restyling", url: "https://www.autoblog.com.uy/2026/06/lanzamiento-omoda-e5-restyling.html", date: "2026-06", type: "Prensa especializada" },
     changanOf: { name: "Changan Uruguay — sitio oficial", url: "https://changan.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     deepalOf: { name: "Deepal Uruguay — sitio oficial", url: "https://deepal.uy", date: CHECKED, type: "Web oficial de la marca/importador" },
     zeekrOf: { name: "Zeekr Uruguay — sitio oficial", url: "https://www.zeekrlife.com/es-uy/", date: CHECKED, type: "Web oficial de la marca/importador" },
@@ -1827,6 +1832,30 @@ window.EVDATA = (function () {
     ]
   };
 
+  /* Movimientos de precio con fuente. Solo entran cambios con precio anterior y posterior informados por prensa, con fecha.
+     «conf»: cuántas fuentes independientes coinciden. Un cambio de una sola fuente se marca como tal; lo que otra fuente contradice va en «note».
+     Los precios son de lista en dólares, sin promociones ni gastos de gestoría. */
+  const priceMoves = [
+    { id: "byd-seagull", name: "BYD Seagull GL (EV300)", from: 19990, to: 18990, cur: "USD", date: "2026-07-23", period: "post-tesla", conf: "3 fuentes coinciden", srcs: ["ambitoByd", "mvdByd", "teslaPrecio"], note: "Tarifario «línea 2027». El Observador informa el ajuste de US$ 1.000 sin dar cifras." },
+    { id: null, name: "BYD Seagull GS (EV380)", from: 21990, to: 20990, cur: "USD", date: "2026-07-23", period: "post-tesla", conf: "2 fuentes coinciden", srcs: ["ambitoByd", "mvdByd"], note: "Tarifario «línea 2027»." },
+    { id: "byd-seagull-surf", name: "BYD Seagull Surf", from: 23990, to: 22990, cur: "USD", date: "2026-07-23", period: "post-tesla", conf: "2 fuentes coinciden", srcs: ["ambitoByd", "mvdByd"], note: "Tarifario «línea 2027»." },
+    { id: "byd-yuan-plus-lux", name: "BYD Yuan Plus Luxury (EV480)", from: 36990, to: 31990, cur: "USD", date: "2026-07-23", period: "post-tesla", conf: "3 fuentes coinciden", srcs: ["ambitoByd", "mvdByd", "electricosUyLista"], note: "Una de las dos mayores rebajas del tarifario." },
+    { id: "byd-song-plus-ev", name: "BYD Song Plus EV (GS)", from: 46990, to: 41990, cur: "USD", date: "2026-07-23", period: "post-tesla", conf: "3 fuentes coinciden", srcs: ["ambitoByd", "mvdByd", "electricosUyLista"], note: "Una de las dos mayores rebajas del tarifario." },
+    { id: null, name: "BYD Yuan Pro EV GSX", from: 30990, to: 29990, cur: "USD", date: "2026-07-23", period: "post-tesla", conf: "1 fuente", srcs: ["ambitoByd"], note: "Montevideo Portal menciona una rebaja del Yuan Pro GSi Plus sin dar cifras. No se pudo confirmar el monto con una segunda fuente." },
+    { id: "byd-yuan-pro-ev", name: "BYD Yuan Pro", from: 30990, to: 27990, cur: "USD", date: "2025-07-31", dateNote: "«en los últimos meses» antes de esa fecha", period: "2025", conf: "2 fuentes coinciden", srcs: ["forbes2025", "teslaPrecio"], note: "El Observador (23/7/2026) cuenta que hace un año BYD recortó US$ 3.000 el Yuan Pro." },
+    { id: "byd-seagull", name: "BYD Seagull", from: 21990, to: 19990, cur: "USD", date: "2025-07-31", dateNote: "«en los últimos meses» antes de esa fecha", period: "2025", conf: "2 fuentes coinciden", srcs: ["forbes2025", "teslaPrecio"], note: "El Observador (23/7/2026) cuenta que hace un año BYD recortó US$ 2.000 el Seagull." },
+    { id: null, name: "Omoda E5 Comfort (modelo 2025)", from: 33990, to: 31990, cur: "USD", date: "2025-07-31", dateNote: "precio anterior de marzo de 2025", period: "2025", conf: "1 fuente", srcs: ["forbes2025"], note: "Es el modelo anterior al restyling; el E5 renovado (2027) se vende desde US$ 26.990 pero tiene otra batería: no es una comparación equivalente." },
+    { id: "volvo-ex30-ultra", name: "Volvo EX30 Ultra", from: 59900, to: 54900, cur: "USD", date: null, dateNote: "fecha no informada (lista a septiembre de 2026)", period: "otro", conf: "1 fuente", srcs: ["electricosUyLista"], note: "Coincide con el precio actual del catálogo." }
+  ];
+  const marketTimeline = [
+    { date: "2025-07-31", title: "«Guerra de precios sin precedentes»", text: "BYD recortó el Yuan Pro (−US$ 3.000) y el Seagull (−US$ 2.000) y otras marcas ajustaron. Santa Rosa decía que los precios habían llegado a una meseta.", srcs: ["forbes2025", "teslaPrecio"] },
+    { date: "2026-06", title: "Omoda renueva el E5", text: "El E5 restyling (modelo 2027) se ofrece desde US$ 26.990.", srcs: ["autoblogE5Resty"] },
+    { date: "2026-07-01", title: "Se anuncia el IMESI para eléctricos", text: "Previsto desde el 1/1/2027: 0 % hasta US$ 19.000 de valor de importación, 5 % de 19.001 a 27.000 y 9 % por encima. Sin norma oficial verificada.", srcs: ["imesiObservador", "imesiAutoblog"] },
+    { date: "2026-07-17", title: "Tesla llega a Uruguay", text: "Model 3 desde US$ 32.990 y Model Y desde US$ 36.490. Más de 200 unidades en 24 horas, según la prensa.", srcs: ["teslaInfobae", "montevideoTesla"] },
+    { date: "2026-07-23", title: "BYD publica su tarifario «línea 2027»", text: "Baja de US$ 1.000 a 5.000 en cinco versiones. Grupo Santa Rosa (GWM, Leapmotor, Omoda, JMC, Zeekr) dijo estar «analizando la situación» y no prever una reacción inmediata.", srcs: ["ambitoByd", "mvdByd", "teslaPrecio"] },
+    { date: "2026-10-05", title: "El MEF analiza postergar el IMESI", text: "Prensa informa que se estudia una breve postergación; sin anuncio oficial.", srcs: ["imesiPostergar"] }
+  ];
+
   const market = {
     ev2025: 14387, growth2025: "147 %", share2026ZeroKm: "36,7 %", shareNote: "Cifras ACAU citadas por prensa (ene–ago 2026).",
     source: sources.acau
@@ -2003,5 +2032,5 @@ window.EVDATA = (function () {
     });
   });
 
-  return { checked: CHECKED, typeLabels, origins, sources, vehicles, pendingBrands, benefits, financing, market, sales, tradeIn };
+  return { checked: CHECKED, typeLabels, origins, sources, vehicles, pendingBrands, benefits, financing, market, sales, tradeIn, priceMoves, marketTimeline };
 })();
