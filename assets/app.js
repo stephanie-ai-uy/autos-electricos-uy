@@ -84,6 +84,14 @@ window.EV = (function () {
     window.googleTranslateElementInit = () => new google.translate.TranslateElement({ pageLanguage: "es", includedLanguages: "en,fr", autoDisplay: false }, "gt_el");
     const sc = document.createElement("script"); sc.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"; sc.async = true; document.head.appendChild(sc);
   }
+  /* Cambios de precio con fuente (EVDATA.priceMoves): una sola fuente de verdad para catálogo, ficha, mercado y ranking. */
+  const movesOf = id => (D.priceMoves || []).filter(m => m.id === id).sort((x, y) => (y.date || "").localeCompare(x.date || ""));
+  const fmtD = d => d ? new Date(d + (d.length === 7 ? "-01" : "") + "T12:00:00").toLocaleDateString("es-UY", d.length === 7 ? { month: "long", year: "numeric" } : { day: "numeric", month: "short", year: "numeric" }) : "fecha no informada";
+  function moveBadge(v) {
+    const m = movesOf(v.id)[0]; if (!m || !m.date) return "";
+    const d = m.to - m.from, cur = m.cur === "UYU" ? "$ " : "US$ ";
+    return `<div class="small" style="margin-top:4px"><span class="badge ${d < 0 ? "ok" : "warn"}" title="Fuente y detalle en la página Mercado">${d < 0 ? "Bajó" : "Subió"} ${cur}${fmtNum(Math.abs(d), 0)}</span> <span class="muted">${fmtD(m.date)} · <a href="mercado.html">ver cambios</a></span></div>`;
+  }
   const CAR='<div class="car" aria-hidden="true"><svg viewBox="0 0 220 70" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 48h14M196 48h14M30 48c-8 0-12-3-12-9 0-8 6-12 16-14l28-6c8-6 18-12 34-12h28c18 0 30 8 40 18l16 5c8 2 12 6 12 12 0 4-3 6-8 6h-6"/><path d="M62 24h38M118 24h34M100 14v12M118 14v12"/><circle cx="56" cy="50" r="10"/><circle cx="164" cy="50" r="10"/><path d="M92 48h24"/></svg></div>';
   const typeLabel = t => (D.typeLabels||{})[t] || t;
   const typeBadge = t => `<span class="badge ${t==="BEV"?"ok":t==="PHEV"?"":"warn"}">${t}</span>`;
@@ -122,5 +130,5 @@ window.EV = (function () {
       : "Imagen ilustrativa generada con IA; el vehículo real puede diferir.";
     return `<figure class="thumb" style="margin:0 0 8px"><img src="${m.src}" alt="${esc(v.brand + " " + v.model)}" loading="lazy" decoding="async" style="width:100%;${big ? "max-width:560px;" : "aspect-ratio:16/10;object-fit:cover;"}border-radius:10px;background:#1a1f27"><figcaption class="small muted">${cap}</figcaption></figure>`;
   }
-  return { D, CAR, thumb, typeLabel, typeBadge, originOf, originBadge, esc, NI, num, fmtNum, fmtMoney, statusBadge, priceHtml, priceStale, getVehicles, byId, daysSince };
+  return { moveBadge, movesOf, fmtD, D, CAR, thumb, typeLabel, typeBadge, originOf, originBadge, esc, NI, num, fmtNum, fmtMoney, statusBadge, priceHtml, priceStale, getVehicles, byId, daysSince };
 })();
