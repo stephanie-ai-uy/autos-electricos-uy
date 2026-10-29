@@ -3,12 +3,12 @@
 <title>Mercado de eléctricos en Uruguay: cambios de precio, competencia y garantías | Autos Eléctricos UY</title>
 <meta name="description" content="Qué autos eléctricos cambiaron de precio en Uruguay, cuánto y cuándo; cómo se reparte la competencia por precio y batería y qué marcas informan más garantías. Solo cambios con fuente y fecha.">
 <meta property="og:type" content="website"><meta property="og:locale" content="es_UY"><meta property="og:site_name" content="Autos Eléctricos UY"><meta property="og:title" content="Mercado de eléctricos en Uruguay: cambios de precio y competencia"><meta property="og:description" content="Qué eléctricos cambiaron de precio, cuánto y cuándo, con fuente y fecha de cada cambio."><meta property="og:url" content="https://stephanie-ai-uy.github.io/autos-electricos-uy/mercado.html"><meta property="og:image" content="https://stephanie-ai-uy.github.io/autos-electricos-uy/assets/og.jpg"><meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="assets/style.css?v=18">
+<link rel="stylesheet" href="assets/style.css?v=19">
 <style>
 .kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin:14px 0}
-.kpi .big{font-family:var(--head);font-size:1.9rem;font-weight:800;line-height:1.1}
+.kpi{border-top:2px solid rgba(255,159,67,.6)}.kpi .big{font-family:var(--head);font-size:1.9rem;font-weight:800;line-height:1.1}
 .tl{border-left:2px solid var(--line2);margin:14px 0 0 8px;padding-left:18px}
-.tl .it{position:relative;margin:0 0 18px}.tl .it:before{content:"";position:absolute;left:-26px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--brand);box-shadow:0 0 10px var(--brand)}
+.tl .it{position:relative;margin:0 0 18px}.tl .it:before{content:"";position:absolute;left:-26px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px rgba(255,159,67,.7)}
 .tl .it.tesla:before{background:var(--violet);box-shadow:0 0 10px var(--violet)}
 .neg{color:var(--ok);font-weight:700}.pos{color:var(--bad);font-weight:700}
 .chips button{margin:0 6px 6px 0}
@@ -94,8 +94,26 @@ document.getElementById("lg").innerHTML=`<span><i style="background:#9b7bff"></i
  let g="";for(let p=0;p<=ym;p+=ym/5)g+=`<line x1="${L}" x2="${W-R}" y1="${Y(p)}" y2="${Y(p)}" stroke="#222b37"/><text x="${L-8}" y="${Y(p)+4}" text-anchor="end">${EV.fmtNum(p/1000,0)}k</text>`;
  for(let k=0;k<=xm;k+=20)g+=`<line y1="${T}" y2="${H-B}" x1="${X(k)}" x2="${X(k)}" stroke="#222b37"/><text x="${X(k)}" y="${H-B+16}" text-anchor="middle">${k}</text>`;
  g+=`<text x="${(W+L)/2}" y="${H-6}" text-anchor="middle">Batería (kWh)</text><text transform="translate(12 ${(H-B)/2}) rotate(-90)" text-anchor="middle">Precio de lista (US$)</text>`;
- const pts=bev.slice().sort((a,b)=>(a.brand==="Tesla")-(b.brand==="Tesla")).map(v=>`<circle cx="${X(v.batteryKwh)}" cy="${Y(v.price.list)}" r="${v.brand==="Tesla"?7:5}" fill="${col(v)}" fill-opacity=".85" stroke="#07090c"><title>${e(v.brand+" "+v.model+" "+(v.version||""))} · ${fm(v.price.list)} · ${v.batteryKwh} kWh · ${fm(v.price.list/v.batteryKwh)}/kWh</title></circle>`).join("");
- document.getElementById("scat").innerHTML=`<svg class="sc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Precio contra batería de los eléctricos con dato">${g}${pts}</svg><p class="small muted">Pasá el mouse o tocá un punto para ver el modelo. Se excluyen los de más de US$ 100.000.</p>`}
+ const ord=bev.slice().sort((a,b)=>(a.brand==="Tesla")-(b.brand==="Tesla"));
+ const pts=ord.map((v,i)=>`<g class="pt" data-i="${i}" tabindex="0" role="button" aria-label="${e(v.brand+" "+v.model+" "+(v.version||""))}, ${fm(v.price.list)}, ${v.batteryKwh} kWh" style="cursor:pointer"><circle cx="${X(v.batteryKwh)}" cy="${Y(v.price.list)}" r="12" fill="transparent"/><circle class="dot" cx="${X(v.batteryKwh)}" cy="${Y(v.price.list)}" r="${v.brand==="Tesla"?7:5}" fill="${col(v)}" fill-opacity=".85" stroke="#07090c"/></g>`).join("");
+ window.__ord=ord;
+ document.getElementById("scat").innerHTML=`<svg class="sc" id="svgsc" viewBox="0 0 ${W} ${H}" role="group" aria-label="Precio contra batería de los eléctricos con dato">${g}${pts}</svg><div id="pick" class="card small" style="margin-top:10px" aria-live="polite">Pasá el mouse por un punto, o tocalo, para ver el modelo, su precio y su batería.</div><p class="small muted">Se excluyen los de más de US$ 100.000.</p>`;
+ tooltips()}
+
+function tooltips(){
+  const svg=document.getElementById("svgsc"),ord=window.__ord;
+  const tip=document.createElement("div");tip.style.cssText="position:fixed;z-index:60;pointer-events:none;background:#11161d;border:1px solid #2e3947;border-radius:10px;padding:8px 11px;font-size:.82rem;line-height:1.35;color:#f2f5f9;max-width:270px;box-shadow:0 12px 30px -10px #000;display:none";document.body.appendChild(tip);
+  const info=v=>`<strong>${e(v.brand+" "+v.model+" "+(v.version||""))}</strong><br>${fm(v.price.list)} · ${v.batteryKwh} kWh · ${fm(v.price.list/v.batteryKwh)}/kWh`;
+  const idx=t=>{const g=t.closest&&t.closest("[data-i]");return g?+g.dataset.i:-1};
+  const place=(x,y)=>{tip.style.left=Math.min(x+14,innerWidth-tip.offsetWidth-8)+"px";tip.style.top=Math.max(8,y-tip.offsetHeight-12)+"px"};
+  const show=(i,x,y)=>{tip.innerHTML=info(ord[i]);tip.style.display="block";place(x,y)};
+  svg.addEventListener("pointermove",ev=>{if(ev.pointerType==="touch")return;const i=idx(ev.target);if(i<0){tip.style.display="none";return}show(i,ev.clientX,ev.clientY)});
+  svg.addEventListener("pointerleave",()=>{tip.style.display="none"});
+  const pick=i=>{const v=ord[i];document.getElementById("pick").innerHTML=info(v)+` · <a href="ficha.html?id=${encodeURIComponent(v.id)}">Ver ficha</a>`;svg.querySelectorAll(".dot").forEach((d,k)=>{d.setAttribute("stroke",k===i?"#ff9f43":"#07090c");d.setAttribute("stroke-width",k===i?3:1)})};
+  svg.addEventListener("click",ev=>{const i=idx(ev.target);if(i>=0){pick(i);if(ev.pointerType==="touch"||ev.detail===0){const b=ev.target.getBoundingClientRect();show(i,b.left+b.width/2,b.top);setTimeout(()=>tip.style.display="none",2500)}}});
+  svg.addEventListener("focusin",ev=>{const i=idx(ev.target);if(i>=0){pick(i);const b=ev.target.getBoundingClientRect();show(i,b.left+b.width/2,b.top)}});
+  svg.addEventListener("focusout",()=>{tip.style.display="none"});
+}
 /* --- cerca de Tesla --- */
 document.getElementById("near").innerHTML=["tesla-m3-sr","tesla-my-prwd"].map(id=>{const t=EV.byId(id),p=t.price.list,list=bev.filter(v=>v.id!==id&&v.brand!=="Tesla"&&Math.abs(v.price.list-p)/p<=.15).sort((a,b)=>b.batteryKwh-a.batteryKwh);
  return `<div class="card"><strong>${e(t.brand+" "+t.model+" "+t.version)}</strong><div class="muted small">${fm(p)} · ${t.batteryKwh} kWh · ${fm(p/t.batteryKwh)}/kWh</div><ul class="small" style="margin:8px 0 0 18px;padding:0">${list.slice(0,8).map(v=>`<li><a href="ficha.html?id=${encodeURIComponent(v.id)}">${e(v.brand+" "+v.model+" "+(v.version||""))}</a> — ${fm(v.price.list)} · ${v.batteryKwh} kWh · ${fm(v.price.list/v.batteryKwh)}/kWh</li>`).join("")||"<li>Sin datos comparables.</li>"}</ul>${list.length>8?`<div class="small muted">y ${list.length-8} más</div>`:""}</div>`}).join("");
