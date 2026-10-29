@@ -32,5 +32,5 @@
 <details><summary>¿Los precios de esta web son definitivos?</summary><p>No. Son precios de lista según fuentes públicas con fecha; el vendedor puede haberlos cambiado. Siempre confirmá por escrito.</p></details>
 <details><summary>¿Puedo cargar el auto en casa?</summary><p>En general sí con una toma adecuada o cargador dedicado, pero requiere revisar la instalación eléctrica. Consultá a un profesional y a UTE.</p></details>
 </div></main>
-<script src="assets/data.js?v=12"></script><script src="assets/app.js?v=18"></script>
+<script src="assets/data.js?v=12"></script><script src="assets/app.js?v=19"></script>
 <script>document.querySelector("#gt tbody").innerHTML=EV.getVehicles().map(v=>`<tr><td>${EV.esc(v.brand)} ${EV.esc(v.model)} ${EV.esc(v.version)}</td><td>${EV.esc(v.warranty.vehicle||EV.NI)}</td><td>${EV.esc(v.warranty.battery||EV.NI)}</td><td class="small">${EV.esc(v.warranty.note||"")} <a href="${EV.esc(v.source.url)}" rel="noopener">fuente</a></td></tr>`).join("");</script></body></html>

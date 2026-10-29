@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Instaladores de cargadores eléctricos en Uruguay | Autos Eléctricos UY</title>
+<meta name="description" content="Directorio informativo de electricistas e instaladores que informan hacer instalaciones de cargadores domiciliarios en Uruguay. Buscá por departamento. Sin garantía ni recomendación.">
+<link rel="stylesheet" href="assets/style.css?v=19"></head>
+<body data-page="ins"><main id="main"><div class="wrap">
+<h1>Instaladores de <span class="grad">cargadores</span> en tu zona</h1>
+<p class="lead">Directorio informativo de electricistas e instaladores que nos pidieron aparecer aquí para instalar el cargador de tu casa. Buscá por departamento y contactalos directamente.</p>
+<div class="notice warn"><strong>Importante.</strong> Esta lista es solo informativa: <strong>no recomendamos ni garantizamos a ningún instalador</strong>, no intervenimos en precios, trabajos ni pagos y no somos parte de lo que acuerdes. Los datos los informa cada instalador. Antes de contratar, pedí el número de registro de instalador autorizado y comprobalo en la fuente oficial (UTE), y pedí presupuesto por escrito. Podés comparar con 2 o 3.</div>
+<div class="filters card" style="margin:14px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:end">
+<div><label for="fd">Departamento</label><select id="fd"><option value="">Todos</option></select></div>
+<div><label for="fs">Tipo de trabajo</label><select id="fs"><option value="">Todos</option></select></div>
+</div>
+<div id="off" class="notice bad" hidden>El directorio no está disponible en este momento.</div>
+<p id="count" class="small muted" aria-live="polite"></p>
+<div id="list" class="grid"></div>
+
+<h2 id="alta">¿Sos instalador eléctrico? Sumate al directorio</h2>
+<p>Es <strong>gratis</strong>. Revisamos cada alta antes de publicarla. Si querés que aparezca, completá el formulario; podemos pedirte más datos por email o teléfono. Más adelante podrían existir opciones de visibilidad destacada, que se acordarían aparte y siempre con tu aceptación.</p>
+<form class="card" id="f" novalidate style="max-width:640px">
+<label for="nm">Nombre o empresa *</label><input id="nm" maxlength="100" required>
+<label for="kd">Sos *</label><select id="kd"><option value="persona">Persona (electricista independiente)</option><option value="empresa">Empresa</option></select>
+<label for="lic">Número de registro de instalador autorizado *</label><input id="lic" maxlength="60" required placeholder="Tal como figura en tu habilitación">
+<fieldset style="border:0;padding:0;margin:12px 0 0"><legend style="font-weight:600">Departamentos donde trabajás * <span class="small muted">(elegí uno o más)</span></legend><div id="deps" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px 12px"></div></fieldset>
+<label for="loc">Localidades o zonas (opcional)</label><input id="loc" maxlength="120" placeholder="Ej.: Montevideo y Ciudad de la Costa">
+<fieldset style="border:0;padding:0;margin:12px 0 0"><legend style="font-weight:600">Qué instalás</legend><div id="svs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:4px 12px"></div></fieldset>
+<label for="ph">Teléfono o WhatsApp</label><input id="ph" maxlength="30" autocomplete="tel" placeholder="Ej.: 099 123 456">
+<label for="em">Email</label><input id="em" maxlength="120" type="email" autocomplete="email">
+<p class="small muted">Hace falta al menos uno de los dos.</p>
+<label for="ws">Sitio web o red social (opcional)</label><input id="ws" maxlength="200" placeholder="https://…">
+<label for="ds">Breve descripción (opcional, máx. 500 caracteres)</label><textarea id="ds" maxlength="500" style="min-height:90px;font:inherit"></textarea>
+<div style="position:absolute;left:-9999px" aria-hidden="true"><label>No completar<input id="hp" tabindex="-1" autocomplete="off"></label></div>
+<label style="font-weight:400;margin-top:14px"><input type="checkbox" id="consent" style="width:auto"> <span id="ctext"></span></label>
+<p class="small muted">Publicaremos solo los datos que cargues acá. Podés pedir que se modifiquen o se borren escribiendo a <a href="mailto:stephanie.inteligenciart@gmail.com" data-ev="email_click">stephanie.inteligenciart@gmail.com</a>. No pedimos cédula ni datos bancarios.</p>
+<p><button class="btn" id="go" type="submit">Enviar mi alta</button></p><div id="msgout" aria-live="polite"></div></form>
+</div></main>
+<script>document.addEventListener("click",ev=>{const a=ev.target.closest("[data-ev]");if(a&&window.EVTRACK)EVTRACK(a.dataset.ev)});</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
+<script src="assets/config.js"></script><script src="assets/data.js?v=12"></script><script src="assets/app.js?v=19"></script>
+<script>
+const $=id=>document.getElementById(id), e=EV.esc, C=window.EVCONFIG||{};
+const DEPS=["Artigas","Canelones","Cerro Largo","Colonia","Durazno","Flores","Florida","Lavalleja","Maldonado","Montevideo","Paysandú","Río Negro","Rivera","Rocha","Salto","San José","Soriano","Tacuarembó","Treinta y Tres"];
+const SVS=["Cargador domiciliario (casa)","Edificios y condominios","Empresas y flotas","Cocheras y estacionamientos","Ajuste de potencia contratada","Instalación solar"];
+const CT="Autorizo a Autos Eléctricos UY a publicar en este directorio los datos que cargué (nombre, zona, registro informado, contacto y descripción) para que personas interesadas me contacten. Entiendo que es un directorio informativo, sin garantía ni recomendación, y que puedo pedir que se modifique o se borre.";
+$("ctext").textContent=CT;
+$("fd").insertAdjacentHTML("beforeend",DEPS.map(d=>`<option>${e(d)}</option>`).join(""));
+$("fs").insertAdjacentHTML("beforeend",SVS.map(d=>`<option>${e(d)}</option>`).join(""));
+$("deps").innerHTML=DEPS.map(d=>`<label style="font-weight:400"><input type="checkbox" name="dep" value="${e(d)}" style="width:auto"> ${e(d)}</label>`).join("");
+$("svs").innerHTML=SVS.map(d=>`<label style="font-weight:400"><input type="checkbox" name="sv" value="${e(d)}" style="width:auto"> ${e(d)}</label>`).join("");
+const sb=(C.SUPABASE_URL&&C.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY):null;
+let ALL=[];
+const wa=p=>{const d=String(p||"").replace(/\D/g,"");return d.length>=8?(d.startsWith("598")?d:"598"+d.replace(/^0/,"")):null};
+function render(){const d=$("fd").value,s=$("fs").value;
+  const r=ALL.filter(x=>(!d||x.departments.includes(d))&&(!s||x.services.includes(s)));
+  $("count").textContent=ALL.length?`${r.length} de ${ALL.length} instaladores${d?" en "+d:""}.`:"";
+  $("list").innerHTML=r.map(x=>{const w=wa(x.phone);return `<div class="card"><h3 style="margin:0 0 4px">${e(x.name)} <span class="badge">${x.kind==="empresa"?"Empresa":"Independiente"}</span></h3>
+<div class="small muted">${e(x.departments.join(", "))}${x.locality?" · "+e(x.locality):""}</div>
+${x.services.length?`<p class="small" style="margin:8px 0">${e(x.services.join(" · "))}</p>`:""}
+${x.description?`<p class="small">${e(x.description)}</p>`:""}
+<p class="small muted" style="margin:6px 0">Registro informado: <strong>${e(x.license_no||"no informado")}</strong>. ${x.verified_on?`Verificado en fuente oficial el ${e(x.verified_on)}.`:"Aún no verificado por este sitio: comprobalo vos."}</p>
+<p style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 0">${x.phone?`<a class="btn sec" href="tel:${e(x.phone.replace(/[^\d+]/g,""))}" data-ev="installer_call">Llamar</a>`:""}${w?`<a class="btn sec" target="_blank" rel="noopener" href="https://wa.me/${w}" data-ev="installer_wa">WhatsApp</a>`:""}${x.email?`<a class="btn sec" href="mailto:${e(x.email)}" data-ev="installer_mail">Email</a>`:""}${x.website&&/^https?:\/\//.test(x.website)?`<a class="btn sec" target="_blank" rel="noopener nofollow" href="${e(x.website)}" data-ev="installer_web">Sitio</a>`:""}</p></div>`}).join("")||`<div class="card">${ALL.length?"No hay instaladores cargados para ese filtro todavía.":"Todavía no hay instaladores publicados. Si sos instalador, sé el primero en sumarte más abajo."}</div>`}
+$("fd").onchange=$("fs").onchange=()=>{render();window.EVTRACK&&EVTRACK("installer_filter",$("fd").value||"todos")};
+if(!sb){$("off").hidden=false;$("go").disabled=true;render()}else sb.from("installers").select("*").eq("status","approved").order("name").then(({data,error})=>{if(error)$("off").hidden=false;ALL=data||[];render()});
+let last=0;
+$("f").addEventListener("submit",async ev=>{ev.preventDefault();const out=$("msgout");
+  if($("hp").value)return;
+  if(Date.now()-last<20000){out.textContent="Esperá unos segundos antes de reenviar.";return}
+  const g=n=>[...document.querySelectorAll(`input[name=${n}]:checked`)].map(i=>i.value);
+  const name=$("nm").value.trim(),lic=$("lic").value.trim(),ph=$("ph").value.trim(),em=$("em").value.trim(),ws=$("ws").value.trim(),deps=g("dep");
+  if(name.length<2){out.textContent="Escribí tu nombre o el de la empresa.";return}
+  if(lic.length<2){out.textContent="Indicá tu número de registro de instalador autorizado.";return}
+  if(!deps.length){out.textContent="Elegí al menos un departamento.";return}
+  if(!ph&&!em){out.textContent="Dejá un teléfono o un email para que te contacten.";return}
+  if(ph&&!/^[+\d][\d\s()-]{6,}$/.test(ph)){out.textContent="El teléfono no parece válido.";return}
+  if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){out.textContent="El email no parece válido.";return}
+  if(ws&&!/^https?:\/\//i.test(ws)){out.textContent="El sitio web debe empezar con http:// o https://";return}
+  if(!$("consent").checked){out.textContent="Necesitamos tu autorización para publicar tus datos.";return}
+  $("go").disabled=true;last=Date.now();window.EVTRACK&&EVTRACK("installer_submit");
+  const {error}=await sb.from("installers").insert({name,kind:$("kd").value,departments:deps,locality:$("loc").value.trim()||null,license_no:lic,services:g("sv"),phone:ph||null,email:em||null,website:ws||null,description:$("ds").value.trim()||null,consent_publish:true,consent_text:CT});
+  $("go").disabled=false;
+  out.innerHTML=error?`<div class="notice bad">No se pudo enviar. Probá más tarde o escribinos por email.</div>`:`<div class="notice info"><strong>¡Gracias!</strong> Recibimos tu alta. La revisamos y, si todo está bien, aparecerá en el directorio.</div>`;
+  if(!error)$("f").reset();});
+</script></body></html>
