@@ -31,8 +31,12 @@
 <div class="notice info">«Hasta 100 % financiable» en un aviso no significa aprobación automática del 100 % para cualquier solicitante. Condiciones y tasas dependen de cada perfil.</div>
 <p class="small muted">Incluimos solo entidades con un préstamo específico para comprar vehículos. No figuran el BROU (solo préstamos al consumo generales) ni HSBC (no hay oferta vigente confirmada). ¿Querés vender tu usado para comprar? Mirá <a href="permuta.html">quién toma tu usado como parte de pago</a>.</p>
 <div class="tablewrap"><table><thead><tr><th>Entidad</th><th>Producto y condiciones publicadas</th><th>Estado</th><th>Fuente y enlaces</th></tr></thead><tbody id="ent"></tbody></table></div>
+<h2 id="propios">Créditos propios de automotoras y financieras</h2>
+<div class="notice warn"><strong>Lo que sabemos y lo que no.</strong> Estas casas publican financiación en el propio local, pero <strong>muy pocas aclaran en su web las tasas, los plazos o los requisitos</strong>. Donde dice «No confirmado», la fuente no explica si el crédito es de la casa o de un banco. En general el financiamiento directo de la automotora suele costar más que un préstamo bancario (<a href="https://oliveraautomotores.com/blogs/noticias/financiamiento-de-vehiculos-en-uruguay" rel="noopener">guía de una automotora uruguaya</a>, sin fecha). Pedí siempre el <strong>costo financiero total por escrito</strong> y compará con los bancos de arriba. Información relevada el 29/10/2026; no es una lista completa ni una recomendación.</div>
+<div class="tablewrap"><table><thead><tr><th>Casa</th><th>¿Crédito propio?</th><th>Condiciones publicadas</th><th>Eléctricos e híbridos</th><th>Fuente</th></tr></thead><tbody id="prop"></tbody></table></div>
+<p class="small muted">También existen sitios que intermedian con automotoras, como <a href="https://autoencuotas.com/byd-en-uruguay-2026-modelos-precios-y-como-comprarlo-en-cuotas/" rel="noopener">AutoEnCuotas</a>, que dice conectar con automotoras de «financiación directa, sin banco ni garante» con cuotas fijas en dólares; es material comercial y no pudimos verificar las condiciones. Algunas automotoras de otros departamentos aparecen en redes sociales o clasificados con «financiación hasta 100 %», sin datos verificables, por lo que no las incluimos. Si tu automotora ofrece crédito propio y quiere figurar, escribinos desde <a href="contacto.html">Sugerencias</a>.</p>
 </div></main>
-<script src="assets/data.js?v=12"></script><script src="assets/finance.js?v=4"></script><script src="assets/app.js?v=19"></script>
+<script src="assets/data.js?v=13"></script><script src="assets/finance.js?v=4"></script><script src="assets/app.js?v=19"></script>
 <script>
 const $=id=>document.getElementById(id), e=EV.esc;
 $("ent").innerHTML = EV.D.financing.map(f=>{
@@ -42,6 +46,7 @@ $("ent").innerHTML = EV.D.financing.map(f=>{
   return `<tr><td><strong>${e(f.entity)}</strong></td><td>${cond}</td>
 <td><span class="badge ${ok?"ok":pend?"warn":"bad"}">${e(f.status)}</span></td>
 <td>${f.source?`<a href="${e(f.source.url)}" rel="noopener">${e(f.source.name)}</a><br><span class="small muted">${e(f.source.date)}</span><br>`:""}${links||"—"}</td></tr>`;}).join("");
+$("prop").innerHTML=EV.D.dealerFinancing.map(d=>`<tr><td><strong>${e(d.entity)}</strong><br><span class="small muted">${e(d.kind)} · ${e(d.place)}</span></td><td>${e(d.own)}</td><td class="small">${e(d.terms)}</td><td class="small">${e(d.ev)}</td><td class="small"><a href="${e(d.source.url)}" rel="noopener" target="_blank">${e(d.source.name)}</a><br><span class="muted">Consultado: ${e(d.checked)}. ${e(d.note)}</span></td></tr>`).join("");
 // Condiciones publicadas que se pueden cargar en el simulador (solo lo que la entidad publica; la tasa real depende del perfil).
 const PRESETS=[
  {id:"bbva-usd",label:"BBVA · autos eléctricos 0 km · USD 5,5 % TEA · hasta 72 meses",cur:"USD",rate:5.5,rt:"TEA",months:72,note:"BBVA publica 5,5 % TEA en dólares, hasta 100 % del valor del 0 km y hasta 72 meses (web oficial, 22/10/2026). Tu tasa final depende de la aprobación crediticia."},

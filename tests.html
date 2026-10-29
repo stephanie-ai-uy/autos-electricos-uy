@@ -2,7 +2,7 @@
 <html lang="es"><head><meta charset="utf-8"><title>Pruebas</title><meta name="robots" content="noindex">
 <style>body{font:15px system-ui;margin:20px}.ok{color:#146c3a}.ko{color:#b00020;font-weight:700}</style></head>
 <body><h1>Pruebas automáticas (abrir en el navegador)</h1><div id="o"></div><p id="sum"></p>
-<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=11"></script><script src="assets/app.js?v=18"></script>
+<script src="assets/finance.js?v=4"></script><script src="assets/data.js?v=13"></script><script src="assets/app.js?v=19"></script>
 <script>
 let pass=0,fail=0;const o=document.getElementById("o");
 function t(name,fn){try{const r=fn();if(r===true||r===undefined){pass++;o.innerHTML+=`<div class=ok>✔ ${name}</div>`}else throw new Error(r)}catch(e){fail++;o.innerHTML+=`<div class=ko>✘ ${name}: ${e.message}</div>`}}
@@ -39,5 +39,6 @@ t("catálogo: sin precio inventado (null cuando verification=sin dato)",()=>V.ev
 t("catálogo: autonomía sin ciclo no se asume (rangeCycle null permitido)",()=>V.every(v=>v.rangeKm==null||v.rangeCycle===null||typeof v.rangeCycle==="string"));
 t("beneficios: estados válidos y fuente",()=>EVDATA.benefits.every(b=>["vigente","anunciado","vencido","pendiente"].includes(b.status)&&b.sources.length&&b.lastChecked));
 t("beneficios: ninguno 'vigente' sin fuente",()=>EVDATA.benefits.filter(b=>b.status==="vigente").every(b=>b.sources.length>0));
+t("financiación de automotoras: cada una con fuente, fecha y aclaración de si es propia",()=>{const d=EV.D.dealerFinancing;if(!d.length)return "vacío";const bad=d.filter(x=>!x.source||!x.source.url||!x.checked||!x.own||!x.terms);return bad.length?"incompleto: "+bad.map(x=>x.entity).join(", "):true});
 document.getElementById("sum").innerHTML=`<b>${pass} pasaron, ${fail} fallaron</b>`;document.title=fail?"FAIL":"PASS";
 </script></body></html>

@@ -17,5 +17,5 @@
 <div class="notice">Actualmente <strong>ninguna</strong> ficha está verificada con la web oficial del importador, ni ningún stock con un concesionario. Es la primera tarea pendiente (ver <code>docs/PENDIENTES.md</code>).</div>
 <h2>Fuentes usadas (consultadas el <span id="d"></span>)</h2><div class="tablewrap"><table><thead><tr><th>Fuente</th><th>Tipo</th><th>Fecha</th></tr></thead><tbody id="s"></tbody></table></div>
 </div></main>
-<script src="assets/data.js?v=12"></script><script src="assets/app.js?v=19"></script>
+<script src="assets/data.js?v=13"></script><script src="assets/app.js?v=19"></script>
 <script>document.getElementById("d").textContent=EV.D.checked;document.getElementById("s").innerHTML=Object.values(EV.D.sources).map(s=>`<tr><td><a href="${EV.esc(s.url)}" rel="noopener">${EV.esc(s.name)}</a></td><td>${EV.esc(s.type)}</td><td>${EV.esc(s.date)}</td></tr>`).join("");</script></body></html>
