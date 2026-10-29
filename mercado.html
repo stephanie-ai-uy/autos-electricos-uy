@@ -57,7 +57,7 @@ svg.sc text{fill:var(--muted);font:11px var(--font)}
 <p>Detalle, fuentes y fechas en <a href="beneficios.html">Beneficios</a>. Los beneficios son por categoría de vehículo, no por marca; lo que cambia entre marcas son las garantías y el precio.</p>
 <p class="small muted">Esta página es informativa: no recomienda comprar ni dejar de comprar un modelo. Antes de decidir, confirmá precio, versión y condiciones con el vendedor.</p>
 </div></main>
-<script src="assets/data.js?v=10"></script><script src="assets/app.js?v=17"></script>
+<script src="assets/data.js?v=11"></script><script src="assets/app.js?v=18"></script>
 <script>
 const D=EVDATA,e=EV.esc,V=D.vehicles,M=D.priceMoves,S=D.sources,fm=n=>"US$ "+EV.fmtNum(n,0);
 const fd=d=>d?new Date(d+(d.length===7?"-01":"")+"T12:00:00").toLocaleDateString("es-UY",d.length===7?{month:"long",year:"numeric"}:{day:"numeric",month:"short",year:"numeric"}):"s/f";
@@ -75,7 +75,7 @@ $k.innerHTML=`<div class="card kpi"><div class="muted small">Bajas confirmadas e
 let per="todos";
 function tm(){
   const rows=M.filter(m=>per==="todos"||m.period===per).sort((a,b)=>(b.date||"").localeCompare(a.date||"")||pct(a)-pct(b));
-  document.querySelector("#tm tbody").innerHTML=rows.map(m=>{const v=m.id?EV.byId(m.id):null,cur=v&&v.price&&v.price.list!=null?v.price.list:null,diff=cur!=null&&cur!==m.to?` <span class="small muted">(catálogo hoy: ${fm(cur)})</span>`:"";
+  document.querySelector("#tm tbody").innerHTML=rows.map(m=>{const v=m.id?EV.byId(m.id):null,cur=v&&v.price&&v.price.list!=null?v.price.list:null,later=M.some(x=>x!==m&&x.id&&x.id===m.id&&(x.date||"")>(m.date||"")),diff=later?` <span class="small muted">(después volvió a cambiar: ver 2026)</span>`:(cur!=null&&cur!==m.to?` <span class="small muted">(catálogo hoy: ${fm(cur)})</span>`:"");
     return `<tr><td><strong>${e(m.name)}</strong>${m.id?` <a class="small" href="ficha.html?id=${encodeURIComponent(m.id)}">ver ficha</a>`:""}<div class="small muted">${e(m.note||"")}</div></td><td>${fm(m.from)}</td><td>${fm(m.to)}${diff}</td><td>${cl(pct(m))}<div class="small muted">${fm(m.from-m.to)} menos</div></td><td>${fd(m.date)}${m.dateNote?`<div class="small muted">${e(m.dateNote)}</div>`:""}</td><td class="small">${srcLinks(m)}<div class="muted">${e(m.conf)}</div></td></tr>`}).join("")||'<tr><td colspan="6" class="muted">No hay cambios en este grupo.</td></tr>';
   document.querySelectorAll("#flt button").forEach(b=>b.classList.toggle("sec",b.dataset.p!==per));
 }

@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="assets/style.css?v=19"></head>
 <body data-page="cat"><main id="main"><div class="wrap" id="out"></div></main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
-<script src="assets/config.js"></script><script src="assets/images.js?v=2"></script><script src="assets/data.js?v=10"></script><script src="assets/app.js?v=17"></script>
+<script src="assets/config.js"></script><script src="assets/images.js?v=2"></script><script src="assets/data.js?v=11"></script><script src="assets/app.js?v=18"></script>
 <script>
 const id = new URLSearchParams(location.search).get("id"), v = EV.byId(id), e = EV.esc, ni = EV.NI;
 const out = document.getElementById("out");
@@ -33,6 +33,7 @@ ${row("Baúl", v.trunkL ? v.trunkL + " L (mínimo)" : null)}${row("Plazas", v.se
 ${row("Garantía del vehículo", v.warranty.vehicle)}${row("Garantía de batería", v.warranty.battery)}${row("Condiciones de garantía", v.warranty.note)}
 ${row("Observaciones", v.notes)}
 </tbody></table></div>
+${(()=>{const ms=EV.movesOf(v.id);return ms.length?`<h2>Cambios de precio registrados</h2><div class="tablewrap"><table><thead><tr><th>Fecha</th><th>Antes</th><th>Después</th><th>Fuentes</th></tr></thead><tbody>${ms.map(m=>`<tr><td>${e(EV.fmtD(m.date))}${m.dateNote?`<div class="small muted">${e(m.dateNote)}</div>`:""}</td><td>US$ ${EV.fmtNum(m.from,0)}</td><td>US$ ${EV.fmtNum(m.to,0)} <span class="small muted">(${m.to<m.from?"−":"+"}${EV.fmtNum(Math.abs(m.to-m.from)/m.from*100,1)} %)</span></td><td class="small">${m.srcs.map(k=>EV.D.sources[k]?`<a href="${e(EV.D.sources[k].url)}" rel="noopener">${e(EV.D.sources[k].name.split(" — ")[0])}</a>`:"").join(", ")}<div class="muted">${e(m.conf)}</div></td></tr>`).join("")}</tbody></table></div>`:""})()}
 <h2>Fuente</h2><p><strong>Precio:</strong> <a href="${e(v.source.url)}" rel="noopener">${e(v.source.name)}</a> — ${e(v.source.type)}, publicada ${e(v.source.date)}. Consultada el ${e(EV.D.checked)}.</p>
 ${v.specSource ? `<p><strong>Ficha técnica:</strong> <a href="${e(v.specSource.url)}" rel="noopener">${e(v.specSource.name)}</a> — ${e(v.specSource.type)}, ${e(v.specSource.date)}.${v.specNote ? " " + e(v.specNote) : ""}</p>` : `<p class="small muted">Aún no se halló una ficha técnica completa para esta versión.</p>`}
 <p class="small muted">Dato sin ficha oficial del importador: tratar como orientativo. Los vacíos se muestran como «No informado»; no se rellenan con estimaciones.</p>

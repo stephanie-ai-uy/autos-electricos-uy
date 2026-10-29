@@ -27,7 +27,7 @@
 <p class="small muted">Aparecen en prensa o en webs de importadores pero todavía no tienen ficha con datos verificados. No equivalen a disponibilidad confirmada.</p>
 <div id="pending" class="tablewrap"></div></section></div></div></main>
 <div class="tray" id="tray"><span id="trayTxt"></span><a class="btn" id="goCmp" href="comparador.html">Comparar</a><button class="btn sec" id="clr">Vaciar</button></div>
-<script src="assets/images.js?v=2"></script><script src="assets/data.js?v=10"></script><script src="assets/app.js?v=17"></script>
+<script src="assets/images.js?v=2"></script><script src="assets/data.js?v=11"></script><script src="assets/app.js?v=18"></script>
 <script>
 const $ = id => document.getElementById(id), V = EV.getVehicles(), TYPES = ["BEV","PHEV","HEV","REEV"];
 const qs = new URLSearchParams(location.search);
@@ -54,7 +54,7 @@ function card(v) {
   return `<article class="card vcard">${EV.thumb(v)}
 <div>${EV.typeBadge(v.type)} ${EV.statusBadge(v.status)} ${EV.originBadge(v.brand)} ${v.discrepancy ? '<span class="badge warn">Fuentes discrepan</span>' : ''}</div>
 <h3><a href="ficha.html?id=${v.id}">${EV.esc(v.brand)} ${EV.esc(v.model)}</a></h3><div class="muted small">${EV.esc(v.version || "")}</div>
-<div style="margin:8px 0">${EV.priceHtml(v)}</div>
+<div style="margin:8px 0">${EV.priceHtml(v)}${EV.moveBadge(v)}</div>
 <dl>${v.type === "BEV" ? `<dt>Batería</dt><dd>${v.batteryKwh != null ? EV.fmtNum(v.batteryKwh, 1) + " kWh" : EV.NI}</dd>
 <dt>Autonomía</dt><dd>${v.rangeKm != null ? v.rangeKm + " km (" + EV.esc(v.rangeCycle || "ciclo no informado") + ")" : EV.NI}</dd>` : `<dt>Autonomía eléctrica</dt><dd>${v.rangeKm != null ? v.rangeKm + " km" : EV.NI}</dd>`}
 ${v.type === "BEV" && v.batteryKwh && v.rangeKm ? `<dt>Consumo est.</dt><dd>${(v.batteryKwh / v.rangeKm * 100).toFixed(1).replace(".", ",")} kWh/100 km</dd>` : ""}
