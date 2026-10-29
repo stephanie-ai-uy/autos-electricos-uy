@@ -20,7 +20,7 @@
 <script>
 const $=id=>document.getElementById(id), e=EV.esc, C=window.EVCONFIG||{};
 const sb=(C.SUPABASE_URL&&C.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY):null;
-const TABS={stats:"Estadísticas",sales:"Ventas (guía CEE)",vehicles:"Vehículos",benefits:"Beneficios",financing_products:"Financiación",site_settings:"Ajustes",lead_requests:"Contactos",vehicle_reviews:"Opiniones",installers:"Instaladores",audit_logs:"Historial",export:"Exportar al sitio"};
+const TABS={stats:"Estadísticas",sales:"Ventas (guía CEE)",vehicles:"Vehículos",benefits:"Beneficios",financing_products:"Financiación",site_settings:"Ajustes",lead_requests:"Contactos",vehicle_reviews:"Opiniones",installers:"Instaladores",insurance_brokers:"Corredores de seguros",audit_logs:"Historial",export:"Exportar al sitio"};
 let tab="stats";
 if(!sb)$("off").hidden=false;else init();
 async function init(){const {data:{session}}=await sb.auth.getSession();session?await enter(session):($("login").hidden=false);}
@@ -111,7 +111,7 @@ async function leadsView(b){
 
 
 /* ===== Historial de cambios (audit_logs) en formato legible ===== */
-const TBL={vehicles:"Vehículos",benefits:"Beneficios",financing_products:"Financiación",site_settings:"Ajustes",lead_requests:"Contactos",vehicle_reviews:"Opiniones",installers:"Instaladores",sales:"Ventas",admin_users:"Administradoras"};
+const TBL={vehicles:"Vehículos",benefits:"Beneficios",financing_products:"Financiación",site_settings:"Ajustes",lead_requests:"Contactos",vehicle_reviews:"Opiniones",installers:"Instaladores",insurance_brokers:"Corredores de seguros",sales:"Ventas",admin_users:"Administradoras"};
 const ACT={INSERT:"Creó",UPDATE:"Modificó",DELETE:"Borró"};
 let histFilter="todas";
 function brief(d){if(!d)return"";const x=d.data||d;const t=x.name||((x.brand||x.entity||"")+" "+(x.model||"")+" "+(x.version||"")).trim()||x.buyer_name||x.author||x.title||"";return String(t).slice(0,80)}
@@ -135,6 +135,22 @@ async function historyView(b){
   $("hf").onchange=()=>{histFilter=$("hf").value;historyView(b)};
 }
 
+async function dirView(b,T,TT){
+    const {data,error}=await sb.from(T).select("*").order("created_at",{ascending:false}).limit(300);
+    if(error){b.innerHTML=`<div class="notice bad">${e(error.message)}<br><span class="small">Si dice que la tabla no existe, falta ejecutar la migración 005 o 006 de supabase/migrations en Supabase.</span></div>`;return}
+    const ST={pending:"Pendiente",approved:"Publicado",rejected:"Rechazado"};
+    b.innerHTML=`<h2>${e(TT)} (moderación)</h2><p class="small muted">Antes de aprobar: comprobá el número de registro en la fuente oficial y anotá la fecha. Lo «Pendiente» no se muestra en el sitio. Si alguien pide que lo borres o lo modifiques, hacelo desde acá.</p>`+(data||[]).map(r=>`<div class="card" style="margin:8px 0"><div><strong>${e(r.name)}</strong> · ${r.kind==="empresa"?"Empresa":"Independiente"} · <span class="badge ${r.status==="approved"?"ok":r.status==="rejected"?"bad":"warn"}">${ST[r.status]}</span> <span class="small muted">${new Date(r.created_at).toLocaleString("es-UY")}</span></div>
+<p class="small">${e(r.departments.join(", "))}${r.locality?" · "+e(r.locality):""}<br>Registro / habilitación informada: <strong>${e(r.license_no||"—")}</strong><br>${e([r.phone,r.email,r.website].filter(Boolean).join(" · "))}</p>
+${r.insurers&&r.insurers.length?`<p class="small">Aseguradoras: ${e(r.insurers.join(" · "))}</p>`:""}${r.services.length?`<p class="small">${e(r.services.join(" · "))}</p>`:""}${r.description?`<p class="small">${e(r.description)}</p>`:""}
+<p class="small muted">${r.verified_on?`Verificado el ${e(r.verified_on)}${r.verified_note?": "+e(r.verified_note):""}`:"Sin verificar"}</p>
+<p><button class="btn" data-in="approved" data-id="${r.id}">Aprobar y publicar</button> <button class="btn sec" data-in="verify" data-id="${r.id}">Marcar verificado hoy</button> <button class="btn sec" data-in="rejected" data-id="${r.id}">Rechazar / ocultar</button> <button class="btn sec" data-in="del" data-id="${r.id}">Borrar</button></p></div>`).join("")||"<p>Todavía no hay altas.</p>";
+    b.onclick=async ev=>{const t=ev.target;if(!t.dataset.in)return;const id=t.dataset.id,a=t.dataset.in;
+      if(a==="del"){if(!confirm("¿Borrar esta ficha definitivamente?"))return;await sb.from(T).delete().eq("id",id)}
+      else if(a==="verify"){const n=prompt("Nota de verificación (ej.: «registro vigente en UTE»):","");if(n===null)return;await sb.from(T).update({verified_on:new Date().toISOString().slice(0,10),verified_note:n.slice(0,300)||null}).eq("id",id)}
+      else await sb.from(T).update({status:a}).eq("id",id);
+      show();};
+    return;
+}
 /* ===== Estadísticas (tabla site_events, anónima) ===== */
 let statDays=30;
 async function statsView(b){
@@ -185,21 +201,8 @@ async function show(){
       else await sb.from("vehicle_reviews").update({status:t.dataset.rv}).eq("id",t.dataset.id);
       show();};
     return;}
-  if(tab==="installers"){
-    const {data,error}=await sb.from("installers").select("*").order("created_at",{ascending:false}).limit(300);
-    if(error){b.innerHTML=`<div class="notice bad">${e(error.message)}<br><span class="small">Si dice que la tabla no existe, falta ejecutar la migración 005_instaladores.sql en Supabase.</span></div>`;return}
-    const ST={pending:"Pendiente",approved:"Publicado",rejected:"Rechazado"};
-    b.innerHTML=`<h2>Instaladores (moderación)</h2><p class="small muted">Antes de aprobar: comprobá el número de registro en la fuente oficial y anotá la fecha. Lo «Pendiente» no se muestra en el sitio. Si alguien pide que lo borres o lo modifiques, hacelo desde acá.</p>`+(data||[]).map(r=>`<div class="card" style="margin:8px 0"><div><strong>${e(r.name)}</strong> · ${r.kind==="empresa"?"Empresa":"Independiente"} · <span class="badge ${r.status==="approved"?"ok":r.status==="rejected"?"bad":"warn"}">${ST[r.status]}</span> <span class="small muted">${new Date(r.created_at).toLocaleString("es-UY")}</span></div>
-<p class="small">${e(r.departments.join(", "))}${r.locality?" · "+e(r.locality):""}<br>Registro informado: <strong>${e(r.license_no||"—")}</strong><br>${e([r.phone,r.email,r.website].filter(Boolean).join(" · "))}</p>
-${r.services.length?`<p class="small">${e(r.services.join(" · "))}</p>`:""}${r.description?`<p class="small">${e(r.description)}</p>`:""}
-<p class="small muted">${r.verified_on?`Verificado el ${e(r.verified_on)}${r.verified_note?": "+e(r.verified_note):""}`:"Sin verificar"}</p>
-<p><button class="btn" data-in="approved" data-id="${r.id}">Aprobar y publicar</button> <button class="btn sec" data-in="verify" data-id="${r.id}">Marcar verificado hoy</button> <button class="btn sec" data-in="rejected" data-id="${r.id}">Rechazar / ocultar</button> <button class="btn sec" data-in="del" data-id="${r.id}">Borrar</button></p></div>`).join("")||"<p>Todavía no hay altas.</p>";
-    b.onclick=async ev=>{const t=ev.target;if(!t.dataset.in)return;const id=t.dataset.id,a=t.dataset.in;
-      if(a==="del"){if(!confirm("¿Borrar esta ficha definitivamente?"))return;await sb.from("installers").delete().eq("id",id)}
-      else if(a==="verify"){const n=prompt("Nota de verificación (ej.: «registro vigente en UTE»):","");if(n===null)return;await sb.from("installers").update({verified_on:new Date().toISOString().slice(0,10),verified_note:n.slice(0,300)||null}).eq("id",id)}
-      else await sb.from("installers").update({status:a}).eq("id",id);
-      show();};
-    return;}
+  if(tab==="installers")return dirView(b,"installers","Instaladores");
+  if(tab==="insurance_brokers")return dirView(b,"insurance_brokers","Corredores de seguros");
   if(tab==="lead_requests")return leadsView(b);
   if(tab==="audit_logs")return historyView(b);
   if(false){
