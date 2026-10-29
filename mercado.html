@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mercado de eléctricos en Uruguay: bajas de precio, competencia y garantías | Autos Eléctricos UY</title>
-<meta name="description" content="Qué autos eléctricos bajaron de precio en Uruguay desde la llegada de Tesla, cómo se reparte la competencia por precio y batería, y qué marcas informan más garantías. Solo cambios con fuente y fecha.">
-<meta property="og:type" content="website"><meta property="og:locale" content="es_UY"><meta property="og:site_name" content="Autos Eléctricos UY"><meta property="og:title" content="Mercado de eléctricos en Uruguay: bajas de precio y competencia"><meta property="og:description" content="Qué eléctricos bajaron de precio desde la llegada de Tesla, con fuente y fecha de cada cambio."><meta property="og:url" content="https://stephanie-ai-uy.github.io/autos-electricos-uy/mercado.html"><meta property="og:image" content="https://stephanie-ai-uy.github.io/autos-electricos-uy/assets/og.jpg"><meta name="twitter:card" content="summary_large_image">
+<title>Mercado de eléctricos en Uruguay: cambios de precio, competencia y garantías | Autos Eléctricos UY</title>
+<meta name="description" content="Qué autos eléctricos cambiaron de precio en Uruguay, cuánto y cuándo; cómo se reparte la competencia por precio y batería y qué marcas informan más garantías. Solo cambios con fuente y fecha.">
+<meta property="og:type" content="website"><meta property="og:locale" content="es_UY"><meta property="og:site_name" content="Autos Eléctricos UY"><meta property="og:title" content="Mercado de eléctricos en Uruguay: cambios de precio y competencia"><meta property="og:description" content="Qué eléctricos cambiaron de precio, cuánto y cuándo, con fuente y fecha de cada cambio."><meta property="og:url" content="https://stephanie-ai-uy.github.io/autos-electricos-uy/mercado.html"><meta property="og:image" content="https://stephanie-ai-uy.github.io/autos-electricos-uy/assets/og.jpg"><meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="assets/style.css?v=18">
 <style>
 .kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin:14px 0}
@@ -18,21 +18,20 @@ svg.sc text{fill:var(--muted);font:11px var(--font)}
 .legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
 </style></head>
 <body data-page="mkt"><main id="main"><div class="wrap">
-<h1>Mercado: <span class="grad">bajas de precio</span> y competencia</h1>
-<p class="lead">Desde la llegada de Tesla (17/7/2026) el mercado de eléctricos en Uruguay se movió. Acá ves <strong>qué bajó, cuánto y cuándo</strong>, cómo compiten los modelos por precio y batería, y quién informa más garantías.</p>
+<h1>Mercado: <span class="grad">cambios de precio</span> y competencia</h1>
+<p class="lead">Acá ves <strong>qué precios cambiaron, cuánto y cuándo</strong>, cómo compiten los modelos por precio y batería, y quién informa más garantías.</p>
 <div class="notice info"><strong>Cómo leer esta página.</strong> Solo entran cambios de precio con valor anterior y posterior <strong>informados por prensa y con fecha</strong>; cada fila muestra sus fuentes y cuántas coinciden. Si no encontramos el dato, no lo estimamos. Puede haber otras bajas que todavía no relevamos: <a href="contacto.html">avisanos</a>. Precios de lista en dólares, sin promociones ni gastos de gestoría.</div>
 
 <div class="kpis" id="kpis"></div>
 
-<h2>Qué bajó de precio</h2>
-<p class="chips" id="flt"><button class="btn" data-p="todos">Todos</button><button class="btn sec" data-p="post-tesla">Desde Tesla (jul. 2026)</button><button class="btn sec" data-p="2025">Ronda de 2025</button><button class="btn sec" data-p="otro">Otros</button></p>
+<h2>Cambios de precio</h2>
+<p class="chips" id="flt"><button class="btn" data-p="todos">Todos</button><button class="btn sec" data-p="2026">2026</button><button class="btn sec" data-p="2025">2025</button><button class="btn sec" data-p="otro">Fecha no informada</button></p>
 <div class="tablewrap"><table id="tm"><thead><tr><th>Modelo</th><th>Antes</th><th>Después</th><th>Cambio</th><th>Fecha</th><th>Fuentes</th></tr></thead><tbody></tbody></table></div>
 <p class="small muted" id="tmNote"></p>
 <div id="tmcmp"></div>
 
 <h2>Línea de tiempo</h2>
 <div class="tl" id="tl"></div>
-<p class="small muted">Sobre la reacción de otras marcas: a la fecha de las notas, Grupo Santa Rosa (representante de GWM, Leapmotor, Omoda, JMC y Zeekr) declaró que no preveía una reacción inmediata. Los recortes confirmados con cifras se concentran en BYD; no inferimos que otras marcas vayan a bajar.</p>
 
 <h2>El mapa competitivo: precio vs. batería</h2>
 <p class="muted">Cada punto es un eléctrico puro con precio de lista y batería informados. Cuanto más abajo y a la derecha, más batería por dólar. La batería (kWh) sí es comparable entre marcas; la autonomía no siempre, porque se mide con ciclos distintos.</p>
@@ -58,20 +57,20 @@ svg.sc text{fill:var(--muted);font:11px var(--font)}
 <p>Detalle, fuentes y fechas en <a href="beneficios.html">Beneficios</a>. Los beneficios son por categoría de vehículo, no por marca; lo que cambia entre marcas son las garantías y el precio.</p>
 <p class="small muted">Esta página es informativa: no recomienda comprar ni dejar de comprar un modelo. Antes de decidir, confirmá precio, versión y condiciones con el vendedor.</p>
 </div></main>
-<script src="assets/data.js?v=9"></script><script src="assets/app.js?v=17"></script>
+<script src="assets/data.js?v=10"></script><script src="assets/app.js?v=17"></script>
 <script>
 const D=EVDATA,e=EV.esc,V=D.vehicles,M=D.priceMoves,S=D.sources,fm=n=>"US$ "+EV.fmtNum(n,0);
 const fd=d=>d?new Date(d+(d.length===7?"-01":"")+"T12:00:00").toLocaleDateString("es-UY",d.length===7?{month:"long",year:"numeric"}:{day:"numeric",month:"short",year:"numeric"}):"s/f";
 const pct=m=>(m.to-m.from)/m.from*100, cl=n=>`<span class="${n<0?"neg":"pos"}">${n<0?"−":"+"}${EV.fmtNum(Math.abs(n),1)} %</span>`;
 const srcLinks=m=>m.srcs.map(k=>S[k]?`<a href="${e(S[k].url)}" rel="noopener" target="_blank" title="${e(S[k].name)}">${e(S[k].name.split(" — ")[0])}</a>`:"").join(", ");
 /* --- KPIs (solo cambios con ≥ 2 fuentes que coinciden, para no inflar) --- */
-const firm=M.filter(m=>/^[23]/.test(m.conf)), post=firm.filter(m=>m.period==="post-tesla");
+const firm=M.filter(m=>/^[23]/.test(m.conf)), post=firm.filter(m=>m.period==="2026");
 const avgPost=post.length?post.reduce((a,m)=>a+pct(m),0)/post.length:null, big=post.slice().sort((a,b)=>pct(a)-pct(b))[0];
 const $k=document.getElementById("kpis");
-$k.innerHTML=`<div class="card kpi"><div class="muted small">Bajas confirmadas desde Tesla</div><div class="big">${post.length}</div><div class="small muted">versiones con 2 o más fuentes coincidentes (${[...new Set(post.map(x=>x.name.split(" ")[0]))].join(", ")})</div></div>
+$k.innerHTML=`<div class="card kpi"><div class="muted small">Bajas confirmadas en 2026</div><div class="big">${post.length}</div><div class="small muted">versiones con 2 o más fuentes coincidentes (${[...new Set(post.map(x=>x.name.split(" ")[0]))].join(", ")})</div></div>
 <div class="card kpi"><div class="muted small">Baja promedio de esas versiones</div><div class="big">${avgPost==null?"—":cl(avgPost)}</div><div class="small muted">sobre el precio de lista anterior</div></div>
 <div class="card kpi"><div class="muted small">Mayor baja</div><div class="big">${big?cl(pct(big)):"—"}</div><div class="small muted">${big?e(big.name)+" · "+fm(big.from-big.to)+" menos":""}</div></div>
-<div class="card kpi"><div class="muted small">Entrada de Tesla (17/7/2026)</div><div class="big">US$ 32.990</div><div class="small muted">Model 3 de entrada; Model Y desde US$ 36.490</div></div>`;
+<div class="card kpi"><div class="muted small">Cambios registrados</div><div class="big">${M.length}</div><div class="small muted">con precio anterior y posterior, fuente y fecha</div></div>`;
 /* --- tabla de bajas --- */
 let per="todos";
 function tm(){
@@ -83,7 +82,7 @@ function tm(){
 document.getElementById("flt").onclick=ev=>{if(ev.target.dataset.p){per=ev.target.dataset.p;tm()}};tm();
 document.getElementById("tmNote").textContent=`Se muestran ${M.length} movimientos con precio anterior y posterior informados. Las filas con «1 fuente» no pudieron confirmarse con una segunda y deben leerse con cautela.`;
 /* acumulado BYD Seagull */
-{const a=M.find(m=>m.id==="byd-seagull"&&m.period==="2025"),b=M.find(m=>m.id==="byd-seagull"&&m.period==="post-tesla");
+{const a=M.find(m=>m.id==="byd-seagull"&&m.period==="2025"),b=M.find(m=>m.id==="byd-seagull"&&m.period==="2026");
  if(a&&b)document.getElementById("tmcmp").innerHTML=`<div class="card" style="margin:14px 0"><strong>Acumulado del BYD Seagull (versión de entrada):</strong> de ${fm(a.from)} a ${fm(b.to)} entre mediados de 2025 y julio de 2026, es decir <strong>${fm(a.from-b.to)}</strong> menos (${cl(pct({from:a.from,to:b.to}))}). <span class="small muted">Se calcula con dos movimientos confirmados; las versiones de entrada pueden no ser idénticas entre 2025 y 2026.</span></div>`}
 /* --- línea de tiempo --- */
 document.getElementById("tl").innerHTML=D.marketTimeline.map(t=>`<div class="it ${/Tesla llega/.test(t.title)?"tesla":""}"><div class="small muted">${fd(t.date)}</div><strong>${e(t.title)}</strong><div>${e(t.text)}</div><div class="small">${t.srcs.map(k=>S[k]?`<a href="${e(S[k].url)}" rel="noopener" target="_blank">${e(S[k].name.split(" — ")[0])}</a>`:"").join(" · ")}</div></div>`).join("");
